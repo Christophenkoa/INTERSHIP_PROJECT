@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'icc_intership_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_db',
+        'NAME': 'e_learning',
         'USER': 'postgres',
         'PASSWORD': 'postgresql',
         'HOST': 'localhost',
