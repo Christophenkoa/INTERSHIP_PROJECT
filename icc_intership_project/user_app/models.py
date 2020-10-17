@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from ..class_management_app.models import Class, Course
+from icc_intership_project.class_management_app.models import Class, Course
 
 
 # Create your models here.

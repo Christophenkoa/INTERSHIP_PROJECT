@@ -1,5 +1,5 @@
 from django.db import models
-from ..user_app.models import Teacher, Student
+from icc_intership_project.user_app.models import Teacher, Student
 
 
 # Create your models here.
@@ -21,6 +21,9 @@ class QuizTaker(models.Model):
     end_time = models.DateTimeField()
     associated_student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="ass_student")
     associated_quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="ass_quiz")
+
+    def __str__(self):
+        return self.score
 
 
 class Question(models.Model):

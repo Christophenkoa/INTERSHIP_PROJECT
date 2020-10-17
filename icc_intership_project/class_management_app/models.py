@@ -1,5 +1,5 @@
 from django.db import models
-from ..user_app.models import Admin, Teacher, Student
+from icc_intership_project.user_app.models import Admin, Teacher, Student
 
 
 # Create your models here.

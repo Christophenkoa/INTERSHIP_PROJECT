@@ -4,42 +4,30 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class User(models.Model):
-    name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+
+class Admin(User):
     tel = models.PositiveIntegerField()
-    is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    gender = models.CharField(max_length=1)
-    email = models.EmailField()
 
-    class Meta:
-        abstract = True
-
-
-class Admin(models.Model):
-    email = models.EmailField()
-    password = models.CharField(max_length=255)
-    tel = models.PositiveIntegerField()
-    username = models.CharField(max_length=255)
+    def __str__(self):
+        return self.username
 
 
 class Teacher(User):
-    is_staff = True
-    username = models.CharField(max_length=255)
-    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=1)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
-    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
-    teacher = models.ManyToManyField(Teacher)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    teacher = models.ManyToManyField(Teacher, blank=True)
+
+    def __str__(self):
+        return self.entitled
 
 
 class Class(models.Model):
@@ -47,23 +35,23 @@ class Class(models.Model):
     class_number = models.IntegerField(null=True)
     option = models.CharField(max_length=10, null=True)
     serie = models.CharField(max_length=5, null=True)
-    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
-    courses = models.ManyToManyField(Course)
-    teacher = models.ManyToManyField(Teacher)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    courses = models.ManyToManyField(Course, blank=True)
+    teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
-        return f"{self.entitled}  {self.class_number}  {self.option} {self.serie}"
+        return f"{self.level}  {self.class_number}  {self.option} {self.serie}"
 
 
 class Student(User):
     dateOfBirth = models.DateField()
     regis_number = models.CharField(max_length=255)
-    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class Evaluation(models.Model):
@@ -105,6 +93,9 @@ class QuizTaker(models.Model):
     end_time = models.DateTimeField()
     associated_student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="ass_student")
     associated_quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="ass_quiz")
+
+    def __str__(self):
+        return f"{self.associated_student}  {self.associated_quiz}  {self.score}"
 
 
 class Question(models.Model):

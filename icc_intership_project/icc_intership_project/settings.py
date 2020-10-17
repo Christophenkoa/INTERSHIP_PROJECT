@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'backend_api',
     'rest_framework',
+    # my app
+    # 'quiz_app',
+    # 'user_app',
+    # 'class_management_app',
 ]
 
 MIDDLEWARE = [
@@ -91,18 +95,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
+     {
+         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+     },
+     {
+         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+     },
+     {
+         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+     },
+     {
+         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+     },
 ]
 
 
