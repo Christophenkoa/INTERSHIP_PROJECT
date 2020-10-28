@@ -37,9 +37,18 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    my_admin = AdminSerializer
-    my_class = ClassSerializer
-    courses = CourseSerializer
+    my_class = serializers.SerializerMethodField()
+    courses = serializers.SerializerMethodField()
+    evaluation = serializers.SerializerMethodField()
+
+    def get_my_class(self, obj):
+        return ClassSerializer(obj.my_class).data
+
+    def get_courses(self, obj):
+        return CourseSerializer(obj.my_class.courses, many=True).data
+
+    def get_evaluation(self, obj):
+        return EvaluationSerializer(obj.note, many=True).data
 
     class Meta:
         model = Student
