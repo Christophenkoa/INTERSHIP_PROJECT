@@ -1,8 +1,8 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/navMenu/class-info">Home</a>
@@ -26,7 +26,7 @@
       <span class="spacer"></span>
       <mat-icon color="accent" class="icon-spacer">account_circle</mat-icon>
       <span style="font-size: large;padding: 0 10px;">Hello, username</span>
-      <button mat-mini-fab matBadge="15" matBadgeColor="primary">
+      <button mat-mini-fab matBadge="15" matBadgeColor="primary" matTooltip="Notifications">
         <mat-icon>notification_important</mat-icon>
       </button>
       <span style="padding: 0 12px;"></span>
@@ -34,7 +34,10 @@
     </mat-toolbar>
     <!-- Add Content Here -->
     <!--<app-class-info></app-class-info>-->
+    <!--<app-crud-student></app-crud-student>-->
     <app-crud-student></app-crud-student>
+    <!--<router-outlet></router-outlet>-->
+    <!--<app-crud-teacher></app-crud-teacher>-->
 
   </mat-sidenav-content>
 </mat-sidenav-container>

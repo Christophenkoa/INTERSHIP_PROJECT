@@ -18,26 +18,29 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { LoginComponent } from './login/login.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ClassInfoComponent } from './class-info/class-info.component';
 import { CrudTeacherComponent } from './crud/teacher/crud-teacher/crud-teacher.component';
 import { CrudStudentComponent } from './crud/student/crud-student/crud-student.component';
 import { CuStudentComponent } from './crud/student/cu-student/cu-student.component';
 import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainNavComponent,
     ClassInfoComponent,
     CrudTeacherComponent,
     CrudStudentComponent,
     CuStudentComponent,
-    CuTeacherComponent
+    CuTeacherComponent,
+    MainNavComponent
   ],
   entryComponents: [],
   imports: [
@@ -57,9 +60,10 @@ import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.compone
     MatBadgeModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

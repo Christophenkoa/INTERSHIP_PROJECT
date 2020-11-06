@@ -1,1 +1,51 @@
+<div class="jumbotron" style="background-color: dimgrey; text-align: center">
+  <h1 class="display-4">Create, Update and Delete Student</h1>
+</div>
 
+
+<mat-form-field floatLabel="never">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="weight">
+    <th mat-header-cell *matHeaderCellDef> Weight </th>
+    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+    <td *matCellDef="let element"> {{element.symbol}} </td>
+  </ng-container>
+
+  <!-- Icon Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td *matCellDef="let row">
+      <button mat-icon-button color="warn"><mat-icon>launch</mat-icon></button>
+      <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<button mat-mini-fab aria-label="Add a new student" matTooltip="Add student">
+  <mat-icon>add</mat-icon>
+</button>
