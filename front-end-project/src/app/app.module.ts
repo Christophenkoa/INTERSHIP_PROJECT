@@ -17,13 +17,16 @@ import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { LoginComponent } from './login/login.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ClassInfoComponent } from './class-info/class-info.component';
-import { CrudTeacherComponent } from './crud/crud-teacher/crud-teacher.component';
-import { CrudStudentComponent } from './crud/crud-student/crud-student.component';
+import { CrudTeacherComponent } from './crud/teacher/crud-teacher/crud-teacher.component';
+import { CrudStudentComponent } from './crud/student/crud-student/crud-student.component';
+import { CuStudentComponent } from './crud/student/cu-student/cu-student.component';
+import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +35,11 @@ import { CrudStudentComponent } from './crud/crud-student/crud-student.component
     MainNavComponent,
     ClassInfoComponent,
     CrudTeacherComponent,
-    CrudStudentComponent
+    CrudStudentComponent,
+    CuStudentComponent,
+    CuTeacherComponent
   ],
+  entryComponents: [],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -50,7 +56,8 @@ import { CrudStudentComponent } from './crud/crud-student/crud-student.component
     LayoutModule,
     MatBadgeModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
