@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,15 +8,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+
   hide = true;
   loginForm : FormGroup
 
-  constructor(private formBuiler : FormBuilder) { }
+  constructor(private formBuiler : FormBuilder,
+              private router : Router) { }
 
   ngOnInit() {
     this.LoginForm();
-    
   }
 
   LoginForm(){
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
 
     if(this.loginForm.invalid){return;}
 
-    console.log(username +','+ password);
-      
+    console.log(username + ',' + password);
+    this.router.navigate(['navMenu']);
   }
 }

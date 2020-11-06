@@ -15,16 +15,24 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { LoginComponent } from './login/login.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ClassInfoComponent } from './class-info/class-info.component';
+import { CrudTeacherComponent } from './crud/crud-teacher/crud-teacher.component';
+import { CrudStudentComponent } from './crud/crud-student/crud-student.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainNavComponent
+    MainNavComponent,
+    ClassInfoComponent,
+    CrudTeacherComponent,
+    CrudStudentComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +48,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatToolbarModule,
     MatListModule,
     LayoutModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
