@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {CuTeacherComponent} from '../cu-teacher/cu-teacher.component';
 
 export interface PeriodicElement {
   name: string;
@@ -29,16 +30,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CrudTeacherComponent implements OnInit {
 
+  /** Differents columns of the table **/
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
+  /** Filter the information in DataTable **/
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor() { }
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
+  /** Open the CU(Create and Update) interface **/
+  OpenCUMethod() {
+    this.dialog.open(CuTeacherComponent);
+  }
 }

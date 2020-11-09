@@ -19,6 +19,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -42,7 +43,7 @@ import {AuthService} from './services/auth.service';
     CuTeacherComponent,
     MainNavComponent
   ],
-  entryComponents: [],
+  entryComponents: [CuTeacherComponent, CuStudentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,7 +62,8 @@ import {AuthService} from './services/auth.service';
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
