@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogConfig, MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {CuTeacherComponent} from '../cu-teacher/cu-teacher.component';
 
@@ -49,6 +49,10 @@ export class CrudTeacherComponent implements OnInit {
 
   /** Open the CU(Create and Update) interface **/
   OpenCUMethod() {
-    this.dialog.open(CuTeacherComponent);
+    const dialog = new MatDialogConfig();
+    dialog.width = '70%';
+    dialog.height = '70%';
+    dialog.disableClose = true;
+    this.dialog.open(CuTeacherComponent, dialog);
   }
 }
