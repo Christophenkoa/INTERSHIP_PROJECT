@@ -31,6 +31,7 @@ import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.compone
 import { MainNavComponent } from './main-nav/main-nav.component';
 
 import {AuthService} from './services/auth.service';
+import { MainSpaceComponent } from './main-space/main-space.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {AuthService} from './services/auth.service';
     CrudStudentComponent,
     CuStudentComponent,
     CuTeacherComponent,
-    MainNavComponent
+    MainNavComponent,
+    MainSpaceComponent
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent],
   imports: [
