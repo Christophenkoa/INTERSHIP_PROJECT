@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatTableDataSource, MatDialogRef} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {CuStudentComponent} from '../cu-student/cu-student.component';
+import { MatDialogConfig } from '@angular/material';
 
 export interface PeriodicElement {
   name: string;
@@ -30,7 +31,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CrudStudentComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog){ }
 
   /** Differents columns of the table **/
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
@@ -49,7 +50,10 @@ export class CrudStudentComponent implements OnInit {
 
   /** Open the CU(Create and Update) interface **/
   OpenCUMethod() {
-    this.dialog.open(CuStudentComponent);
+    const dialog = new MatDialogConfig();
+    dialog.width = '70%';
+    dialog.height = '70%';
+    dialog.disableClose = true;
+    this.dialog.open(CuStudentComponent, dialog);
   }
-
 }

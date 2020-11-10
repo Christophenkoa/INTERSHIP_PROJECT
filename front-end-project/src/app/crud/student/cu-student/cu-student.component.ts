@@ -11,7 +11,7 @@ export class CuStudentComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
 
-  constructor(private formBuiler : FormBuilder) { }
+  constructor(private formBuiler: FormBuilder) { }
 
   ngOnInit() {
     this.RegisterForm();
@@ -34,8 +34,9 @@ export class CuStudentComponent implements OnInit {
   }
 
   OnSubmitForm(){
-    console.log('Hello World !!');
+
     if(this.registerForm.invalid){return;}
+    console.log('Hello World !!');
   }
 
 }
