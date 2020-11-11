@@ -53,6 +53,21 @@ export class CuTeacherComponent implements OnInit {
         return false;
       }
     }
+    /** Function that generates a 10-character password **/
+    function makeid() {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+";
+
+      for (var i = 0; i < 10; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
+    }
+    const pass = makeid();
+
+    console.log(pass);
+    alert("your password is " +pass);
+
     if(this.registerForm.invalid) {return;}
     console.log(username + ',' + name + ',' + surname + ',' + password + ',' + tel + ',' + email + ',' +  gender + ',' + active + ',' + staff + ',' + superuser);
     console.log(typeof active);

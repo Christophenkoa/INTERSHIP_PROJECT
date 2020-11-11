@@ -20,7 +20,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule, MatRadioModule} from '@angular/material';
+import {MatAutocompleteModule, MatNativeDateModule, MatRadioModule} from '@angular/material';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -32,6 +32,7 @@ import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.compone
 import { MainNavComponent } from './main-nav/main-nav.component';
 
 import {AuthService} from './services/auth.service';
+import { AddNoteComponent } from './crud/add-note/add-note.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {AuthService} from './services/auth.service';
     CrudStudentComponent,
     CuStudentComponent,
     CuTeacherComponent,
-    MainNavComponent
+    MainNavComponent,
+    AddNoteComponent
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent],
   imports: [
@@ -68,6 +70,7 @@ import {AuthService} from './services/auth.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatAutocompleteModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

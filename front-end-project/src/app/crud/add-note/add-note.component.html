@@ -1,0 +1,47 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container" style="text-align: center">
+    <h1>Add note</h1>
+  </div>
+</div>
+
+<mat-card style="text-align: center">
+  <mat-card-header >
+    <mat-card-title > Course : Chemistry </mat-card-title>
+  </mat-card-header>
+  <mat-dialog-content>
+    <form (ngSubmit)="OnsubmitNote()" [formGroup]="NoteForm">
+      <mat-form-field class="full-width" appearance="legacy">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" [matAutocomplete]="auto" placeholder="Enter...">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filterOptions | async"
+                      [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="NoteForm.get('name').errors?.required">
+          Required name
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="legacy">
+        <mat-label> Birthday date </mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+               formControlName="date_Eval" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="NoteForm.get('date_Eval').errors?.required">
+          Required Evaluation date
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="legacy">
+        <mat-label>Note</mat-label>
+        <input matInput formControlName="note" required placeholder="Enter note">
+        <mat-error *ngIf="NoteForm.get('note').errors?.required">
+          Required note
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+</mat-card>
+
