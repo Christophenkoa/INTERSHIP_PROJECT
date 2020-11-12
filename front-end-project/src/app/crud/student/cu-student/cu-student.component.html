@@ -1,8 +1,8 @@
 
+<mat-dialog-content>
+  <div class="row">
+    <form (ngSubmit)="OnSubmitForm()" [formGroup]="registerForm">
 
-<div class="row">
-  <form (ngSubmit)="OnSubmitForm()" [formGroup]="registerForm">
-    <div class="col-sm-6">
       <mat-form-field class="full-width" appearance="legacy">
         <mat-label> Register Number </mat-label>
         <input formControlName="Regis_nbre" matInput required />
@@ -56,7 +56,8 @@
           Email must be a valid email address
         </mat-error>
       </mat-form-field>
-      <!--<mat-form-field class="full-width" appearance="legacy">
+
+      <mat-form-field class="full-width" appearance="legacy">
         <mat-label> Birthday date </mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Choose a date"
                formControlName="date_Birth" required>
@@ -64,13 +65,55 @@
         <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="registerForm.get('date_Birth').errors?.required">
           Required Birthday date
+        </mat-error><!---->
+      </mat-form-field>
+      <div class="form-group">
+        <mat-label> Gender </mat-label>
+        <mat-radio-group MatInput formControlName="gender" required>
+          <mat-radio-button value="M" style="margin-right: 20px">Male</mat-radio-button>
+          <mat-radio-button value="F">Female</mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="registerForm.get('gender').errors?.required">
+          Required gender
         </mat-error>
-      </mat-form-field>-->
-    </div>
-    <div class="col-sm-6">
+      </div>
+      <div class="form-group">
+        <mat-label> Is active ? </mat-label>
+        <mat-radio-group MatInput formControlName="is_active" required>
+          <mat-radio-button value="true" style="margin-right: 20px">Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="registerForm.get('is_active').errors?.required">
+          Required answer
+        </mat-error>
+      </div>
+      <div class="form-group">
+        <mat-label> Is staff ? </mat-label>
+        <mat-radio-group MatInput formControlName="is_staff" required>
+          <mat-radio-button value = "true" style="margin-right: 20px">Yes</mat-radio-button>
+          <mat-radio-button value= "false">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="registerForm.get('is_staff').errors?.required">
+          Required answer
+        </mat-error>
+      </div>
+      <div class="form-group">
+        <mat-label> Is super user ? </mat-label>
+        <mat-radio-group MatInput formControlName="is_superuser" required>
+          <mat-radio-button value = "true" style="margin-right: 20px">Yes</mat-radio-button>
+          <mat-radio-button value= "false">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="registerForm.get('is_superuser').errors?.required">
+          Required answer
+        </mat-error>
+      </div>
 
-    </div>
-  </form>
+      <mat-dialog-actions>
+        <button mat-raised-button color="primary">Submit</button>
+        <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+      </mat-dialog-actions>
+    </form>
+  </div>
 
+</mat-dialog-content>
 
-</div>

@@ -11,7 +11,7 @@ export class CuStudentComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
 
-  constructor(private formBuiler : FormBuilder) { }
+  constructor(private formBuiler: FormBuilder) { }
 
   ngOnInit() {
     this.RegisterForm();
@@ -34,8 +34,30 @@ export class CuStudentComponent implements OnInit {
   }
 
   OnSubmitForm(){
-    console.log('Hello World !!');
-    if(this.registerForm.invalid){return;}
+    /** Retrieve values from the form **/
+    const regis = this.registerForm.get('Regis_nbre').value;
+    const name = this.registerForm.get('name').value;
+    const surname = this.registerForm.get('surname').value;
+    const password = this.registerForm.get('password').value;
+    const tel = this.registerForm.get('tel').value;
+    const email = this.registerForm.get('email').value;
+    const date = this.registerForm.get('date_Birth').value;
+    const gender = this.registerForm.get('gender').value;
+    const active = convert(this.registerForm.get('is_active').value);
+    const staff = convert(this.registerForm.get('is_staff').value);
+    const superuser = convert(this.registerForm.get('is_superuser').value);
+
+    /** Function which convert a string value to boolean **/
+    function convert(value) {
+      if (value === "true" || value === 'true'){
+        return true;
+      }else {
+        return false;
+      }
+    }
+    if(this.registerForm.invalid) {return;}
+    console.log(regis + ',' + name + ',' + surname + ',' + password + ',' + tel + ',' + email + ',' + date + ',' + gender + ',' + active + ',' + staff + ',' + superuser);
+    console.log(typeof active);
   }
 
 }

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -20,6 +20,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule, MatNativeDateModule, MatRadioModule} from '@angular/material';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -31,7 +32,10 @@ import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.compone
 import { MainNavComponent } from './main-nav/main-nav.component';
 
 import {AuthService} from './services/auth.service';
+
 import { MainSpaceComponent } from './main-space/main-space.component';
+
+import { AddNoteComponent } from './crud/add-note/add-note.component';
 
 @NgModule({
   declarations: [
@@ -43,13 +47,18 @@ import { MainSpaceComponent } from './main-space/main-space.component';
     CuStudentComponent,
     CuTeacherComponent,
     MainNavComponent,
+<<<<<<< HEAD
     MainSpaceComponent
+=======
+    AddNoteComponent
+>>>>>>> 3386cb15dcf95e39ae8db027116543841f625c88
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatInputModule,
@@ -65,7 +74,10 @@ import { MainSpaceComponent } from './main-space/main-space.component';
     MatPaginatorModule,
     MatDialogModule,
     MatTooltipModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatAutocompleteModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
