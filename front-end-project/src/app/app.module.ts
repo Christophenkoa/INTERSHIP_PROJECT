@@ -47,11 +47,8 @@ import { AddNoteComponent } from './crud/add-note/add-note.component';
     CuStudentComponent,
     CuTeacherComponent,
     MainNavComponent,
-<<<<<<< HEAD
-    MainSpaceComponent
-=======
+    MainSpaceComponent,
     AddNoteComponent
->>>>>>> 3386cb15dcf95e39ae8db027116543841f625c88
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent],
   imports: [
