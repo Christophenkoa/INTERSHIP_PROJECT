@@ -13,6 +13,7 @@ export class AddNoteComponent implements OnInit {
   NoteForm: FormGroup;
   options: string[]= ['One', 'Two', 'Three', 'Four', 'Five', 'Eight'];
   filterOptions: Observable<string[]>;
+  dateNow : Date
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -25,7 +26,7 @@ export class AddNoteComponent implements OnInit {
     this.NoteForm = this.formBuilder.group({
       name : ['', Validators.required],
       date_Eval : ['', Validators.required],
-      note : ['', Validators.required]
+      note : ['', [Validators.required, Validators.pattern('\+?\d+\.\d+')]]
     });
   }
 
@@ -47,6 +48,8 @@ export class AddNoteComponent implements OnInit {
   OnsubmitNote() {
 
     if(this.NoteForm.invalid){return;}
+
+    console.log(this.NoteForm.get('name').value + ' , ' + this.NoteForm.get('date_Eval').value + ' , ' + this.NoteForm.get('note').value);
   }
 
 }

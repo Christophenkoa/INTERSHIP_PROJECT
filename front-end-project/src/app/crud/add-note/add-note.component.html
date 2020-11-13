@@ -10,9 +10,9 @@
   </mat-card-header>
   <mat-dialog-content>
     <form (ngSubmit)="OnsubmitNote()" [formGroup]="NoteForm">
-      <mat-form-field class="full-width" appearance="legacy">
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 30px;">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" [matAutocomplete]="auto" placeholder="Enter...">
+        <input matInput formControlName="name" [matAutocomplete]="auto" placeholder="Enter name..." required>
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let option of filterOptions | async"
                       [value]="option">
@@ -23,8 +23,8 @@
           Required name
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="legacy">
-        <mat-label> Birthday date </mat-label>
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 30px;">
+        <mat-label> Evaluation date </mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Choose a date"
                formControlName="date_Eval" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -33,13 +33,21 @@
           Required Evaluation date
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="legacy">
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 30px;">
         <mat-label>Note</mat-label>
-        <input matInput formControlName="note" required placeholder="Enter note">
+        <input type="number" matInput formControlName="note" required placeholder="Example : 13.00 or 13.0">
         <mat-error *ngIf="NoteForm.get('note').errors?.required">
           Required note
         </mat-error>
+        <mat-error *ngIf="NoteForm.get('note').errors?.pattern">
+          Syntax is not correct
+        </mat-error>
       </mat-form-field>
+      <div class="form-group" style="margin-top: 30px;">
+        <button mat-mini-fab aria-label="Add a new note" matTooltip="Add note">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </form>
   </mat-dialog-content>
 
