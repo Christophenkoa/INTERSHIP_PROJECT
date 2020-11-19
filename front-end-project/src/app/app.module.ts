@@ -22,6 +22,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule, MatNativeDateModule, MatRadioModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -86,6 +87,7 @@ import { NoteClassComponent } from './note-classe/note-class.component';
     MatAutocompleteModule,
     MatSelectModule,
     CKEditorModule,
+    MatSnackBarModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
