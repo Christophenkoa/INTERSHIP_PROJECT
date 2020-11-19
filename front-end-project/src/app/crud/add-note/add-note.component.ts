@@ -29,7 +29,7 @@ export class AddNoteComponent implements OnInit {
     });
   }
 
-  /**  **/
+  /** Function that filter word and display the best choice **/
   FilterValue(){
     this.filterOptions = this.NoteForm.get('name').valueChanges
       .pipe(
