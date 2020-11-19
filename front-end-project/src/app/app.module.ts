@@ -44,6 +44,7 @@ import { MainSpaceComponent } from './main-space/main-space.component';
 import { AddNoteComponent } from './crud/add-note/add-note.component';
 import { CourseEditorComponent } from './course-editor/course-editor.component';
 import { NoteClassComponent } from './note-classe/note-class.component';
+import { CuClassComponent } from './crud/cu-class/cu-class.component';
 
 @NgModule({
   declarations: [
@@ -58,9 +59,10 @@ import { NoteClassComponent } from './note-classe/note-class.component';
     MainSpaceComponent,
     AddNoteComponent,
     CourseEditorComponent,
-    NoteClassComponent
+    NoteClassComponent,
+    CuClassComponent
   ],
-  entryComponents: [CuTeacherComponent, CuStudentComponent],
+  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

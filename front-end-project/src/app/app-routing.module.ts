@@ -6,6 +6,8 @@ import { ClassInfoComponent } from './class-info/class-info.component';
 import {MainNavComponent} from './main-nav/main-nav.component';
 import {CourseEditorComponent} from './course-editor/course-editor.component';
 import { AddNoteComponent } from './crud/add-note/add-note.component';
+import { CuClassComponent } from './crud/cu-class/cu-class.component';
+import { MainSpaceComponent } from './main-space/main-space.component';
 
 
 const routes: Routes = [
@@ -30,8 +32,16 @@ const routes: Routes = [
     component: CourseEditorComponent,
   },
   {
-    path : 'navMenu/add_note',
+    path : 'navMenu/add-note',
     component: AddNoteComponent,
+  },
+  {
+    path : 'navMenu/add-class',
+    component: CuClassComponent,
+  },
+  {
+    path : 'navMenu/class-view',
+    component: MainSpaceComponent,
   },
   {
     path: '**',
