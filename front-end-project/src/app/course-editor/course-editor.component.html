@@ -1,0 +1,15 @@
+<ckeditor
+    #myEditor
+    [(ngModel)]="ckeditorContent"
+
+    debounce="500"
+>
+
+</ckeditor>
+<div>
+  <div style="width: fit-content; margin: auto;">
+    <button mat-raised-button color="primary" (click)="getData()">Save</button>
+    <button mat-raised-button color="accent" (click)="getData()">Publish</button>
+  </div>
+</div>
+

@@ -21,6 +21,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule, MatNativeDateModule, MatRadioModule} from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -31,11 +32,17 @@ import { CuStudentComponent } from './crud/student/cu-student/cu-student.compone
 import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 
+/*CKE Editor import*/
+import { CKEditorModule } from 'ng2-ckeditor';
+
+
 import {AuthService} from './services/auth.service';
 
 import { MainSpaceComponent } from './main-space/main-space.component';
 
 import { AddNoteComponent } from './crud/add-note/add-note.component';
+import { CourseEditorComponent } from './course-editor/course-editor.component';
+import { NoteClassComponent } from './note-classe/note-class.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +55,9 @@ import { AddNoteComponent } from './crud/add-note/add-note.component';
     CuTeacherComponent,
     MainNavComponent,
     MainSpaceComponent,
-    AddNoteComponent
+    AddNoteComponent,
+    CourseEditorComponent,
+    NoteClassComponent
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent],
   imports: [
@@ -75,6 +84,8 @@ import { AddNoteComponent } from './crud/add-note/add-note.component';
     MatNativeDateModule,
     MatRadioModule,
     MatAutocompleteModule,
+    MatSelectModule,
+    CKEditorModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

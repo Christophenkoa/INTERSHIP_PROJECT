@@ -4,13 +4,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ClassInfoComponent } from './class-info/class-info.component';
 import {MainNavComponent} from './main-nav/main-nav.component';
+import {CourseEditorComponent} from './course-editor/course-editor.component';
 
 
 
 const routes: Routes = [
   {
     path : '',
-    component : LoginComponent
+    component : ClassInfoComponent,
   },
   {
     path : 'login',
@@ -25,8 +26,12 @@ const routes: Routes = [
     component: ClassInfoComponent,
   },
   {
+    path : 'navMenu/set-course',
+    component: CourseEditorComponent,
+  },
+  {
     path: '**',
-    redirectTo: 'navMenu',
+    redirectTo: 'navMenu/class-info',
   }
 ];
 
