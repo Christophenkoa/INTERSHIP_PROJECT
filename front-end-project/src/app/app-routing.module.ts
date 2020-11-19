@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { ClassInfoComponent } from './class-info/class-info.component';
 import {MainNavComponent} from './main-nav/main-nav.component';
 import {CourseEditorComponent} from './course-editor/course-editor.component';
+import {ClassViewComponent} from './class-view/class-view.component';
 
 
 
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path : '',
     component : ClassInfoComponent,
+  },
+  {
+    path : 'class-view',
+    component : ClassViewComponent,
   },
   {
     path : 'login',
