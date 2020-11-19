@@ -13,7 +13,6 @@ export class AddNoteComponent implements OnInit {
   NoteForm: FormGroup;
   options: string[]= ['One', 'Two', 'Three', 'Four', 'Five', 'Eight'];
   filterOptions: Observable<string[]>;
-  dateNow : Date
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -26,10 +25,11 @@ export class AddNoteComponent implements OnInit {
     this.NoteForm = this.formBuilder.group({
       name : ['', Validators.required],
       date_Eval : ['', Validators.required],
-      note : ['', [Validators.required, Validators.pattern('\+?\d+\.\d+')]]
+      note : ['', [Validators.required, Validators.pattern(/^\+?\d+((\.|\,)\d+)?$/)]]
     });
   }
 
+  /** Function that filter word and display the best choice **/
   FilterValue(){
     this.filterOptions = this.NoteForm.get('name').valueChanges
       .pipe(
