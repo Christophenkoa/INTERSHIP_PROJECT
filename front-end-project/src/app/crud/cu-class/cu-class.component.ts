@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-cu-class',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CuClassComponent implements OnInit {
 
+  ClassForm : FormGroup;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  OnSubmitForm() {
+
+  }
 }
