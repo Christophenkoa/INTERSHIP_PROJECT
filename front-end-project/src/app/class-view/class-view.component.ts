@@ -18,8 +18,8 @@ export class ClassViewComponent implements OnInit {
 
   OpenCUMethod() {
     const dialog = new MatDialogConfig();
-    dialog.width = '70%';
-    dialog.height = '70%';
+    dialog.width = '40%';
+    dialog.height = '40%';
     dialog.disableClose = true;
     this.dialog.open(CuClassComponent, dialog);
   }

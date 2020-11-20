@@ -23,6 +23,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule, MatNativeDateModule, MatRadioModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -97,7 +98,8 @@ import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
     MatAutocompleteModule,
     MatSelectModule,
     CKEditorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
