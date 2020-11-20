@@ -3,23 +3,64 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/navMenu/class-info">Home</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/navMenu/set-course">Set Course</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/navMenu/add-note">Add Note</a>
-      <mat-divider></mat-divider>
-      <!--<a mat-list-item routerLink="/navMenu/class-view">Class List</a>-->
-      <a mat-list-item routerLink="/navMenu/class-view">Classes</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/navMenu/add_note">add Note</a>
-      <mat-divider></mat-divider>
+    <mat-toolbar> <div class="p-3">Menu</div></mat-toolbar>
+
+    <mat-nav-list class="p-3">
+
+      <a mat-list-item routerLink="/navMenu/class-info">
+          <mat-icon aria-hidden="false" aria-label="home icon" class="mr-2" color="accent">
+            home
+          </mat-icon>
+          <span style="font-size: 0.8em;">Home</span>
+      </a>
+      <a mat-list-item routerLink="">
+          <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+            account_circle
+          </mat-icon>
+        <span style="font-size: 0.8em;">User Profile</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/add-note">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          note_add
+        </mat-icon>
+        <span style="font-size: 0.8em;">Add Note</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/add-mark">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          assignment
+        </mat-icon>
+        <span style="font-size: 0.8em;">Add Mark</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/class-view">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          article
+        </mat-icon>
+        <span style="font-size: 0.8em;">Classes List</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/class-info">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          sticky_note_2
+        </mat-icon>
+        <span style="font-size: 0.8em;">Class Description</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/student">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          receipt_long
+        </mat-icon>
+        <span style="font-size: 0.8em;">Manage Student</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/teacher">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          receipt_long
+        </mat-icon>
+        <span style="font-size: 0.8em;">Manage Teacher</span>
+      </a>
+
     </mat-nav-list>
+
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="warn">
+    <mat-toolbar color="warn" class="mb-1">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -38,16 +79,19 @@
       <span style="padding: 0 12px;"></span>
       <button mat-raised-button color="accent">Deconnexion</button>
     </mat-toolbar>
-    <!-- Add Content Here -->
-    <!--<app-class-info></app-class-info>-->
-    <!--<app-crud-student></app-crud-student>-->
-<!--    <app-main-space></app-main-space>-->
-<!--    <app-course-editor></app-course-editor>-->
-    <!--<app-note-class></app-note-class>-->
-    <!--<app-crud-student></app-crud-student>-->
-    <router-outlet></router-outlet>
-    <!--<app-crud-teacher></app-crud-teacher>-->
-    <!--<app-add-note></app-add-note>-->
+
+    <div class="m-3">
+      <!-- Add Content Here -->
+      <!--<app-class-info></app-class-info>-->
+      <!--<app-crud-student></app-crud-student>-->
+      <!--    <app-main-space></app-main-space>-->
+      <!--    <app-course-editor></app-course-editor>-->
+      <!--<app-note-class></app-note-class>-->
+      <!--<app-crud-student></app-crud-student>-->
+      <router-outlet></router-outlet>
+      <!--<app-crud-teacher></app-crud-teacher>-->
+      <!--<app-add-note></app-add-note>-->
+    </div>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

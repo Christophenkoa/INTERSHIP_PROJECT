@@ -46,6 +46,10 @@ import { CourseEditorComponent } from './course-editor/course-editor.component';
 import { NoteClassComponent } from './note-classe/note-class.component';
 import { CuClassComponent } from './crud/cu-class/cu-class.component';
 import { ClassViewComponent } from './class-view/class-view.component';
+import { HomeComponent } from './home/home.component';
+
+/*chart*/
+import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
 
 @NgModule({
   declarations: [
@@ -63,10 +67,12 @@ import { ClassViewComponent } from './class-view/class-view.component';
     NoteClassComponent,
     CuClassComponent,
     ClassViewComponent,
+    HomeComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [
     BrowserModule,
+    IgxDoughnutChartModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,

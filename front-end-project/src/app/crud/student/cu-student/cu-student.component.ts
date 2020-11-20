@@ -33,7 +33,8 @@ export class CuStudentComponent implements OnInit {
     });
   }
 
-  OnSubmitForm(){
+  OnSubmitForm() {
+    // tslint:disable-next-line:jsdoc-format
     /** Retrieve values from the form **/
     const regis = this.registerForm.get('Regis_nbre').value;
     const name = this.registerForm.get('name').value;
@@ -47,15 +48,17 @@ export class CuStudentComponent implements OnInit {
     const staff = convert(this.registerForm.get('is_staff').value);
     const superuser = convert(this.registerForm.get('is_superuser').value);
 
+    // tslint:disable-next-line:jsdoc-format
     /** Function which convert a string value to boolean **/
     function convert(value) {
-      if (value === "true" || value === 'true'){
+      if (value === 'true' || value === 'true') {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
-    if(this.registerForm.invalid) {return;}
+    if (this.registerForm.invalid) {return; }
+    // tslint:disable-next-line:max-line-length
     console.log(regis + ',' + name + ',' + surname + ',' + password + ',' + tel + ',' + email + ',' + date + ',' + gender + ',' + active + ',' + staff + ',' + superuser);
     console.log(typeof active);
   }

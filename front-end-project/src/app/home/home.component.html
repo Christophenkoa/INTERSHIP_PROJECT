@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="bg-primary m-3" style="height: 170px;"></div>
+  </div>
+  <div class="col-md-4">
+    <div class="bg-success m-3" style="height: 170px;"></div>
+  </div>
+  <div class="col-md-4">
+<!--    student and teacher-->
+    <div class="bg-danger m-3" style="height: 170px;">
+      <igx-doughnut-chart height="100%" width="100%">
+        <igx-ring-series
+          [dataSource]="data"
+          labelMemberPath="Label"
+          valueMemberPath="Value">
+        </igx-ring-series>
+      </igx-doughnut-chart>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="bg-dark m-3" style="height: 270px;"></div>
+  </div>
+  <div class="col-md-4">
+    <div class="bg-info m-3" style="height: 270px;">
+
+      <igx-doughnut-chart height="100%" width="100%">
+        <igx-ring-series
+          [dataSource]="data"
+          labelMemberPath="Label"
+          valueMemberPath="Value">
+        </igx-ring-series>
+      </igx-doughnut-chart>
+
+    </div>
+  </div>
+</div>
