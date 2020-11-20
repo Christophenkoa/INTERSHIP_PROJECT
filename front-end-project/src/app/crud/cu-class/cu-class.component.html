@@ -1,2 +1,71 @@
-<p>cu-class works!</p>
-<button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+<mat-toolbar>
+  <span>Create or Update class informations</span>
+</mat-toolbar>
+
+<mat-dialog-content>
+    <form (ngSubmit)="OnSubmitForm()" [formGroup]="ClassForm">
+      <mat-grid-list cols="2" rowHeight="fit" gutterSize="5px" style="height: 200px">
+        <mat-grid-tile>
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Level </mat-label>
+            <mat-select formControlName="level" matInput required>
+              <mat-option *ngFor="let class of Class " [value]="class">
+                {{ class }}
+              </mat-option>
+            </mat-select>
+            <!--<input formControlName="level" matInput required />-->
+            <mat-error *ngIf="ClassForm.get('level').errors?.required">
+              Required level
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Class number </mat-label>
+            <mat-select formControlName="class_number" matInput required >
+              <mat-option *ngFor="let numberClass of ClassNumber" [value]="numberClass">
+                {{ numberClass }}
+              </mat-option>
+            </mat-select>
+            <!--<input formControlName="class_number" matInput required />-->
+            <mat-error *ngIf="ClassForm.get('class_number').errors?.required">
+              Required class number
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field class="full-width" appearance="legacy">
+              <mat-label> Option </mat-label>
+              <mat-select formControlName="option" matInput required>
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+              <!--<input formControlName="option" matInput required />-->
+              <mat-error *ngIf="ClassForm.get('option').errors?.required">
+                Required option
+              </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field class="full-width" appearance="legacy">
+              <mat-label> Serie </mat-label>
+              <mat-select formControlName="serie" matInput required>
+                <mat-option *ngFor="let serie of serial" [value]="serie">
+                  {{ serie }}
+                </mat-option>
+              </mat-select>
+              <!--<input formControlName="serie" matInput required />-->
+              <mat-error *ngIf="ClassForm.get('serie').errors?.required">
+                Required serie
+              </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <button mat-raised-button color="primary" style="margin-right: 10px">Save</button>
+          <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+</mat-dialog-content>
+

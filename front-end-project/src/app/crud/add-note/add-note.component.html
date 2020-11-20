@@ -28,7 +28,7 @@
         <input matInput [matDatepicker]="picker" placeholder="Choose a date"
                formControlName="date_Eval" [max]="dateNow" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker color="accent"></mat-datepicker>
+        <mat-datepicker #picker disabled="false" color="accent"></mat-datepicker>
         <mat-error *ngIf="NoteForm.get('date_Eval').errors?.required">
           Required Evaluation date
         </mat-error>
