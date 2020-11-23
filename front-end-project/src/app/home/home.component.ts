@@ -12,10 +12,10 @@ data: any[];
 
     /*chart */
     this.data = [
-      { Value: 30, Label: 'Google',    },
-      { Value: 15, Label: 'Microsoft', },
-      { Value: 30, Label: 'Apple',     },
-      { Value: 25, Label: 'Samsung',   },
+      { Value: 30, Label: 'MATH', },
+      { Value: 15, Label: 'FRENCH', },
+      { Value: 30, Label: 'CHEMISTRY', },
+      { Value: 25, Label: 'SPORT', },
     ];
   }
 }

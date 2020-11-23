@@ -12,6 +12,7 @@ import { MainSpaceComponent } from './main-space/main-space.component';
 import {CrudStudentComponent} from './crud/student/crud-student/crud-student.component';
 import {CrudTeacherComponent} from './crud/teacher/crud-teacher/crud-teacher.component';
 import {HomeComponent} from './home/home.component';
+import {QuizzesComponent} from './quizzes/quizzes.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,10 @@ const routes: Routes = [
   {
     path : 'navMenu/teacher',
     component: CrudTeacherComponent,
+  },
+  {
+    path : 'quiz',
+    component : QuizzesComponent,
   },
   {
     path: '**',

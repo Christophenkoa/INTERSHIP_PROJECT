@@ -1,0 +1,9 @@
+<div class="question-container">
+  {{question.questionDesc}}
+  <hr>
+  <div>
+    <div *ngFor="let answer of question.answers">
+      <app-answer [answer]="answer"></app-answer>
+    </div>
+  </div>
+</div>

@@ -51,6 +51,12 @@ import { HomeComponent } from './home/home.component';
 
 /*chart*/
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
+import { QuizzesComponent } from './quizzes/quizzes.component';
+import { QuizDetailComponent } from './quizzes/quiz-detail/quiz-detail.component';
+import { QuestionComponent } from './quizzes/quiz-detail/question/question.component';
+import { AnswerComponent } from './quizzes/quiz-detail/question/answer/answer.component';
+import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
+import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +75,12 @@ import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
     CuClassComponent,
     ClassViewComponent,
     HomeComponent,
+    QuizzesComponent,
+    QuizDetailComponent,
+    QuestionComponent,
+    AnswerComponent,
+    QuizListComponent,
+    QuizResultComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [
