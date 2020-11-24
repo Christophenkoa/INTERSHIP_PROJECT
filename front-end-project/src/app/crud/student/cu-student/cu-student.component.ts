@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { StudentModel } from '../../../models/student/student.model';
 
 @Component({
   selector: 'app-cu-student',
@@ -22,7 +23,7 @@ export class CuStudentComponent implements OnInit {
       Regis_nbre : ['', Validators.required],
       name : ['', Validators.required],
       surname : ['', Validators.required],
-      password : ['', Validators.required],
+      /*password : ['', Validators.required],*/
       tel : ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{9}$')]],
       email : ['', [Validators.required, Validators.email]],
       date_Birth : ['', Validators.required],
@@ -34,33 +35,41 @@ export class CuStudentComponent implements OnInit {
   }
 
   OnSubmitForm() {
-    // tslint:disable-next-line:jsdoc-format
-    /** Retrieve values from the form **/
-    const regis = this.registerForm.get('Regis_nbre').value;
-    const name = this.registerForm.get('name').value;
-    const surname = this.registerForm.get('surname').value;
-    const password = this.registerForm.get('password').value;
-    const tel = this.registerForm.get('tel').value;
-    const email = this.registerForm.get('email').value;
-    const date = this.registerForm.get('date_Birth').value;
-    const gender = this.registerForm.get('gender').value;
-    const active = convert(this.registerForm.get('is_active').value);
-    const staff = convert(this.registerForm.get('is_staff').value);
-    const superuser = convert(this.registerForm.get('is_superuser').value);
-
-    // tslint:disable-next-line:jsdoc-format
     /** Function which convert a string value to boolean **/
     function convert(value) {
-      if (value === 'true' || value === 'true') {
+      if (value === "true" || value === 'true') {
         return true;
       } else {
         return false;
       }
     }
+
+    /** Function that generates a 10-character password **/
+    function makePassword() {
+      var text = '';
+      var lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
+
+      for (var i = 0; i < 10; i++)
+        text += lettre.charAt(Math.floor(Math.random() * lettre.length));
+
+      return text;
+    }
+    const password = makePassword();
+
     if (this.registerForm.invalid) {return; }
-    // tslint:disable-next-line:max-line-length
-    console.log(regis + ',' + name + ',' + surname + ',' + password + ',' + tel + ',' + email + ',' + date + ',' + gender + ',' + active + ',' + staff + ',' + superuser);
-    console.log(typeof active);
+
+    /** Retrieve values from the form **/
+    const student = new StudentModel( this.registerForm.get('Regis_nbre').value,
+                                      this.registerForm.get('name').value,
+                                      this.registerForm.get('surname').value,
+                                      password,
+                                      this.registerForm.get('tel').value,
+                                      this.registerForm.get('email').value,
+                                      this.registerForm.get('date_Birth').value,
+                                      this.registerForm.get('gender').value,
+                                      convert(this.registerForm.get('is_active').value),
+                                      convert(this.registerForm.get('is_staff').value),
+                                      convert(this.registerForm.get('is_superuser').value));
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { TeacherModel } from '../../../models/teacher/teacher.model';
 
 @Component({
   selector: 'app-cu-teacher',
@@ -22,7 +23,7 @@ export class CuTeacherComponent implements OnInit {
       username : ['', Validators.required],
       name : ['', Validators.required],
       surname : ['', Validators.required],
-      password : ['', Validators.required],
+      /*password : ['', Validators.required],*/
       tel : ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{9}$')]],
       email : ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
@@ -37,7 +38,7 @@ export class CuTeacherComponent implements OnInit {
     const username = this.registerForm.get('username').value;
     const name = this.registerForm.get('name').value;
     const surname = this.registerForm.get('surname').value;
-    const password = this.registerForm.get('password').value;
+    /*const password = this.registerForm.get('password').value;*/
     const tel = this.registerForm.get('tel').value;
     const email = this.registerForm.get('email').value;
     const gender = this.registerForm.get('gender').value;
@@ -54,23 +55,21 @@ export class CuTeacherComponent implements OnInit {
       }
     }
     /** Function that generates a 10-character password **/
-    function makeid() {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+";
+    function makePassword() {
+      var text = '';
+      var lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
 
       for (var i = 0; i < 10; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+        text += lettre.charAt(Math.floor(Math.random() * lettre.length));
 
       return text;
     }
-    const pass = makeid();
-
-    console.log(pass);
-    alert("your password is " +pass);
+    const pass = makePassword();
 
     if(this.registerForm.invalid) {return;}
-    console.log(username + ',' + name + ',' + surname + ',' + password + ',' + tel + ',' + email + ',' +  gender + ',' + active + ',' + staff + ',' + superuser);
-    console.log(typeof active);
+    console.log(username + ',' + name + ',' + surname + ',' + pass + ',' + tel + ',' + email + ',' +  gender + ',' + active + ',' + staff + ',' + superuser);
+
+    const teacher = new TeacherModel(username, name, surname, pass, tel, email, gender, active, staff, superuser);
   }
 
 }

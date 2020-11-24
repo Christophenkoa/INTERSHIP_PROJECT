@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ClassesModel } from '../../models/class/classes.model';
 
 @Component({
   selector: 'app-cu-class',

@@ -24,6 +24,7 @@ import {MatAutocompleteModule, MatNativeDateModule, MatRadioModule} from '@angul
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -51,17 +52,14 @@ import { HomeComponent } from './home/home.component';
 
 /*chart*/
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
-<<<<<<< HEAD
 import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
-=======
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { QuizDetailComponent } from './quizzes/quiz-detail/quiz-detail.component';
 import { QuestionComponent } from './quizzes/quiz-detail/question/question.component';
 import { AnswerComponent } from './quizzes/quiz-detail/question/answer/answer.component';
 import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
 import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
->>>>>>> 6b2bad3917769fe8de50800ce900448b96d62acc
 
 @NgModule({
   declarations: [
@@ -80,17 +78,14 @@ import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component
     CuClassComponent,
     ClassViewComponent,
     HomeComponent,
-<<<<<<< HEAD
     CourseCrudComponent,
     CoursesListComponent,
-=======
     QuizzesComponent,
     QuizDetailComponent,
     QuestionComponent,
     AnswerComponent,
     QuizListComponent,
     QuizResultComponent,
->>>>>>> 6b2bad3917769fe8de50800ce900448b96d62acc
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [
@@ -121,7 +116,8 @@ import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component
     MatSelectModule,
     CKEditorModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatExpansionModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
