@@ -1,0 +1,99 @@
+<div class="jumbotron" style="background-color: wheat; text-align: center">
+  <h1 class="display-4">create courses</h1>
+</div>
+
+<mat-card style="text-align: center">
+  <mat-card-content>
+    <form (ngSubmit)="OnSubmitForm()" [formGroup]="CourseForm" >
+      <div class="form-row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="legacy" >
+            <mat-label>Course</mat-label>
+            <input matInput formControlName="course" [matAutocomplete]="auto" placeholder="Enter course..." required>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filterCourse | async"
+                          [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="CourseForm.get('course').errors?.required">
+              Required course
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="legacy" class="form-group">
+            <mat-label>Coefficient</mat-label>
+            <input type="number" matInput formControlName="coef" placeholder="Enter coef" required>
+            <mat-error *ngIf="CourseForm.get('coef').errors?.required">
+              Required Coefficient
+            </mat-error>
+            <mat-error *ngIf="CourseForm.get('coef').errors?.max || CourseForm.get('coef').errors?.min">
+              Coefficient must be least 0-9
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label>Class</mat-label>
+            <input matInput formControlName="class" [matAutocomplete]="classe" placeholder="Enter class..." required>
+            <mat-autocomplete #classe="matAutocomplete">
+              <mat-option *ngFor="let options of filterClass | async"
+                          [value]="options">
+                {{ options }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="CourseForm.get('class').errors?.required">
+              Required class
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-group">
+        <button mat-mini-fab aria-label="Add a new note" matTooltip="Add note">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-form-field floatLabel="never">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef> Weight </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+

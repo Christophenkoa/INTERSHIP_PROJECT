@@ -51,6 +51,8 @@ import { HomeComponent } from './home/home.component';
 
 /*chart*/
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
+import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
+import { CoursesListComponent } from './courses-list/courses-list.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
     CuClassComponent,
     ClassViewComponent,
     HomeComponent,
+    CourseCrudComponent,
+    CoursesListComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [
