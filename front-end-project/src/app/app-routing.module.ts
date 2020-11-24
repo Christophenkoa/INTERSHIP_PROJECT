@@ -13,8 +13,14 @@ import {CrudStudentComponent} from './crud/student/crud-student/crud-student.com
 import {CrudTeacherComponent} from './crud/teacher/crud-teacher/crud-teacher.component';
 import {HomeComponent} from './home/home.component';
 import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
+<<<<<<< HEAD
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
+=======
+import { NoteClassComponent } from './note-classe/note-class.component';
+import {QuizzesComponent} from './quizzes/quizzes.component';
+import {BuildQuizComponent} from './quizzes/build-quiz/build-quiz.component';
+>>>>>>> b9b204fe03e3f8bb07a11142f99d58346488f166
 
 
 const routes: Routes = [
@@ -67,12 +73,21 @@ const routes: Routes = [
     component: CourseCrudComponent,
   },
   {
+<<<<<<< HEAD
     path : 'navMenu/quiz',
     component : QuizzesComponent,
   },
   {
     path : 'navMenu/course-list',
     component : CoursesListComponent,
+=======
+    path : 'quiz',
+    component : QuizzesComponent,
+  },
+  {
+    path : 'quiz/create',
+    component : BuildQuizComponent,
+>>>>>>> b9b204fe03e3f8bb07a11142f99d58346488f166
   },
   {
     path: '**',

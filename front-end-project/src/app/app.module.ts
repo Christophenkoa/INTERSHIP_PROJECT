@@ -52,6 +52,10 @@ import { HomeComponent } from './home/home.component';
 
 /*chart*/
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
+<<<<<<< HEAD
+=======
+
+>>>>>>> b9b204fe03e3f8bb07a11142f99d58346488f166
 import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
@@ -60,6 +64,10 @@ import { QuestionComponent } from './quizzes/quiz-detail/question/question.compo
 import { AnswerComponent } from './quizzes/quiz-detail/question/answer/answer.component';
 import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
 import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
+<<<<<<< HEAD
+=======
+import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
+>>>>>>> b9b204fe03e3f8bb07a11142f99d58346488f166
 
 @NgModule({
   declarations: [
@@ -86,6 +94,10 @@ import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component
     AnswerComponent,
     QuizListComponent,
     QuizResultComponent,
+<<<<<<< HEAD
+=======
+    BuildQuizComponent,
+>>>>>>> b9b204fe03e3f8bb07a11142f99d58346488f166
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [
