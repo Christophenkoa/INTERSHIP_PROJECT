@@ -57,6 +57,7 @@ import { QuestionComponent } from './quizzes/quiz-detail/question/question.compo
 import { AnswerComponent } from './quizzes/quiz-detail/question/answer/answer.component';
 import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
 import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
+import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component
     AnswerComponent,
     QuizListComponent,
     QuizResultComponent,
+    BuildQuizComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [

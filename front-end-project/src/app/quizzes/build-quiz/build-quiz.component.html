@@ -1,0 +1,60 @@
+<form class="question__form m-5" [formGroup]="quizForm" (ngSubmit)="showData()">
+  <!---Quiz Section -->
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Quiz Name" formControlName="quizName">
+  </mat-form-field>
+
+  <div class="answer_form m-3">
+
+    <div formArrayName="question_set">
+      <div class="answer_form m-3" *ngFor="let question of getQuestions(quizForm); let i=index">
+        <div class="ui raised segments" [formGroupName]="i">
+          <h3>Fill a question requirement</h3>
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Question Title" formControlName="questionTitle">
+          </mat-form-field>
+          <!-- Answers segment -->
+          <h3>Answer propositions</h3>
+
+          <div formArrayName="answer_set">
+            <div [formGroupName]="j" *ngFor="let answer of getAnswers(question); let j=index">
+
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="enter a proposition" formControlName="label">
+              </mat-form-field>
+
+              <mat-radio-group formControlName="is_correct">
+                <mat-radio-button class="example-margin" value="true">True</mat-radio-button>
+                <mat-radio-button class="example-margin" value="false">False</mat-radio-button>
+              </mat-radio-group>
+
+              <span *ngIf="getAnswers(question).length > 1">
+                <button mat-raised-button type="submit" color="warn" (click)="removeAnswer(i,j)">
+                  Delete Answer
+                </button>
+              </span>
+
+              <hr>
+
+            </div>
+            <button mat-raised-button type="submit" color="primary" (click)="addAnswer(i)">Add Answer</button>
+          </div>
+          <!-- End Answer -->
+          <hr class="m-3">
+          <span *ngIf="getQuestions(quizForm).length > 1">
+            <button mat-raised-button type="submit" color="warn" (click)="removeQuestion(i)">
+              Delete Question
+            </button>
+        </span>
+          <button mat-raised-button type="submit" color="primary" (click)="addQuestion()">Add Question</button>
+        </div>
+      </div>
+
+      <!-- End Question -->
+        </div>
+  </div>
+  <hr class="m-5">
+  <button mat-raised-button type="submit" color="primary" (click)="addQuiz()">Submit</button>
+</form>
+<pre> {{quizForm.value | json}} </pre>

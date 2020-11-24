@@ -13,6 +13,7 @@ import {CrudStudentComponent} from './crud/student/crud-student/crud-student.com
 import {CrudTeacherComponent} from './crud/teacher/crud-teacher/crud-teacher.component';
 import {HomeComponent} from './home/home.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
+import {BuildQuizComponent} from './quizzes/build-quiz/build-quiz.component';
 
 
 const routes: Routes = [
@@ -63,6 +64,10 @@ const routes: Routes = [
   {
     path : 'quiz',
     component : QuizzesComponent,
+  },
+  {
+    path : 'quiz/create',
+    component : BuildQuizComponent,
   },
   {
     path: '**',
