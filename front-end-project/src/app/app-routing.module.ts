@@ -12,6 +12,8 @@ import { MainSpaceComponent } from './main-space/main-space.component';
 import {CrudStudentComponent} from './crud/student/crud-student/crud-student.component';
 import {CrudTeacherComponent} from './crud/teacher/crud-teacher/crud-teacher.component';
 import {HomeComponent} from './home/home.component';
+import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
+import { NoteClassComponent } from './note-classe/note-class.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
 import {BuildQuizComponent} from './quizzes/build-quiz/build-quiz.component';
 
@@ -60,6 +62,10 @@ const routes: Routes = [
   {
     path : 'navMenu/teacher',
     component: CrudTeacherComponent,
+  },
+  {
+    path : 'navMenu/add-course',
+    component: CourseCrudComponent,
   },
   {
     path : 'quiz',

@@ -51,6 +51,9 @@ import { HomeComponent } from './home/home.component';
 
 /*chart*/
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
+
+import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
+import { CoursesListComponent } from './courses-list/courses-list.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { QuizDetailComponent } from './quizzes/quiz-detail/quiz-detail.component';
 import { QuestionComponent } from './quizzes/quiz-detail/question/question.component';
@@ -76,6 +79,8 @@ import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
     CuClassComponent,
     ClassViewComponent,
     HomeComponent,
+    CourseCrudComponent,
+    CoursesListComponent,
     QuizzesComponent,
     QuizDetailComponent,
     QuestionComponent,

@@ -10,7 +10,7 @@
   </mat-card-header>
   <mat-dialog-content>
     <form (ngSubmit)="OnsubmitNote()" [formGroup]="NoteForm">
-      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 30px;">
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: -50px;margin-left: auto">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" [matAutocomplete]="auto" placeholder="Enter name..." required>
         <mat-autocomplete #auto="matAutocomplete">
@@ -23,7 +23,7 @@
           Required name
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 30px;">
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 0px;">
         <mat-label> Evaluation date </mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Choose a date"
                formControlName="date_Eval" [max]="dateNow" required>
@@ -33,7 +33,7 @@
           Required Evaluation date
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 30px;">
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 0px;">
         <mat-label>Note</mat-label>
         <input type="number" matInput formControlName="note" required placeholder="Example : 13.00 or 13.0">
         <mat-error *ngIf="NoteForm.get('note').errors?.required">
@@ -41,6 +41,17 @@
         </mat-error>
         <mat-error *ngIf="NoteForm.get('note').errors?.pattern">
           Syntax is not correct
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 0px;">
+        <mat-label> Sequence </mat-label>
+        <mat-select matInput formControlName="sequence" required >
+          <mat-option *ngFor="let sequence of sequences" [value]="sequence">
+            {{ sequence }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="NoteForm.get('sequence').errors?.required">
+          Required sequence
         </mat-error>
       </mat-form-field>
       <div class="form-group" style="margin-top: 30px;">

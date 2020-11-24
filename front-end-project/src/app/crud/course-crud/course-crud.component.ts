@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { MatTableDataSource} from '@angular/material';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {PeriodicElement} from '../add-note/add-note.component';
 
 export interface PeriodicElement {
   name: string;
@@ -37,19 +37,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-add-note',
-  templateUrl: './add-note.component.html',
-  styleUrls: ['./add-note.component.scss']
+  selector: 'app-course-crud',
+  templateUrl: './course-crud.component.html',
+  styleUrls: ['./course-crud.component.scss']
 })
-export class AddNoteComponent implements OnInit {
+export class CourseCrudComponent implements OnInit {
 
-  /** Form variables **/
-  NoteForm: FormGroup;
-  options: string[] = ['One', 'Two', 'Three', 'Four', 'Five', 'Eight'];
-  sequences: string[] = ['seq 1', 'seq 2', 'seq 3', 'seq 4', 'seq 5', 'seq 6'];
-  filterOptions: Observable<string[]>;
-  dateNow = new Date();
-  /** End **/
+  CourseForm: FormGroup;
+  filterCourse: Observable<string[]>;
+  filterClass: Observable<string[]>;
+  courses: string[] = ['English', 'French', 'Chemistry', 'Physic', 'Mathematic', 'EPS', 'PCT', 'Deutsch', 'Spanish', 'History', 'Geographic'];
+  class: string[] = ['6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Tle'];
+
   /** Table variables **/
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
@@ -57,50 +56,60 @@ export class AddNoteComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   /** End **/
 
-  constructor(private formBuilder: FormBuilder,
-              private snackBar: MatSnackBar) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.TakeValueForm();
-    this.FilterValue();
+    this.TakeValue();
+    this.FilterCourses();
+    this.FilterClass();
     this.dataSource.paginator = this.paginator;
   }
 
-  TakeValueForm() {
-    this.NoteForm = this.formBuilder.group({
-      name : ['', Validators.required],
-      date_Eval : ['', Validators.required],
-      note : ['', [Validators.required, Validators.pattern(/^\+?\d+((\.|\,)\d+)?$/)]],
-      sequence : ['', Validators.required]
-    });
-  }
-
   /** Function that filter word and display the best choice **/
-  FilterValue(){
-    this.filterOptions = this.NoteForm.get('name').valueChanges
+  FilterCourses(){
+    this.filterCourse = this.CourseForm.get('course').valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filter(value))
+        map(value => this._filterCourse(value))
+      )
+  }
+  private _filterCourse(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.courses.filter(option =>
+      option.toLowerCase().includes(filterValue));
+  }
+  /** End **/
+
+  /** Function that filter word and display the best choice **/
+  FilterClass(){
+    this.filterClass = this.CourseForm.get('class').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterClass(value))
       )
   }
 
-  private _filter(value: string): string[]{
+  private _filterClass(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option =>
-    option.toLowerCase().includes(filterValue));
+    return this.class.filter(option =>
+      option.toLowerCase().includes(filterValue));
   }
-
   /** End **/
 
-  OnsubmitNote() {
-
-    if(this.NoteForm.invalid){return;}
-
-    console.log(this.NoteForm.get('name').value + ' , ' + this.NoteForm.get('date_Eval').value + ' , ' + this.NoteForm.get('note').value);
-    this.snackBar.open('Data saved', 'Close',{
-      duration: 2000,
+  TakeValue() {
+    this.CourseForm = this.formBuilder.group({
+      course: ['', Validators.required],
+      coef: ['', [Validators.required, Validators.max(9), Validators.min(0)]],
+      class: ['', Validators.required]
     });
+  }
+
+  OnSubmitForm() {
+    if(this.CourseForm.invalid){return;}
+
+    console.log(this.CourseForm.get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('class').value)
   }
 
   /** Table informations and functions **/
