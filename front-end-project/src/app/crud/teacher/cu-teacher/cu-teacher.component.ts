@@ -34,18 +34,6 @@ export class CuTeacherComponent implements OnInit {
   }
 
   OnSubmitForm() {
-    /** Retrieve values from the form **/
-    const username = this.registerForm.get('username').value;
-    const name = this.registerForm.get('name').value;
-    const surname = this.registerForm.get('surname').value;
-    /*const password = this.registerForm.get('password').value;*/
-    const tel = this.registerForm.get('tel').value;
-    const email = this.registerForm.get('email').value;
-    const gender = this.registerForm.get('gender').value;
-    const active = convert(this.registerForm.get('is_active').value);
-    const staff = convert(this.registerForm.get('is_staff').value);
-    const superuser = convert(this.registerForm.get('is_superuser').value);
-
     /** Function which convert a string value to boolean **/
     function convert(value) {
       if (value === "true" || value === 'true'){
@@ -64,12 +52,21 @@ export class CuTeacherComponent implements OnInit {
 
       return text;
     }
-    const pass = makePassword();
+    const password = makePassword();
 
     if(this.registerForm.invalid) {return;}
-    console.log(username + ',' + name + ',' + surname + ',' + pass + ',' + tel + ',' + email + ',' +  gender + ',' + active + ',' + staff + ',' + superuser);
-
-    const teacher = new TeacherModel(username, name, surname, pass, tel, email, gender, active, staff, superuser);
+    /** Retrieve values from the form **/
+    const teacher = new TeacherModel( this.registerForm.get('username').value,
+                                      this.registerForm.get('name').value,
+                                      this.registerForm.get('surname').value,
+                                      password,
+                                      this.registerForm.get('tel').value,
+                                      this.registerForm.get('email').value,
+                                      this.registerForm.get('gender').value,
+                                      convert(this.registerForm.get('is_active').value),
+                                      convert(this.registerForm.get('is_staff').value),
+                                      convert(this.registerForm.get('is_superuser').value)
+                                    );
   }
 
 }

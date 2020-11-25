@@ -33,7 +33,12 @@ export class CuClassComponent implements OnInit {
 
   OnSubmitForm() {
     if (this.ClassForm.invalid) { return; }
-    console.log('tout a été envoyé ' + ', ' + this.ClassForm.get('level').value);
+
+    const classes = new ClassesModel( this.ClassForm.get('class_number').value,
+                                      this.ClassForm.get('option').value,
+                                      this.ClassForm.get('level').value,
+                                      this.ClassForm.get('serie').value
+                                    );
   }
 
 
