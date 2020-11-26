@@ -62,6 +62,7 @@ import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
 import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
 import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
 import { DisplayCourseComponent } from './display-course/display-course.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { DisplayCourseComponent } from './display-course/display-course.componen
     CKEditorModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

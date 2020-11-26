@@ -8,11 +8,13 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 })
 export class BuildQuizComponent implements OnInit {
   quizForm: FormGroup;
+  success: boolean;
 
-  constructor(private fb: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
     this.createForm();
+    this.success = false;
   }
 
   public createForm() {
@@ -45,6 +47,8 @@ export class BuildQuizComponent implements OnInit {
   addQuestion() {
     const control = this.quizForm.get('question_set') as FormArray;
     control.push(this.initQuestion());
+    // remove success div
+    this.success = false;
   }
 
   addAnswer(j) {
@@ -53,6 +57,8 @@ export class BuildQuizComponent implements OnInit {
     const control = this.quizForm.get('question_set').controls[j].get('answer_set') as FormArray;
     // console.log(control);
     control.push(this.initAnswer());
+    // remove success div
+    this.success = false;
   }
 
   getQuestions(form) {
@@ -76,15 +82,12 @@ export class BuildQuizComponent implements OnInit {
     control.removeAt(i);
   }
 
-
-  public showData() {
-    console.log(this.quizForm.value);
-  }
-
   addQuiz(quiz) {
     if (! quiz.invalid) {
+      this.success = true;
       console.log('valid');
     } else {
+      this.success = false;
       console.log('invalid');
     }
   }

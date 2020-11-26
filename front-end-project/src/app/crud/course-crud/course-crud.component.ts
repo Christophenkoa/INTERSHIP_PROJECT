@@ -46,14 +46,18 @@ export class CourseCrudComponent implements OnInit {
   CourseForm: FormGroup;
   filterCourse: Observable<string[]>;
   filterClass: Observable<string[]>;
+
+  // tslint:disable-next-line:max-line-length
   courses: string[] = ['English', 'French', 'Chemistry', 'Physic', 'Mathematic', 'EPS', 'PCT', 'Deutsch', 'Spanish', 'History', 'Geographic'];
   class: string[] = ['6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Tle'];
 
+  // tslint:disable-next-line:jsdoc-format
   /** Table variables **/
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  // tslint:disable-next-line:jsdoc-format
   /** End **/
 
   constructor(private formBuilder: FormBuilder) { }
@@ -65,13 +69,14 @@ export class CourseCrudComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  // tslint:disable-next-line:jsdoc-format
   /** Function that filter word and display the best choice **/
-  FilterCourses(){
+  FilterCourses() {
     this.filterCourse = this.CourseForm.get('course').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filterCourse(value))
-      )
+      );
   }
   private _filterCourse(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -79,15 +84,17 @@ export class CourseCrudComponent implements OnInit {
     return this.courses.filter(option =>
       option.toLowerCase().includes(filterValue));
   }
+  // tslint:disable-next-line:jsdoc-format
   /** End **/
 
+  // tslint:disable-next-line:jsdoc-format
   /** Function that filter word and display the best choice **/
-  FilterClass(){
+  FilterClass() {
     this.filterClass = this.CourseForm.get('class').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filterClass(value))
-      )
+      );
   }
 
   private _filterClass(value: string): string[] {
@@ -96,6 +103,7 @@ export class CourseCrudComponent implements OnInit {
     return this.class.filter(option =>
       option.toLowerCase().includes(filterValue));
   }
+  // tslint:disable-next-line:jsdoc-format
   /** End **/
 
   TakeValue() {
@@ -107,14 +115,18 @@ export class CourseCrudComponent implements OnInit {
   }
 
   OnSubmitForm() {
-    if(this.CourseForm.invalid){return;}
+    if (this.CourseForm.invalid) {return; }
 
-    console.log(this.CourseForm.get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('class').value)
+    console.log(
+      this.CourseForm.
+      get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('class').value
+    );
   }
 
-  /** Table informations and functions **/
+  // tslint:disable-next-line:jsdoc-format
+  /** Table information and functions **/
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  /** End **/
+
 }
