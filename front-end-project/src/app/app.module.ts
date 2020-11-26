@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+/* Angular Material Modules */
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -50,7 +51,7 @@ import { CuClassComponent } from './crud/cu-class/cu-class.component';
 import { ClassViewComponent } from './class-view/class-view.component';
 import { HomeComponent } from './home/home.component';
 
-/*chart*/
+/* chart */
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
 import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
@@ -62,6 +63,14 @@ import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
 import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
 import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
 import { DisplayCourseComponent } from './display-course/display-course.component';
+
+/* Services Lists */
+import {AuthGuardService} from './services/auth-guard/auth-guard.service';
+import {ClasseService} from './services/classes/classe.service';
+import {CoursesService} from './services/courses/courses.service';
+import {QuizzesService} from './services/quizz/quizzes.service';
+import {StudentsService} from './services/student/students.service';
+import {TeachersService} from './services/teacher/teachers.service';
 
 @NgModule({
   declarations: [
@@ -123,7 +132,13 @@ import { DisplayCourseComponent } from './display-course/display-course.componen
     MatGridListModule,
     MatExpansionModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+              AuthGuardService,
+              ClasseService,
+              CoursesService,
+              QuizzesService,
+              StudentsService,
+              TeachersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

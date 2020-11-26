@@ -28,9 +28,9 @@ export class CuStudentComponent implements OnInit {
       email : ['', [Validators.required, Validators.email]],
       date_Birth : ['', Validators.required],
       gender: ['', Validators.required],
-      is_active : ['', Validators.required],
-      is_staff: ['', Validators.required],
-      is_superuser: ['', Validators.required]
+      is_active : ['true', Validators.required],
+      is_staff: ['false', Validators.required],
+      is_superuser: ['false', Validators.required]
     });
   }
 

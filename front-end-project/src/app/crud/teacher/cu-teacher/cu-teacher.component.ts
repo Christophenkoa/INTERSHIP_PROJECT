@@ -27,9 +27,9 @@ export class CuTeacherComponent implements OnInit {
       tel : ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{9}$')]],
       email : ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
-      is_active : ['', Validators.required],
-      is_staff: ['', Validators.required],
-      is_superuser: ['', Validators.required]
+      is_active : ['true', Validators.required],
+      is_staff: ['true', Validators.required],
+      is_superuser: ['false', Validators.required]
     });
   }
 
@@ -67,6 +67,7 @@ export class CuTeacherComponent implements OnInit {
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value)
                                     );
+    console.log('it is so good');
   }
 
 }

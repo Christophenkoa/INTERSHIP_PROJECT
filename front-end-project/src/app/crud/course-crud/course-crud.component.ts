@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {PeriodicElement} from '../add-note/add-note.component';
+import { CourseModel } from '../../models/course/courses.model';
 
 export interface PeriodicElement {
   name: string;
@@ -50,7 +51,7 @@ export class CourseCrudComponent implements OnInit {
   class: string[] = ['6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Tle'];
 
   /** Table variables **/
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -65,8 +66,8 @@ export class CourseCrudComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  /** Function that filter word and display the best choice **/
-  FilterCourses(){
+  /* Function that filter word and display the best choice */
+  FilterCourses() {
     this.filterCourse = this.CourseForm.get('course').valueChanges
       .pipe(
         startWith(''),
@@ -109,7 +110,9 @@ export class CourseCrudComponent implements OnInit {
   OnSubmitForm() {
     if(this.CourseForm.invalid){return;}
 
-    console.log(this.CourseForm.get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('class').value)
+    const courses = new CourseModel(this.CourseForm.get('course').value,
+                                    this.CourseForm.get('coef').value,
+                                    this.CourseForm.get('class').value);
   }
 
   /** Table informations and functions **/

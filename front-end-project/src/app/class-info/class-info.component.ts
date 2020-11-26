@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material';
+import {MatDialog, MatDialogConfig, MatPaginator} from '@angular/material';
 import {MatTableDataSource} from '@angular/material/table';
+import {CuClassComponent} from '../crud/cu-class/cu-class.component';
 
 @Component({
   selector: 'app-class-info',
@@ -9,7 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class ClassInfoComponent implements OnInit {
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
   /** First table student **/
@@ -35,6 +36,14 @@ export class ClassInfoComponent implements OnInit {
 
   teacherFilter(filterVal: string) {
     this.dataSources.filter = filterVal.trim().toLowerCase();
+  }
+
+  OpenCUMethod() {
+    const dialog = new MatDialogConfig();
+    dialog.width = '40%';
+    dialog.height = '40%';
+    dialog.disableClose = true;
+    this.dialog.open(CuClassComponent, dialog);
   }
 }
 

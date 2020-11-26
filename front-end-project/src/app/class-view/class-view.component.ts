@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
-import {FormBuilder} from '@angular/forms';
 import {CuClassComponent} from '../crud/cu-class/cu-class.component';
 
 @Component({
@@ -10,8 +9,7 @@ import {CuClassComponent} from '../crud/cu-class/cu-class.component';
 })
 export class ClassViewComponent implements OnInit {
 
-  constructor(private dialog: MatDialog,
-              private formBuilder: FormBuilder) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
   }
