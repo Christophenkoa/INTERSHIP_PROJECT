@@ -9,7 +9,7 @@
         <div class="col">
           <mat-form-field class="full-width" appearance="legacy" >
             <mat-label>Course</mat-label>
-            <input matInput formControlName="course" [matAutocomplete]="auto" placeholder="Enter course..." required>
+            <input matInput type="text" formControlName="course" [matAutocomplete]="auto" placeholder="Enter course..." required>
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let option of filterCourse | async"
                           [value]="option">
@@ -29,14 +29,14 @@
               Required Coefficient
             </mat-error>
             <mat-error *ngIf="CourseForm.get('coef').errors?.max || CourseForm.get('coef').errors?.min">
-              Coefficient must be least 0-9
+              Coefficient must be between 0 and 9
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width" appearance="legacy">
             <mat-label>Class</mat-label>
-            <input matInput formControlName="class" [matAutocomplete]="classe" placeholder="Enter class..." required>
+            <input matInput type="text" formControlName="class" [matAutocomplete]="classe" placeholder="Enter class..." required>
             <mat-autocomplete #classe="matAutocomplete">
               <mat-option *ngFor="let options of filterClass | async"
                           [value]="options">
@@ -87,6 +87,15 @@
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef> Symbol </th>
       <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    </ng-container>
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td *matCellDef="let row">
+        <button mat-icon-button ><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

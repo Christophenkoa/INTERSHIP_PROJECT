@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Quiz} from '../models/quiz_folder/quiz';
+import {Quiz} from '../../models/quiz_folder/quiz';
 
 @Injectable({
   providedIn: 'root'
