@@ -1,4 +1,4 @@
-<form class="question__form m-5" [formGroup]="quizForm" (ngSubmit)="showData()">
+<form class="question__form m-5" [formGroup]="quizForm" (ngSubmit)="addQuiz(quizForm)">
   <!---Quiz Section -->
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Quiz Name" formControlName="quizName">
@@ -9,7 +9,7 @@
     <div formArrayName="question_set">
       <div class="answer_form m-3" *ngFor="let question of getQuestions(quizForm); let i=index">
         <div class="ui raised segments" [formGroupName]="i">
-          <h3>Fill a question requirements</h3>
+          <h3>Fill question number {{i +1 }}</h3>
 
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Question Title" formControlName="questionTitle">
@@ -31,11 +31,11 @@
                 </mat-radio-group>
 
                 <span *ngIf="getAnswers(question).length > 1">
-                <button mat-raised-button type="submit" color="warn" (click)="removeAnswer(i,j)">
-                  Delete Answer
-                </button>
-              </span>
-
+                  <button mat-raised-button type="submit" color="warn" (click)="removeAnswer(i,j)">
+                    Delete Answer
+                  </button>
+                </span>
+                <br>
                 <button mat-raised-button
                         type="submit"
                         color="primary"
@@ -48,12 +48,13 @@
             </div>
           </div>
           <!-- End Answer -->
-          <hr class="m-3">
+
           <span *ngIf="getQuestions(quizForm).length > 1">
-            <button mat-raised-button type="submit" color="warn" (click)="removeQuestion(i)">
+            <button mat-raised-button type="submit" color="warn" class="mr-1 mb-1" (click)="removeQuestion(i)">
               Delete Question
             </button>
-        </span>
+          </span>
+
           <button mat-raised-button
                   type="submit"
                   color="primary"
@@ -62,6 +63,7 @@
             Add Question
           </button>
         </div>
+        <hr class="m-3">
       </div>
 
       <!-- End Question -->
@@ -69,7 +71,7 @@
   </div>
 
   <div class="m-5">
-    <button mat-raised-button type="submit" color="primary" (click)="addQuiz()">Submit</button>
+    <button mat-raised-button type="submit" color="primary">Submit</button>
   </div>
 
 </form>

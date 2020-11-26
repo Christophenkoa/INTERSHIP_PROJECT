@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-build-quiz',
@@ -17,7 +17,7 @@ export class BuildQuizComponent implements OnInit {
 
   public createForm() {
     this.quizForm = new FormGroup({
-      quizName: new FormControl(''),
+      quizName: new FormControl('', Validators.required),
       // answers: answerPropositions
       question_set: new FormArray([
         this.initQuestion(),
@@ -28,7 +28,7 @@ export class BuildQuizComponent implements OnInit {
 
   initQuestion() {
     return new FormGroup({
-      questionTitle: new FormControl(''),
+      questionTitle: new FormControl('', Validators.required),
       answer_set: new FormArray([
         this.initAnswer(),
       ]),
@@ -37,8 +37,8 @@ export class BuildQuizComponent implements OnInit {
 
   initAnswer() {
     return new FormGroup({
-      label: new FormControl(''),
-      is_correct: new FormControl(),
+      label: new FormControl('', Validators.required),
+      is_correct: new FormControl('false', Validators.required),
     });
   }
 
@@ -81,5 +81,11 @@ export class BuildQuizComponent implements OnInit {
     console.log(this.quizForm.value);
   }
 
-  addQuiz() {}
+  addQuiz(quiz) {
+    if (! quiz.invalid) {
+      console.log('valid');
+    } else {
+      console.log('invalid');
+    }
+  }
 }
