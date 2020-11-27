@@ -40,10 +40,7 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 
 
-import {AuthService} from './services/auth-guard/auth.service';
-
 import { MainSpaceComponent } from './main-space/main-space.component';
-
 import { AddNoteComponent } from './crud/add-note/add-note.component';
 import { CourseEditorComponent } from './course-editor/course-editor.component';
 import { NoteClassComponent } from './note-classe/note-class.component';
@@ -135,7 +132,7 @@ import {QuizService} from './services/quizz/quiz.service';
     MatExpansionModule,
     HttpClientModule,
   ],
-  providers: [AuthService,
+  providers: [
               AuthGuardService,
               ClasseService,
               CoursesService,

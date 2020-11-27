@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from './services/auth-guard/auth.service';
 import {Observable, Subscription} from 'rxjs';
 
 
@@ -13,18 +12,10 @@ import {Observable, Subscription} from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'front-end-project';
   auth = true;
-  authSubs: Subscription;
-
-
-  constructor(private authService: AuthService) { }
+  
+  constructor() { }
 
   ngOnInit() {
-    /*this.authSubs = this.authService.authSubj.subscribe(
-      (val: boolean) => {
-        this.auth = val;
-      }
-    );*/
-
   }
 
 
