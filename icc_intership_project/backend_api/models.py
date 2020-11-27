@@ -77,8 +77,10 @@ class Chapter(models.Model):
 
 class Quiz(models.Model):
     entitled = models.CharField(max_length=255)
+    course = models.CharField(max_length=255)
     req_time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
+    classe = models.ForeignKey(Class, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     student = models.ManyToManyField(Student, through='QuizTaker',
                                      through_fields=('associated_quiz', 'associated_student'),)

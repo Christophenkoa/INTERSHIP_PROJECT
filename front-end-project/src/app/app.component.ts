@@ -12,7 +12,7 @@ import {Observable, Subscription} from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'front-end-project';
   auth = true;
-  
+
   constructor() { }
 
   ngOnInit() {
