@@ -73,13 +73,28 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class QuestionQuizSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = '__all__'
+
+    def get_answers(self, obj):
+        return AnswerQuestionSerializer(obj.answer_set.all(), many=True).data
+
+
 class QuizSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer
     student = StudentSerializer
+    questions = serializers.SerializerMethodField()
 
     class Meta:
         model = Quiz
-        fields = '__all__'
+        exclude = ['teacher']
+
+    def get_questions(self, obj):
+        return QuestionQuizSerializer(obj.question_set.all(), many=True).data
 
 
 class QuizTakerSerializer(serializers.ModelSerializer):
