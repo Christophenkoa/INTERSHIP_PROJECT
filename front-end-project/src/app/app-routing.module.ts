@@ -17,6 +17,7 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
 import { NoteClassComponent } from './note-classe/note-class.component';
 import {BuildQuizComponent} from './quizzes/build-quiz/build-quiz.component';
+import {QuizListComponent} from './quizzes/quiz-list/quiz-list.component';
 
 
 const routes: Routes = [
@@ -83,6 +84,10 @@ const routes: Routes = [
   {
     path : 'quiz/create',
     component : BuildQuizComponent,
+  },
+  {
+    path : 'quiz/list',
+    component : QuizListComponent,
   },
   {
     path: '**',

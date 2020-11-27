@@ -72,6 +72,7 @@ import {CoursesService} from './services/courses/courses.service';
 import {QuizzesService} from './services/quizz/quizzes.service';
 import {StudentsService} from './services/student/students.service';
 import {TeachersService} from './services/teacher/teachers.service';
+import {QuizService} from './services/quizz/quiz.service';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import {TeachersService} from './services/teacher/teachers.service';
               CoursesService,
               QuizzesService,
               StudentsService,
-              TeachersService],
+              TeachersService,
+              QuizService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

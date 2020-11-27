@@ -1,1 +1,25 @@
-<p>quiz-list works!</p>
+<h1>Quiz list</h1>
+<ul>
+
+  <div *ngFor="let quiz_item of quiz; let i = index">
+
+    <h2>{{quiz_item.entitled}}</h2>
+
+    <div>
+      <ul *ngFor="let question of quiz_item.questions">
+        <li>{{question.question_desc}}</li>
+
+        <div>
+          <ul *ngFor="let answer of question.answers">
+            <li>
+              {{answer.answer}} -- <span>
+              <small>It is <em>{{answer.is_true}}</em></small></span>
+            </li>
+          </ul>
+        </div>
+
+      </ul>
+    </div>
+
+  </div>
+</ul>
