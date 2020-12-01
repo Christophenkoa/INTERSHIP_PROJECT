@@ -12,4 +12,8 @@ export class QuizService {
     // @ts-ignore
     return this.http.get<any[]>(this.url);
   }
+
+  postQuiz(quiz: any): Observable<any> {
+    return this.http.get<any[]>(this.url);
+  }
 }

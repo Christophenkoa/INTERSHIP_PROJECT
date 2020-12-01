@@ -85,7 +85,7 @@ export class BuildQuizComponent implements OnInit {
   addQuiz(quiz) {
     if (! quiz.invalid) {
       this.success = true;
-      console.log('valid');
+      console.log(quiz);
     } else {
       this.success = false;
       console.log('invalid');
