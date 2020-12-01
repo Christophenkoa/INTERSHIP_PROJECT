@@ -26,6 +26,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatChipsModule} from '@angular/material/chips';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -131,6 +132,7 @@ import {QuizService} from './services/quizz/quiz.service';
     MatGridListModule,
     MatExpansionModule,
     HttpClientModule,
+    MatChipsModule,
   ],
   providers: [
               AuthGuardService,

@@ -3,6 +3,7 @@ import {MatDialog, MatTableDataSource, MatDialogRef} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {CuStudentComponent} from '../cu-student/cu-student.component';
 import { MatDialogConfig } from '@angular/material';
+import { StudentModel } from '../../../models/student/student.model';
 
 export interface PeriodicElement {
   name: string;
@@ -49,7 +50,15 @@ export class CrudStudentComponent implements OnInit {
   }
 
   /** Open the CU(Create and Update) interface **/
-  OpenCUMethod() {
+  OpenCreateMethod() {
+    const dialog = new MatDialogConfig();
+    dialog.width = '50%';
+    dialog.height = '75%';
+    dialog.disableClose = true;
+    this.dialog.open(CuStudentComponent, dialog);
+  }
+
+  OpenUpdateMethod() {
     const dialog = new MatDialogConfig();
     dialog.width = '50%';
     dialog.height = '75%';

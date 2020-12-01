@@ -38,7 +38,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td *matCellDef="let row">
-        <button mat-icon-button ><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button (click)="OpenUpdateMethod()"><mat-icon>launch</mat-icon></button>
         <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
       </td>
     </ng-container>
@@ -51,7 +51,7 @@
 </div>
 
 <div class="cent-boutton">
-  <button mat-mini-fab aria-label="Add a new student" matTooltip="Add student" (click)="OpenCUMethod()">
+  <button mat-mini-fab aria-label="Add a new student" matTooltip="Add student" (click)="OpenCreateMethod()">
     <mat-icon>add</mat-icon>
   </button>
 </div>
