@@ -14,6 +14,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ['username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'gender',
+                  'is_superuser', 'is_staff', 'is_active']
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -38,16 +40,12 @@ class ClassSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     my_class = serializers.SerializerMethodField()
     courses = serializers.SerializerMethodField()
-    evaluation = serializers.SerializerMethodField()
 
     def get_my_class(self, obj):
         return ClassSerializer(obj.my_class).data
 
     def get_courses(self, obj):
         return CourseSerializer(obj.my_class.courses, many=True).data
-
-    def get_evaluation(self, obj):
-        return EvaluationSerializer(obj.note, many=True).data
 
     class Meta:
         model = Student
@@ -72,13 +70,28 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class QuestionQuizSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = '__all__'
+
+    def get_answers(self, obj):
+        return AnswerQuestionSerializer(obj.answer_set.all(), many=True).data
+
+
 class QuizSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer
     student = StudentSerializer
+    questions = serializers.SerializerMethodField()
 
     class Meta:
         model = Quiz
-        fields = '__all__'
+        exclude = ['teacher']
+
+    def get_questions(self, obj):
+        return QuestionQuizSerializer(obj.question_set.all(), many=True).data
 
 
 class QuizTakerSerializer(serializers.ModelSerializer):
