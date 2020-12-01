@@ -1,7 +1,7 @@
 export class TeacherModel {
   constructor(public username: string,
-              public name: string,
-              public surname: string,
+              public firstName: string,
+              public lastName: string,
               public password: string,
               public tel: number,
               public email: string,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { TeacherModel } from '../../../models/teacher/teacher.model';
+import {TeachersService} from '../../../services/teacher/teachers.service';
 
 @Component({
   selector: 'app-cu-teacher',
@@ -12,7 +13,8 @@ export class CuTeacherComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
 
-  constructor(private formBuiler: FormBuilder) { }
+  constructor(private formBuiler: FormBuilder,
+              private teacherService: TeachersService) { }
 
   ngOnInit() {
     this.RegisterForm();
@@ -21,9 +23,8 @@ export class CuTeacherComponent implements OnInit {
   RegisterForm() {
     this.registerForm = this.formBuiler.group({
       username : ['', Validators.required],
-      name : ['', Validators.required],
-      surname : ['', Validators.required],
-      /*password : ['', Validators.required],*/
+      first_name : ['', Validators.required],
+      last_name : ['', Validators.required],
       tel : ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{9}$')]],
       email : ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
@@ -57,8 +58,8 @@ export class CuTeacherComponent implements OnInit {
     if(this.registerForm.invalid) {return;}
     /** Retrieve values from the form **/
     const teacher = new TeacherModel( this.registerForm.get('username').value,
-                                      this.registerForm.get('name').value,
-                                      this.registerForm.get('surname').value,
+                                      this.registerForm.get('first_name').value,
+                                      this.registerForm.get('last_name').value,
                                       password,
                                       this.registerForm.get('tel').value,
                                       this.registerForm.get('email').value,
@@ -67,7 +68,10 @@ export class CuTeacherComponent implements OnInit {
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value)
                                     );
-    console.log('it is so good');
+    console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
+    this.teacherService.CreateTeacher(teacher)
+      .subscribe(data => console.log(data),
+        error => console.log(error));
   }
 
 }

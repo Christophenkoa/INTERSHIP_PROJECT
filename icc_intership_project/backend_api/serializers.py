@@ -13,6 +13,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
+        fields = ['username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
         fields = ['first_name', 'last_name', 'username', 'email', 'password', 'gender',
                   'my_admin', 'is_superuser', 'is_staff', 'is_active']
 
@@ -42,6 +43,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
+<<<<<<< HEAD
         # fields = '__all__'
         fields = ['first_name', 'last_name', 'username', 'email', 'password', 'dateOfBirth',
                   'regis_number', 'my_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
@@ -51,6 +53,10 @@ class StudentSerializer(serializers.ModelSerializer):
     #
     # def get_courses(self, obj):
     #     return CourseSerializer(obj.my_class.courses, many=True).data
+=======
+        fields = ['first_name', 'last_name', 'username', 'evaluation', 'email', 'password', 'dateOfBirth',
+                  'regis_number', 'my_class', 'my_admin', 'courses', 'is_superuser', 'is_staff', 'is_active']
+>>>>>>> 35b5153805a592a4d88ea544b501b2c7341e45a7
 
 
 class EvaluationSerializer(serializers.ModelSerializer):

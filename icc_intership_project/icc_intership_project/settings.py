@@ -25,6 +25,13 @@ SECRET_KEY = '2yx0y*7%j16p=qoz0_na6t%-bq@i4@e3rv59%brdhn07xpma_m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = ['*']
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200"
+]
+
+CORS_ORIGIN_ALLOW_ALL= True
+
 ALLOWED_HOSTS = []
 
 CORS_ORIGIN_WHITELIST = (

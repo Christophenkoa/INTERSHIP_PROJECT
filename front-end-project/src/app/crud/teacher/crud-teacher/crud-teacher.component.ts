@@ -1,27 +1,22 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {CuTeacherComponent} from '../cu-teacher/cu-teacher.component';
+import {TeachersService} from '../../../services/teacher/teachers.service';
+import {TeacherModel} from '../../../models/teacher/teacher.model';
 
-export interface PeriodicElement {
+export interface TeacherElement {
+  username: string;
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  surname: string;
+  email: string;
+  gender: string;
+  is_superuser: boolean;
+  is_staff: boolean;
+  is_active: boolean;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 
 @Component({
   selector: 'app-crud-teacher',
@@ -30,21 +25,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CrudTeacherComponent implements OnInit {
 
+  TEACHER_DATA: MatTableDataSource<any>;
+
   /** Differents columns of the table **/
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['username', 'first_name', 'last_name', 'email', 'gender', 'is_superuser', 'is_staff', 'is_active', 'actions'];
 
   /** Filter the information in DataTable **/
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.TEACHER_DATA.filter = filterValue.trim().toLowerCase();
   }
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+              private teacherService: TeachersService) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    /* Call function for take all teachers */
+    this.teacherService.GetAllTeacher()
+      .subscribe(
+        (data) => {
+          this.TEACHER_DATA = new MatTableDataSource(data) ;
+          this.TEACHER_DATA.paginator = this.paginator;
+        }, (error => console.log(error))
+      );
   }
 
   /** Open the CU(Create and Update) interface **/

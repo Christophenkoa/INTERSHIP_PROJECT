@@ -12,9 +12,18 @@ class Admin(User):
         return self.username
 
 
-class Teacher(User):
+class Teacher(models.Model):
+    username = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    tel = models.PositiveIntegerField()
+    email = models.CharField(max_length=255)
     gender = models.CharField(max_length=1)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
+    is_active = models.BooleanField
+    is_staff = models.BooleanField
+    is_superuser = models.BooleanField
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
 
     def __str__(self):
         return self.username
@@ -46,7 +55,7 @@ class Class(models.Model):
 class Student(User):
     dateOfBirth = models.DateField()
     regis_number = models.CharField(max_length=255)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )
 

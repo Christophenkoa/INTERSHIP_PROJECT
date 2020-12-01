@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentModel } from '../../../models/student/student.model';
+import { StudentsService } from '../../../services/student/students.service';
 
 @Component({
   selector: 'app-cu-student',
@@ -12,7 +13,8 @@ export class CuStudentComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
 
-  constructor(private formBuiler: FormBuilder) { }
+  constructor(private formBuiler: FormBuilder,
+              private studentStudent: StudentsService) { }
 
   ngOnInit() {
     this.RegisterForm();
@@ -70,6 +72,8 @@ export class CuStudentComponent implements OnInit {
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value));
+    /* Send informations */
+    this.studentStudent.CreateStudent(student);
   }
 
 }
