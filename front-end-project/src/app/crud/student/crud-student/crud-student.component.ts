@@ -51,8 +51,8 @@ export class CrudStudentComponent implements OnInit {
   /** Open the CU(Create and Update) interface **/
   OpenCUMethod() {
     const dialog = new MatDialogConfig();
-    dialog.width = '70%';
-    dialog.height = '70%';
+    dialog.width = '50%';
+    dialog.height = '75%';
     dialog.disableClose = true;
     this.dialog.open(CuStudentComponent, dialog);
   }
