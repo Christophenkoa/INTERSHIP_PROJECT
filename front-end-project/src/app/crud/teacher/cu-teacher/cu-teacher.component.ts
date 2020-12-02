@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { TeacherModel } from '../../../models/teacher/teacher.model';
 import {TeachersService} from '../../../services/teacher/teachers.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cu-teacher',
@@ -14,10 +16,27 @@ export class CuTeacherComponent implements OnInit {
   hide = true;
 
   constructor(private formBuiler: FormBuilder,
-              private teacherService: TeachersService) { }
+              private teacherService: TeachersService,
+              public infoBull: MatSnackBar,
+              public dialogRef: MatDialogRef<CuTeacherComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.RegisterForm();
+    if(this.data){
+      this.registerForm.setValue({
+        username: this.data.username,
+        first_name: this.data.first_name,
+        last_name: this.data.last_name,
+        tel: this.data.tel,
+        email: this.data.email,
+        gender: this.data.gender,
+        is_active: this.data.is_active,
+        is_staff: this.data.is_staff,
+        is_superuser: this.data.is_superuser
+      });
+    }
+    console.log(this.data.id);
   }
 
   RegisterForm() {
@@ -68,8 +87,35 @@ export class CuTeacherComponent implements OnInit {
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value)
                                     );
-    console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
+    // console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
     this.teacherService.CreateTeacher(teacher)
+      .subscribe(data => {
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+          this.infoBull.open('Creation Error', 'Close', {
+            duration: 2000
+          });
+        });
+  }
+
+  UpdateForm(){
+
+    if(this.registerForm.invalid) {return;}
+    const teacherUpdated = new TeacherModel( this.registerForm.get('username').value,
+                                      this.registerForm.get('first_name').value,
+                                      this.registerForm.get('last_name').value,
+                                      this.data.password,
+                                      this.registerForm.get('tel').value,
+                                      this.registerForm.get('email').value,
+                                      this.registerForm.get('gender').value,
+                                      this.registerForm.get('is_active').value,
+                                      this.registerForm.get('is_staff').value,
+                                      this.registerForm.get('is_superuser').value
+    );
+    // console.log("Oui, c'est bon " + typeof(this.registerForm.get('is_active').value));
+    this.teacherService.UpdateTeacher(teacherUpdated, this.data.id)
       .subscribe(data => console.log(data),
         error => console.log(error));
   }

@@ -12,13 +12,8 @@ class Admin(User):
         return self.username
 
 
-class Teacher(models.Model):
-    username = models.CharField(max_length=255)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+class Teacher(User):
     tel = models.PositiveIntegerField()
-    email = models.CharField(max_length=255)
     gender = models.CharField(max_length=1)
     is_active = models.BooleanField
     is_staff = models.BooleanField

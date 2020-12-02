@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {CuTeacherComponent} from '../cu-teacher/cu-teacher.component';
 import {TeachersService} from '../../../services/teacher/teachers.service';
 import {TeacherModel} from '../../../models/teacher/teacher.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface TeacherElement {
   username: string;
@@ -38,7 +39,8 @@ export class CrudTeacherComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog,
-              private teacherService: TeachersService) { }
+              private teacherService: TeachersService,
+              public infoBull: MatSnackBar) { }
 
   ngOnInit() {
     /* Call function for take all teachers */
@@ -51,6 +53,22 @@ export class CrudTeacherComponent implements OnInit {
       );
   }
 
+  EditTeacher(teacherdata) {
+    const dialogRef = this.dialog.open(CuTeacherComponent, {
+      width : '60%',
+      height : '70%',
+      disableClose : true,
+      data : teacherdata,
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+          duration: 3000
+        });
+      });
+    console.log(teacherdata);
+  }
   /** Open the CU(Create and Update) interface **/
   OpenCUMethod() {
     const dialog = new MatDialogConfig();
