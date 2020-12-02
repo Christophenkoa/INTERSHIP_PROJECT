@@ -68,7 +68,7 @@ export class CuTeacherComponent implements OnInit {
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value)
                                     );
-    console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
+    console.log(teacher);
     this.teacherService.CreateTeacher(teacher)
       .subscribe(data => console.log(data),
         error => console.log(error));

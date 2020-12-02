@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ClassService} from '../../services/classes/class.service';
+import {ClassesModel} from '../../models/class/classes.model';
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-build-quiz',
@@ -7,14 +14,38 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
   styleUrls: ['./build-quiz.component.scss']
 })
 export class BuildQuizComponent implements OnInit {
+
+  constructor(private classService: ClassService) { }
   quizForm: FormGroup;
   success: boolean;
 
-  constructor() { }
+
+  // select tag
+
+// tslint:disable-next-line:label-position no-unused-expression
+selectedValue: string;
+// tslint:disable-next-line:label-position no-unused-expression
+selectedCar: string;
+
+// tslint:disable-next-line:label-position
+foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
+
+classes: ClassesModel[];
+
+// end select tag
 
   ngOnInit() {
     this.createForm();
     this.success = false;
+    this.classService.GetAllClasses()
+      .subscribe(
+        (data) => {this.classes = data; console.log(this.classes); },
+        (error) => {console.log(error); }
+      );
   }
 
   public createForm() {

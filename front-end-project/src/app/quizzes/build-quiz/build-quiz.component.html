@@ -1,6 +1,31 @@
 <form class="question__form m-3 p-3" [formGroup]="quizForm" (ngSubmit)="addQuiz(quizForm)">
   <!---Quiz Section -->
 
+  <!-- select space -->
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Favorite food</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="food">
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Favorite food</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="food">
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Quiz Name" formControlName="quizName">
   </mat-form-field>

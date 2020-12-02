@@ -12,18 +12,13 @@ class Admin(User):
         return self.username
 
 
-class Teacher(models.Model):
-    username = models.CharField(max_length=255)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+class Teacher(User):
     tel = models.PositiveIntegerField()
-    email = models.CharField(max_length=255)
-    gender = models.CharField(max_length=1)
+    gender = models.CharField(max_length=2)
     is_active = models.BooleanField
     is_staff = models.BooleanField
     is_superuser = models.BooleanField
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.username
