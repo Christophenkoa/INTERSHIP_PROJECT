@@ -1,6 +1,34 @@
 <form class="question__form m-3 p-3" [formGroup]="quizForm" (ngSubmit)="addQuiz(quizForm)">
   <!---Quiz Section -->
 
+  <!-- select space -->
+  <div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Select Class</mat-label>
+        <mat-select formControlName="quizClass">
+          <mat-option *ngFor="let class of classes; let i = index" [value]="class.id">
+
+            {{isNull(class.level)+ ' '+ isNull(class.serie) + isNull(class.class_number) + ' '+ isNull(class.option)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <p> Selected food: {{classes[1].all_courses[0].entitled}} </p>
+    <div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select Course</mat-label>
+        <mat-select formControlName="quizCourse">
+            <mat-option *ngFor="let course of classes[1].all_courses" [value]="course.id">
+              {{course.entitled}}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Quiz Name" formControlName="quizName">
   </mat-form-field>

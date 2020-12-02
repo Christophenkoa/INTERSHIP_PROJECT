@@ -13,7 +13,12 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
+<<<<<<< HEAD
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+=======
+        fields = ['username', 'first_name', 'last_name', 'email', 'tel',
+                  'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+>>>>>>> cc598027ce59d1d0e391bb3a1b04839f2da870de
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -27,28 +32,34 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class ClassSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
-    course = CourseSerializer
+    all_courses = serializers.SerializerMethodField()
     teacher = TeacherSerializer
 
     class Meta:
         model = Class
         fields = '__all__'
 
+    def get_all_courses(self, obj):
+        return CourseSerializer(obj.courses.all(), many=True).data
+
 
 class StudentSerializer(serializers.ModelSerializer):
-    my_class = serializers.SerializerMethodField()
-    courses = serializers.SerializerMethodField()
-
-    def get_my_class(self, obj):
-        return ClassSerializer(obj.my_class).data
-
-    def get_courses(self, obj):
-        return CourseSerializer(obj.my_class.courses, many=True).data
+    # my_class = serializers.SerializerMethodField()
+    # courses = serializers.SerializerMethodField()
 
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'username', 'evaluation', 'email', 'password', 'dateOfBirth',
-                  'regis_number', 'my_class', 'my_admin', 'courses', 'is_superuser', 'is_staff', 'is_active']
+        # fields = '__all__'
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'dateOfBirth',
+                  'regis_number', 'my_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+
+    # def get_my_class(self, obj):
+    #     return ClassSerializer(obj.my_class).data
+    #
+    # def get_courses(self, obj):
+    #     return CourseSerializer(obj.my_class.courses, many=True).data
+    #     fields = ['first_name', 'last_name', 'username', 'evaluation', 'email', 'password', 'dateOfBirth',
+    #               'regis_number', 'my_class', 'my_admin', 'courses', 'is_superuser', 'is_staff', 'is_active']
 
 
 class EvaluationSerializer(serializers.ModelSerializer):

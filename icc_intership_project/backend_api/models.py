@@ -14,11 +14,15 @@ class Admin(User):
 
 class Teacher(User):
     tel = models.PositiveIntegerField()
+<<<<<<< HEAD
     gender = models.CharField(max_length=1)
+=======
+    gender = models.CharField(max_length=2)
+>>>>>>> cc598027ce59d1d0e391bb3a1b04839f2da870de
     is_active = models.BooleanField
     is_staff = models.BooleanField
     is_superuser = models.BooleanField
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.username

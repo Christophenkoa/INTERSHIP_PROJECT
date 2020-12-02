@@ -65,7 +65,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 /* Services Lists */
 import {AuthGuardService} from './services/auth-guard/auth-guard.service';
-import {ClasseService} from './services/classes/classe.service';
+import {ClassService} from './services/classes/class.service';
 import {CoursesService} from './services/courses/courses.service';
 import {QuizzesService} from './services/quizz/quizzes.service';
 import {StudentsService} from './services/student/students.service';
@@ -136,7 +136,7 @@ import {QuizService} from './services/quizz/quiz.service';
   ],
   providers: [
               AuthGuardService,
-              ClasseService,
+              ClassService,
               CoursesService,
               QuizzesService,
               StudentsService,
