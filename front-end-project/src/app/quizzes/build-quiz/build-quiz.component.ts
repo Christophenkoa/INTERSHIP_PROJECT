@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ClassService} from '../../services/classes/class.service';
 import {ClassesModel} from '../../models/class/classes.model';
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-build-quiz',
@@ -18,29 +13,18 @@ export class BuildQuizComponent implements OnInit {
   constructor(private classService: ClassService) { }
   quizForm: FormGroup;
   success: boolean;
+  classes: ClassesModel[];
+  // keep value of the selected class
+  selectedClass: number;
 
-
-  // select tag
-
-// tslint:disable-next-line:label-position no-unused-expression
-selectedValue: string;
-// tslint:disable-next-line:label-position no-unused-expression
-selectedCar: string;
-
-// tslint:disable-next-line:label-position
-foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
-classes: ClassesModel[];
-
-// end select tag
+  public isNull(item: any) {
+    return item == null ? '' : item;
+  }
 
   ngOnInit() {
     this.createForm();
     this.success = false;
+    // Normally we should filter classes per teacher
     this.classService.GetAllClasses()
       .subscribe(
         (data) => {this.classes = data; console.log(this.classes); },
@@ -48,8 +32,11 @@ classes: ClassesModel[];
       );
   }
 
+
   public createForm() {
     this.quizForm = new FormGroup({
+      quizClass: new FormControl('', Validators.required),
+      quizCourse: new FormControl('', Validators.required),
       quizName: new FormControl('', Validators.required),
       // answers: answerPropositions
       question_set: new FormArray([
@@ -116,6 +103,7 @@ classes: ClassesModel[];
   addQuiz(quiz) {
     if (! quiz.invalid) {
       this.success = true;
+      console.log('select : ' + this.selectedClass);
       console.log(quiz);
     } else {
       this.success = false;

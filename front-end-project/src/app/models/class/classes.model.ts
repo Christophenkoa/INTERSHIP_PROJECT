@@ -1,6 +1,14 @@
+import {CourseModel} from '../course/courses.model';
+import {TeacherModel} from '../teacher/teacher.model';
+
 export class ClassesModel {
-  constructor(private classNumber: string,
-              private option: string,
-              private level: string,
-              private serie: string) {}
+  constructor(
+    public id: string,
+    public level: string,
+    public class_number: string,
+    public option: string,
+    public serie: string,
+    public all_courses: CourseModel[],
+    public teacher: TeacherModel[]
+  ) {}
 }

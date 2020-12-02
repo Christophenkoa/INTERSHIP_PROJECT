@@ -1,6 +1,7 @@
 export class CourseModel {
-  constructor(private course: string,
-              private coef: number,
-              private classe: string ) {
-  }
+  constructor(
+    public id: number,
+    public entitled: string,
+    public coefficient: number
+  ) {}
 }

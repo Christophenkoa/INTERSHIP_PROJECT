@@ -28,12 +28,15 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class ClassSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
-    course = CourseSerializer
+    all_courses = serializers.SerializerMethodField()
     teacher = TeacherSerializer
 
     class Meta:
         model = Class
         fields = '__all__'
+
+    def get_all_courses(self, obj):
+        return CourseSerializer(obj.courses.all(), many=True).data
 
 
 class StudentSerializer(serializers.ModelSerializer):

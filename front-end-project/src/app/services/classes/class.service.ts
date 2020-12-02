@@ -12,4 +12,8 @@ export class ClassService {
   GetAllClasses(): Observable<any[]> {
     return this.http.get<any[]>(this.url);
   }
+
+  GetClass(id: number): Observable<any[]> {
+    return this.http.get<any[]>(this.url + id + '/');
+  }
 }

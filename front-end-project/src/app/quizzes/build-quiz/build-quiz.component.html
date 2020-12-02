@@ -2,24 +2,27 @@
   <!---Quiz Section -->
 
   <!-- select space -->
-  <div class="row">
-    <div class="col-6">
+  <div>
+    <div>
       <mat-form-field appearance="fill">
-        <mat-label>Favorite food</mat-label>
-        <mat-select [(ngModel)]="selectedValue" name="food">
-          <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
+        <mat-label>Select Class</mat-label>
+        <mat-select formControlName="quizClass">
+          <mat-option *ngFor="let class of classes; let i = index" [value]="class.id">
+
+            {{isNull(class.level)+ ' '+ isNull(class.serie) + isNull(class.class_number) + ' '+ isNull(class.option)}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-6">
+    <p> Selected food: {{classes[1].all_courses[0].entitled}} </p>
+    <div>
+
       <mat-form-field appearance="fill">
-        <mat-label>Favorite food</mat-label>
-        <mat-select [(ngModel)]="selectedValue" name="food">
-          <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
-          </mat-option>
+        <mat-label>Select Course</mat-label>
+        <mat-select formControlName="quizCourse">
+            <mat-option *ngFor="let course of classes[1].all_courses" [value]="course.id">
+              {{course.entitled}}
+            </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
