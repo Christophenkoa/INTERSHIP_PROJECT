@@ -82,12 +82,16 @@ class Chapter(models.Model):
 class Quiz(models.Model):
     entitled = models.CharField(max_length=255)
     course = models.CharField(max_length=255)
-    req_time = models.DateTimeField()
+    req_time = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     classe = models.ForeignKey(Class, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     student = models.ManyToManyField(Student, through='QuizTaker',
                                      through_fields=('associated_quiz', 'associated_student'),)
+
+    @property
+    def questions(self):
+        return self.question_set.all()
 
     def __str__(self):
         return self.entitled
@@ -107,6 +111,10 @@ class QuizTaker(models.Model):
 class Question(models.Model):
     question_desc = models.TextField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+
+    @property
+    def answers(self):
+        return self.answer_set.all()
 
     def __str__(self):
         return self.question_desc

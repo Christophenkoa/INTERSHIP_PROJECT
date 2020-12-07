@@ -13,7 +13,7 @@ export class QuizService {
     return this.http.get<any[]>(this.url);
   }
 
-  postQuiz(quiz: any): Observable<any> {
-    return this.http.get<any[]>(this.url);
+  postQuiz(quiz: Quiz): Observable<Quiz> {
+    return this.http.post<Quiz>(this.url, quiz);
   }
 }

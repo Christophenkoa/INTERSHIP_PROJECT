@@ -7,22 +7,36 @@
       <mat-form-field appearance="fill">
         <mat-label>Select Class</mat-label>
         <mat-select formControlName="quizClass">
-          <mat-option *ngFor="let class of classes; let i = index" [value]="class.id">
-
-            {{isNull(class.level)+ ' '+ isNull(class.serie) + isNull(class.class_number) + ' '+ isNull(class.option)}}
-          </mat-option>
+          <div *ngIf="classes.length != 0; else noClass">
+            <mat-option *ngFor="let class of classes; let i = index" [value]="class.id" (click)="selectedClassF(i)">
+              {{isNull(class.level)+ ' '+ isNull(class.serie) + isNull(class.class_number) + ' '+ isNull(class.option)}}
+            </mat-option>
+          </div>
+          <ng-template #noClass>
+            <mat-option [disabled]="classes.length == 0">
+              <span>Empty class list</span>
+            </mat-option>
+          </ng-template>
         </mat-select>
       </mat-form-field>
     </div>
-    <p> Selected food: {{classes[1].all_courses[0].entitled}} </p>
+<!--    <p> Selected food: {{classes[selectedClass].all_courses[0].entitled}} </p>-->
+    <p> Selected food: {{selectedClass}} </p>
     <div>
 
       <mat-form-field appearance="fill">
         <mat-label>Select Course</mat-label>
         <mat-select formControlName="quizCourse">
-            <mat-option *ngFor="let course of classes[1].all_courses" [value]="course.id">
+          <div *ngIf="classes[selectedClass].all_courses.length != 0; else noCourse">
+            <mat-option *ngFor="let course of classes[selectedClass].all_courses" [value]="course.id">
               {{course.entitled}}
             </mat-option>
+          </div>
+          <ng-template #noCourse>
+            <mat-option [disabled]="classes[selectedClass].all_courses.length == 0">
+              <span>Empty course list</span>
+            </mat-option>
+          </ng-template>
         </mat-select>
       </mat-form-field>
     </div>
@@ -34,28 +48,28 @@
   </mat-form-field>
 
   <div class="question_form m-5">
-    <div formArrayName="question_set">
+    <div formArrayName="questions">
       <div class="answer_form m-3 P-3" *ngFor="let question of getQuestions(quizForm); let i=index">
         <div class="ui raised segments" [formGroupName]="i">
 
           <h3>Fill question number {{i +1 }}</h3>
 
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Question Title" formControlName="questionTitle">
+            <input matInput placeholder="Question Title" formControlName="question_desc">
           </mat-form-field>
 
           <!-- Answers segment -->
           <div class="m-3 p-3">
             <h3>Answer propositions</h3>
 
-            <div formArrayName="answer_set">
-              <div [formGroupName]="j" *ngFor="let answer of getAnswers(question); let j=index">
+            <div formArrayName="answers">
+              <div [formGroupName]="j" *ngFor="let selected_answer of getAnswers(question); let j=index">
 
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="enter a proposition" formControlName="label">
+                  <input matInput placeholder="enter a proposition" formControlName="answer">
                 </mat-form-field>
 
-                <mat-radio-group formControlName="is_correct">
+                <mat-radio-group formControlName="isCorrect">
                   <mat-radio-button class="mr-1" value="true">True</mat-radio-button>
                   <mat-radio-button class="example-margin" value="false" checked>False</mat-radio-button>
                 </mat-radio-group>

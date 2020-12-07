@@ -75,28 +75,62 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class QuestionQuizSerializer(serializers.ModelSerializer):
-    answers = serializers.SerializerMethodField()
+# class QuestionQuizSerializer(serializers.ModelSerializer):
+#     answers = serializers.SerializerMethodField()
+#
+#     class Meta:
+#         model = Question
+#         fields = '__all__'
+#
+#     def get_answers(self, obj):
+#         return AnswerQuestionSerializer(obj.answer_set.all(), many=True).data
+
+
+# class AnswerQuestionSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Answer
+#         fields = '__all__'
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
+    class Meta:
+        model = Answer
+        fields = '__all__'
+
+        read_only_fields = ('question',)
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+    answers = AnswerSerializer(many=True)
 
     class Meta:
         model = Question
-        fields = '__all__'
-
-    def get_answers(self, obj):
-        return AnswerQuestionSerializer(obj.answer_set.all(), many=True).data
+        fields = ['id', 'question_desc', 'quiz', 'answers']
+        read_only_fields = ('quiz',)
 
 
 class QuizSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer
     student = StudentSerializer
-    questions = serializers.SerializerMethodField()
+
+    questions = QuestionSerializer(many=True)
 
     class Meta:
         model = Quiz
-        exclude = ['teacher']
+        fields = ['id', 'entitled', 'course', 'req_time', 'created_at', 'classe', 'teacher', 'questions']
 
-    def get_questions(self, obj):
-        return QuestionQuizSerializer(obj.question_set.all(), many=True).data
+    def create(self, validated_data):
+        questions = validated_data.pop('questions')
+        quiz = Quiz.objects.create(**validated_data)
+        for question in questions:
+            answers = question.pop('answers')
+            question = Question.objects.create(**question, quiz=quiz)
+            for answer in answers:
+                Answer.objects.create(**answer, question=question)
+        return quiz
 
 
 class QuizTakerSerializer(serializers.ModelSerializer):
@@ -105,30 +139,4 @@ class QuizTakerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = QuizTaker
-        fields = '__all__'
-
-
-class AnswerQuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = '__all__'
-
-
-class QuestionSerializer(serializers.ModelSerializer):
-    quiz = QuizSerializer
-    answers = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Question
-        fields = '__all__'
-
-    def get_answers(self, obj):
-        return AnswerQuestionSerializer(obj.answer_set.all(), many=True).data
-
-
-class AnswerSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer
-
-    class Meta:
-        model = Answer
         fields = '__all__'

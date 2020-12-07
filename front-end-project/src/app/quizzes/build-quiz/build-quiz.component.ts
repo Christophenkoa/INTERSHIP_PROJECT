@@ -2,6 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ClassService} from '../../services/classes/class.service';
 import {ClassesModel} from '../../models/class/classes.model';
+import {Subject} from 'rxjs';
+import {CourseModel} from '../../models/course/courses.model';
+import {QuizService} from '../../services/quizz/quiz.service';
+import {Quiz} from '../../models/quiz_folder/quiz';
+import {Question} from '../../models/quiz_folder/question';
+import {Answer} from '../../models/quiz_folder/answer';
+
 
 @Component({
   selector: 'app-build-quiz',
@@ -10,18 +17,26 @@ import {ClassesModel} from '../../models/class/classes.model';
 })
 export class BuildQuizComponent implements OnInit {
 
-  constructor(private classService: ClassService) { }
+  constructor(private classService: ClassService, private quizService: QuizService) { }
   quizForm: FormGroup;
   success: boolean;
-  classes: ClassesModel[];
+
+  myQuiz: Quiz;
+  allQuestions: Question[];
+
+  classes: ClassesModel[] =  [new ClassesModel(0, '', '', '', '',
+    [new CourseModel('', 0)], [])];
+
   // keep value of the selected class
   selectedClass: number;
+  selectedClassSubject = new Subject<number>();
 
   public isNull(item: any) {
     return item == null ? '' : item;
   }
 
   ngOnInit() {
+    this.selectedClass = 0;
     this.createForm();
     this.success = false;
     // Normally we should filter classes per teacher
@@ -32,6 +47,15 @@ export class BuildQuizComponent implements OnInit {
       );
   }
 
+  emit() {
+    this.selectedClassSubject.next(this.selectedClass);
+  }
+
+  selectedClassF(index: number) {
+    this.selectedClass = index;
+    this.emit();
+  }
+
 
   public createForm() {
     this.quizForm = new FormGroup({
@@ -39,7 +63,7 @@ export class BuildQuizComponent implements OnInit {
       quizCourse: new FormControl('', Validators.required),
       quizName: new FormControl('', Validators.required),
       // answers: answerPropositions
-      question_set: new FormArray([
+      questions: new FormArray([
         this.initQuestion(),
       ]),
     });
@@ -48,8 +72,8 @@ export class BuildQuizComponent implements OnInit {
 
   initQuestion() {
     return new FormGroup({
-      questionTitle: new FormControl('', Validators.required),
-      answer_set: new FormArray([
+      question_desc: new FormControl('', Validators.required),
+      answers: new FormArray([
         this.initAnswer(),
       ]),
     });
@@ -57,13 +81,13 @@ export class BuildQuizComponent implements OnInit {
 
   initAnswer() {
     return new FormGroup({
-      label: new FormControl('', Validators.required),
-      is_correct: new FormControl('false', Validators.required),
+      answer: new FormControl('', Validators.required),
+      isCorrect: new FormControl('false', Validators.required),
     });
   }
 
   addQuestion() {
-    const control = this.quizForm.get('question_set') as FormArray;
+    const control = this.quizForm.get('questions') as FormArray;
     control.push(this.initQuestion());
     // remove success div
     this.success = false;
@@ -72,7 +96,7 @@ export class BuildQuizComponent implements OnInit {
   addAnswer(j) {
     console.log(j);
     // @ts-ignore
-    const control = this.quizForm.get('question_set').controls[j].get('answer_set') as FormArray;
+    const control = this.quizForm.get('questions').controls[j].get('answers') as FormArray;
     // console.log(control);
     control.push(this.initAnswer());
     // remove success div
@@ -81,30 +105,40 @@ export class BuildQuizComponent implements OnInit {
 
   getQuestions(form) {
     // console.log(form.get('sections').controls);
-    return form.controls.question_set.controls;
+    return form.controls.questions.controls;
   }
   getAnswers(form) {
     // console.log(form.controls.questions.controls);
-    return form.controls.answer_set.controls;
+    return form.controls.answers.controls;
   }
 
   removeQuestion(i) {
-    const control = this.quizForm.get('question_set') as FormArray;
+    const control = this.quizForm.get('questions') as FormArray;
     control.removeAt(i);
 
   }
 
   removeAnswer(j, i) {
     // @ts-ignore
-    const control = this.quizForm.get('question_set').controls[j].get('answer_set') as FormArray;
+    const control = this.quizForm.get('questions').controls[j].get('answers') as FormArray;
     control.removeAt(i);
   }
 
   addQuiz(quiz) {
     if (! quiz.invalid) {
       this.success = true;
-      console.log('select : ' + this.selectedClass);
-      console.log(quiz);
+      this.myQuiz = new Quiz(quiz.value.quizName, quiz.value.quizCourse,
+        15, quiz.value.quizClass, 2, quiz.value.questions);
+
+      this.quizService.postQuiz(this.myQuiz)
+        .subscribe(
+          (data) => {console.log('return value : ' + data); },
+          (error) => {console.log(error); }
+        );
+
+      // console.log(this.allQuestions);
+      // console.log('select : ' + this.selectedClass);
+      // console.log(quiz);
     } else {
       this.success = false;
       console.log('invalid');

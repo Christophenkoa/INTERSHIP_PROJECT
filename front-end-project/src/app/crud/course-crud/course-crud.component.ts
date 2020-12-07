@@ -122,7 +122,8 @@ export class CourseCrudComponent implements OnInit {
     );
     const courses = new CourseModel(this.CourseForm.get('course').value,
                                     this.CourseForm.get('coef').value,
-                                    this.CourseForm.get('class').value);
+                                    // this.CourseForm.get('class').value
+    );
   }
 
   // tslint:disable-next-line:jsdoc-format

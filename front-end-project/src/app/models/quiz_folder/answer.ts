@@ -1,3 +1,4 @@
 export class Answer {
-  constructor(public id: number, public label: string, public isCorrect: boolean) {}
+  public id: number;
+  constructor(public answer: string, public isCorrect: boolean) {}
 }
