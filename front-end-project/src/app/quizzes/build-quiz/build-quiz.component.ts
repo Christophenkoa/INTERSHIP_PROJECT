@@ -22,10 +22,9 @@ export class BuildQuizComponent implements OnInit {
   success: boolean;
 
   myQuiz: Quiz;
-  allQuestions: Question[];
 
-  classes: ClassesModel[] =  [new ClassesModel(0, '', '', '', '',
-    [new CourseModel('', 0)], [])];
+  classes: ClassesModel[] =  [new ClassesModel(0,
+    '', '', '', [new CourseModel('', 0, 1)])];
 
   // keep value of the selected class
   selectedClass: number;

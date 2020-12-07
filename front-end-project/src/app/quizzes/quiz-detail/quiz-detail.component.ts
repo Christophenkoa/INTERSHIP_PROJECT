@@ -19,34 +19,10 @@ export class QuizDetailComponent implements OnInit {
   ngOnInit() {
     /*this.initializeAnswers();*/
   }
-  // initializeAnswers() {
-  //   this.quiz = new Quiz(
-  //     1,
-  //     'mon quiz',
-  //     new Date(),
-  //     [
-  //       new Question(
-  //         1,
-  //         'Qui est President du Cameroun ?',
-  //         [
-  //           new Answer(1, 'Cabral', false),
-  //           new Answer(2, 'Paul Biya', true),
-  //           new Answer(3, 'Maurice Kampto', false)
-  //         ]
-  //       ),
-  //       new Question(
-  //         1,
-  //         'Qui est President du Cameroun ?',
-  //         [
-  //           new Answer(1, 'Cabral Libi', false),
-  //           new Answer(2, 'Paul Biya', true),
-  //           new Answer(3, 'Maurice Kampto', false)
-  //         ]
-  //       )
-  //     ]
-  //   );
-  //   console.log(this.answers);
-  // }
+  initializeAnswers() {
+    this.quiz = new Quiz('', 1, 15, 1, 1, []);
+    console.log(this.answers);
+  }
 
   saveAnswer() {
   }
@@ -54,21 +30,21 @@ export class QuizDetailComponent implements OnInit {
   submitQuiz() {
   }
 
-  // next() {
-  //   if (this.currentIndex === this.quiz.questions.length - 1) {
-  //     this.submitQuiz();
-  //     return;
-  //   }
-  //
-  //   if (this.selectedAnswer != null) {
-  //     this.saveAnswer();
-  //   }
-  //
-  //   if (this.currentIndex !== this.quiz.questions.length - 1) {
-  //     this.currentIndex += 1;
-  //     this.selectedAnswer = null;
-  //   }
-  // }
+  next() {
+    if (this.currentIndex === this.quiz.questions.length - 1) {
+      this.submitQuiz();
+      return;
+    }
+
+    if (this.selectedAnswer != null) {
+      this.saveAnswer();
+    }
+
+    if (this.currentIndex !== this.quiz.questions.length - 1) {
+      this.currentIndex += 1;
+      this.selectedAnswer = null;
+    }
+  }
 
   selectAnswer(id: number) {
     console.log(id);

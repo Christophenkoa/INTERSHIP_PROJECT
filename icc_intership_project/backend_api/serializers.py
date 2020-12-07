@@ -13,8 +13,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
-        fields = ['username', 'first_name', 'last_name', 'email', 'tel',
-                  'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
 
 
 class CourseSerializer(serializers.ModelSerializer):

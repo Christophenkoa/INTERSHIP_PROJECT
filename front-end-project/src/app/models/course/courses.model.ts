@@ -1,7 +1,10 @@
+import {TeacherModel} from '../teacher/teacher.model';
+
 export class CourseModel {
-  public id: number;
+  id: number;
   constructor(
     public entitled: string,
-    public coefficient: number
+    public coefficient: number,
+    public teacher: number,
   ) {}
 }

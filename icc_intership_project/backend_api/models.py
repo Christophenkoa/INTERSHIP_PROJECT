@@ -14,11 +14,11 @@ class Admin(User):
 
 class Teacher(User):
     tel = models.PositiveIntegerField()
-    gender = models.CharField(max_length=2)
+    gender = models.CharField(max_length=1)
     is_active = models.BooleanField
     is_staff = models.BooleanField
     is_superuser = models.BooleanField
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
 
     def __str__(self):
         return self.username
@@ -27,7 +27,7 @@ class Teacher(User):
 class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
@@ -39,7 +39,7 @@ class Class(models.Model):
     class_number = models.IntegerField(null=True)
     option = models.CharField(max_length=10, null=True)
     serie = models.CharField(max_length=5, null=True)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     courses = models.ManyToManyField(Course, blank=True)
     teacher = models.ManyToManyField(Teacher, blank=True)
 

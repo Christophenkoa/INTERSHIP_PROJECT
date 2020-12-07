@@ -16,6 +16,14 @@ export class TeachersService {
   }
 
   GetAllTeacher(): Observable<any[]> {
-    return this.http.get<any[]>('http://127.0.0.1:8000/user/teacher/');
+    return this.http.get<TeacherModel[]>('http://127.0.0.1:8000/user/teacher/');
+  }
+
+  UpdateTeacher(teacherUpdated: TeacherModel, id: number) {
+    return this.http.put('http://127.0.0.1:8000/user/teacher/' + id + '/', teacherUpdated);
+  }
+
+  DeleteTeacher(id: number) {
+    return this.http.delete('http://127.0.0.1:8000/user/teacher/' + id + '/');
   }
 }
