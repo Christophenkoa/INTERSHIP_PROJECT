@@ -1,5 +1,4 @@
 import {CourseModel} from '../course/courses.model';
-import {TeacherModel} from '../teacher/teacher.model';
 
 export class ClassesModel {
   id: number;

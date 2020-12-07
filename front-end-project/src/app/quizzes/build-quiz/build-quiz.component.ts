@@ -3,11 +3,8 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ClassService} from '../../services/classes/class.service';
 import {ClassesModel} from '../../models/class/classes.model';
 import {Subject} from 'rxjs';
-import {CourseModel} from '../../models/course/courses.model';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Quiz} from '../../models/quiz_folder/quiz';
-import {Question} from '../../models/quiz_folder/question';
-import {Answer} from '../../models/quiz_folder/answer';
 
 
 @Component({
@@ -24,7 +21,7 @@ export class BuildQuizComponent implements OnInit {
   myQuiz: Quiz;
 
   classes: ClassesModel[] =  [new ClassesModel(0,
-    '', '', '', [new CourseModel('', 0, 1)])];
+    '', '', '', [])];
 
   // keep value of the selected class
   selectedClass: number;
