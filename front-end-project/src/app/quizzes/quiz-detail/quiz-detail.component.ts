@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {Question} from '../../models/quiz_folder/question';
 import {Answer} from '../../models/quiz_folder/answer';
+import {QuizService} from '../../services/quizz/quiz.service';
 
 @Component({
   selector: 'app-quiz-detail',
@@ -9,19 +10,19 @@ import {Answer} from '../../models/quiz_folder/answer';
   styleUrls: ['./quiz-detail.component.scss']
 })
 export class QuizDetailComponent implements OnInit {
-  quiz: Quiz;
+  quiz: Quiz = null;
   currentIndex = 0;
   selectedAnswer: number;
   answers = [];
 
-  constructor() { }
+  constructor(private quizService: QuizService) { }
 
   ngOnInit() {
-    /*this.initializeAnswers();*/
-  }
-  initializeAnswers() {
-    this.quiz = new Quiz('', 1, 15, 1, 1, []);
-    console.log(this.answers);
+    this.quizService.getSelectedQuiz(30)
+      .subscribe(
+        (data: any) => {this.quiz = data; console.log(this.quiz); },
+        (error) => {console.log(error); }
+      );
   }
 
   saveAnswer() {
