@@ -4,19 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {CuTeacherComponent} from '../cu-teacher/cu-teacher.component';
 import {TeachersService} from '../../../services/teacher/teachers.service';
-import {TeacherModel} from '../../../models/teacher/teacher.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
-export interface TeacherElement {
-  username: string;
-  name: string;
-  surname: string;
-  email: string;
-  gender: string;
-  is_superuser: boolean;
-  is_staff: boolean;
-  is_active: boolean;
-}
 
 
 @Component({
@@ -29,7 +17,7 @@ export class CrudTeacherComponent implements OnInit {
   TEACHER_DATA: MatTableDataSource<any>;
 
   /** Differents columns of the table **/
-  displayedColumns: string[] = ['username', 'first_name', 'last_name', 'email', 'gender', 'is_superuser', 'is_staff', 'is_active', 'actions'];
+  displayedColumns: string[] = ['username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'is_superuser', 'is_staff', 'is_active', 'actions'];
 
   /** Filter the information in DataTable **/
   applyFilter(filterValue: string) {
@@ -63,18 +51,42 @@ export class CrudTeacherComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(data => {
+        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
+          duration: 3000
+        });
+      });
+    // console.log(teacherdata);
+  }
+  /* Open the CU(Create and Update) interface */
+  OpenCUMethod() {
+    const dialog = this.dialog.open(CuTeacherComponent, {
+      width : '60%',
+      height : '70%',
+      disableClose : true
+    });
+    dialog.afterClosed()
+      .subscribe(data => {
         this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
           duration: 3000
         });
       });
-    console.log(teacherdata);
   }
-  /** Open the CU(Create and Update) interface **/
-  OpenCUMethod() {
-    const dialog = new MatDialogConfig();
-    dialog.width = '60%';
-    dialog.height = '70%';
-    dialog.disableClose = true;
-    this.dialog.open(CuTeacherComponent, dialog);
+  /* Function that delete a teacher in Data base */
+  DeleteMethod(idTeacher) {
+    if (confirm('Are you sure to delete this user ?') === true) {
+      this.teacherService.DeleteTeacher(idTeacher)
+        .subscribe(data => {
+          if (data) {
+            this.infoBull.open('Teacher has been deleted !', 'Close', {
+              duration: 3000
+            });
+          }
+        }, error => {
+          this.infoBull.open('Server Error!', 'Close', {
+            duration: 3000
+          });
+          console.log(error);
+        });
+    }
   }
 }

@@ -1,6 +1,6 @@
 /* Structure */
 table {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 
@@ -9,11 +9,20 @@ table {
 }
 
 mat-paginator {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 
 .cent-boutton{
   margin: 50px auto;
   padding-left: 600px;
+}
+
+.hide{
+  display: none;
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
 }

@@ -13,12 +13,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
-<<<<<<< HEAD
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
-=======
-        fields = ['username', 'first_name', 'last_name', 'email', 'tel',
-                  'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
->>>>>>> cc598027ce59d1d0e391bb3a1b04839f2da870de
 
 
 class CourseSerializer(serializers.ModelSerializer):

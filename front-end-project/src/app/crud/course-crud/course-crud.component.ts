@@ -6,6 +6,10 @@ import {MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {PeriodicElement} from '../add-note/add-note.component';
 import { CourseModel } from '../../models/course/courses.model';
+import {TeacherModel} from '../../models/teacher/teacher.model';
+import {TeachersService} from '../../services/teacher/teachers.service';
+import {CoursesService} from '../../services/courses/courses.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface PeriodicElement {
   name: string;
@@ -45,90 +49,71 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class CourseCrudComponent implements OnInit {
 
   CourseForm: FormGroup;
-  filterCourse: Observable<string[]>;
-  filterClass: Observable<string[]>;
 
-  // tslint:disable-next-line:max-line-length
   courses: string[] = ['English', 'French', 'Chemistry', 'Physic', 'Mathematic', 'EPS', 'PCT', 'Deutsch', 'Spanish', 'History', 'Geographic'];
-  class: string[] = ['6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Tle'];
+  teachers: TeacherModel[] = [];
+  idarea: number[] = [];
 
-  // tslint:disable-next-line:jsdoc-format
-  /** Table variables **/
+  /* Table variables */
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  // tslint:disable-next-line:jsdoc-format
-  /** End **/
+  /* End */
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private teacherService: TeachersService,
+              private courseService: CoursesService,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit() {
+
     this.TakeValue();
-    this.FilterCourses();
-    this.FilterClass();
     this.dataSource.paginator = this.paginator;
+    this.GetAllTeachers();
   }
-  // tslint:disable-next-line:jsdoc-format
-  /** Function that filter word and display the best choice **/
-  FilterCourses() {
-    this.filterCourse = this.CourseForm.get('course').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterCourse(value))
-      );
-  }
-  private _filterCourse(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.courses.filter(option =>
-      option.toLowerCase().includes(filterValue));
-  }
-  // tslint:disable-next-line:jsdoc-format
-  /** End **/
-
-  // tslint:disable-next-line:jsdoc-format
-  /** Function that filter word and display the best choice **/
-  FilterClass() {
-    this.filterClass = this.CourseForm.get('class').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterClass(value))
-      );
-  }
-
-  private _filterClass(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.class.filter(option =>
-      option.toLowerCase().includes(filterValue));
-  }
-  // tslint:disable-next-line:jsdoc-format
-  /** End **/
 
   TakeValue() {
     this.CourseForm = this.formBuilder.group({
       course: ['', Validators.required],
-      coef: ['', [Validators.required, Validators.max(9), Validators.min(0)]],
-      class: ['', Validators.required]
+      coef: ['', [Validators.required, Validators.max(6), Validators.min(1)]],
+      teacher: ['', Validators.required]
     });
   }
 
   OnSubmitForm() {
     if (this.CourseForm.invalid) {return; }
+
     console.log(
       this.CourseForm.
-      get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('class').value
+      get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('teacher').value
     );
+
     const courses = new CourseModel(this.CourseForm.get('course').value,
                                     this.CourseForm.get('coef').value,
-                                    this.CourseForm.get('class').value);
+                                    this.CourseForm.get('teacher').value);
+
+    this.courseService.CreateCourse(courses)
+      .subscribe((data: CourseModel) => {
+          console.log(data);
+          this.snackbar.open(data.entitled + ' has been created !', 'Close', {
+            duration: 2500,
+          });
+        },
+        error => console.log(error));
   }
 
-  // tslint:disable-next-line:jsdoc-format
-  /** Table information and functions **/
+
+  /* Table information and functions */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  /* Get all teachers in Data base */
+  GetAllTeachers() {
+    this.teacherService.GetAllTeacher()
+      .subscribe((data) => {
+        this.teachers = data;
+      }, (error => console.log(error)));
+  }
 }
