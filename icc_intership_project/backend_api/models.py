@@ -28,7 +28,7 @@ class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
-    teacher = models.ManyToManyField(Teacher, blank=True)
+    teacher = models.OneToOneField(Teacher, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.entitled

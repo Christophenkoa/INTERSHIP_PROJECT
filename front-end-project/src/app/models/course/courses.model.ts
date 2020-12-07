@@ -5,6 +5,6 @@ export class CourseModel {
   constructor(
     public entitled: string,
     public coefficient: number,
-    public teacher: number[],
+    public teacher: number,
   ) {}
 }

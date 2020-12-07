@@ -89,6 +89,7 @@ export class CourseCrudComponent implements OnInit {
       get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('teacher').value
     );
 
+    // this.idarea.push();
     const courses = new CourseModel(this.CourseForm.get('course').value,
                                     this.CourseForm.get('coef').value,
                                     this.CourseForm.get('teacher').value);
