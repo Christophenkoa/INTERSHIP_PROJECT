@@ -19,6 +19,7 @@ import { NoteClassComponent } from './note-classe/note-class.component';
 import {BuildQuizComponent} from './quizzes/build-quiz/build-quiz.component';
 import {QuizListComponent} from './quizzes/quiz-list/quiz-list.component';
 import {QuizDetailComponent} from './quizzes/quiz-detail/quiz-detail.component';
+import {DisplayCourseComponent} from './display-course/display-course.component';
 
 
 const routes: Routes = [
@@ -69,6 +70,10 @@ const routes: Routes = [
   {
     path : 'navMenu/add-course',
     component: CourseCrudComponent,
+  },
+  {
+    path : 'course-display',
+    component: DisplayCourseComponent,
   },
   {
     path : 'navMenu/quiz',

@@ -18,11 +18,15 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
-    teacher = TeacherSerializer
+    #teacher = TeacherSerializer
+    course_teacher = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = '__all__'
+
+    def get_course_teacher(self, obj):
+        return TeacherSerializer(obj.teacher).data
 
 
 class ClassSerializer(serializers.ModelSerializer):

@@ -2,16 +2,45 @@
   <h1 class="display-4">create your content</h1>
 </div>
 
-<ckeditor
-    #myEditor
-    [(ngModel)]="ckeditorContent"
-    debounce="500">
+<form (ngSubmit)="OnSubmitForm()" [formGroup]="NoteForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Course</mat-label>
+    <mat-select formControlName="course">
+      <div *ngIf="courses.length != 0; else noClass">
+        <mat-option *ngFor="let course of courses; let i = index" [value]="course.id">
+          {{course.entitled}}
+        </mat-option>
+      </div>
+      <ng-template #noClass>
+        <mat-option [disabled]="courses.length == 0">
+          <span>Empty courses list</span>
+        </mat-option>
+      </ng-template>
+    </mat-select>
+  </mat-form-field>
 
-</ckeditor>
-<div>
+  <div>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="enter your note title" formControlName="entitled">
+    </mat-form-field>
+  </div>
+
+  <ckeditor
+    formControlName="text"
+    debounce="500">
+  </ckeditor>
+  <!--    [(ngModel)]="ckeditorContent"-->
+
+  <div style="width: fit-content; margin: auto;">
+      <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="primary">Save</button>
+      <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="accent">Publish</button>
+  </div>
+</form>
+
+<!--<div>
   <div style="width: fit-content; margin: auto;">
     <button mat-raised-button color="primary" (click)="getData()">Save</button>
     <button mat-raised-button color="accent" (click)="getData()">Publish</button>
   </div>
-</div>
+</div>-->
 
