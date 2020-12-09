@@ -18,7 +18,7 @@ class Teacher(User):
     is_active = models.BooleanField
     is_staff = models.BooleanField
     is_superuser = models.BooleanField
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
 
     def __str__(self):
         return self.username
@@ -27,8 +27,8 @@ class Teacher(User):
 class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
-    teacher = models.ManyToManyField(Teacher, blank=True)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    teacher = models.ForeignKey(Teacher, blank=True, on_delete=models.CASCADE)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
 
     def __str__(self):
         return self.entitled
@@ -39,7 +39,7 @@ class Class(models.Model):
     class_number = models.IntegerField(null=True)
     option = models.CharField(max_length=10, null=True)
     serie = models.CharField(max_length=5, null=True)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
     courses = models.ManyToManyField(Course, blank=True)
     teacher = models.ManyToManyField(Teacher, blank=True)
 
@@ -50,7 +50,7 @@ class Class(models.Model):
 class Student(User):
     dateOfBirth = models.DateField()
     regis_number = models.CharField(max_length=255)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )
 
