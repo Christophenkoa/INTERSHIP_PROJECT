@@ -1,9 +1,13 @@
 import {Question} from './question';
 
 export class Quiz {
-  constructor(public id: number,
-              public entitle: string,
-              public createdAt: Date,
-              public questions: Question[]
+  id: number;
+  constructor(
+    public entitled: string,
+    public course: number,
+    public req_time: number,
+    public classe: number,
+    public teacher: number,
+    public questions: Question[]
   ) {}
 }

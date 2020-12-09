@@ -1,5 +1,6 @@
 import {Answer} from './answer';
 
 export class Question {
-  constructor(public id, public questionDesc: string, public answers: Answer[]) {}
+  public id;
+  constructor(public question_desc: string, public answers: Answer[]) {}
 }

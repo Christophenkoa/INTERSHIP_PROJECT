@@ -36,13 +36,15 @@ export class CuClassComponent implements OnInit {
 
   OnSubmitForm() {
     if (this.ClassForm.invalid) { return; }
-    console.log('OK')
+    console.log('OK');
 
-    const classes = new ClassesModel( this.ClassForm.get('class_number').value,
-                                      this.ClassForm.get('option').value,
-                                      this.ClassForm.get('level').value,
-                                      this.ClassForm.get('serie').value
-                                     );
+    const classes = new ClassesModel(
+      this.ClassForm.get('class_number').value,
+      this.ClassForm.get('option').value,
+      this.ClassForm.get('level').value,
+      this.ClassForm.get('serie').value,
+      []
+    );
   }
 
   TakeSerie(serie) {
@@ -63,9 +65,9 @@ export class CuClassComponent implements OnInit {
     } else if (value === '4ème' || value === '3ème') {
       this.isSerie = false;
       this.isOption = true;
-    } else if ((value === '2nde' || value === '1ère' || value === 'Tle') && this.isOption == true) {
+    } else if ((value === '2nde' || value === '1ère' || value === 'Tle') && this.isOption === true) {
       this.isSerie = true;
-    } else if ((value === '2nde' || value === '1ère' || value === 'Tle') && this.isSerie == true) {
+    } else if ((value === '2nde' || value === '1ère' || value === 'Tle') && this.isSerie === true) {
       this.isOption = false;
     } else {
       this.isSerie = true;
