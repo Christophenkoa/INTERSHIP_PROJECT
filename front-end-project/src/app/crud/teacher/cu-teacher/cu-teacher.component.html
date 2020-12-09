@@ -63,8 +63,8 @@
           <div class="col-md-6 mb-3" style="padding-top: 20px;">
             <mat-label> Is staff ? </mat-label>
             <mat-radio-group MatInput formControlName="is_staff" required>
-              <mat-radio-button value = "true" style="margin-right: 20px">Yes</mat-radio-button>
-              <mat-radio-button value= "false">No</mat-radio-button>
+              <mat-radio-button value= 'true' style="margin-right: 20px">Yes</mat-radio-button>
+              <mat-radio-button value= 'false' >No</mat-radio-button>
             </mat-radio-group>
             <mat-error *ngIf="registerForm.get('is_staff').errors?.required">
               Required answer

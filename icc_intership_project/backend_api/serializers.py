@@ -15,6 +15,10 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
 
+    # def create(self,validate_data):
+    #     print("--------------------",validate_data)
+    #     return
+
 
 class CourseSerializer(serializers.ModelSerializer):
     admin = AdminSerializer

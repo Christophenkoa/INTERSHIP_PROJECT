@@ -7,8 +7,8 @@ export class TeacherModel {
               public tel: number,
               public email: string,
               public gender: string,
-              public isActive: boolean,
-              public isStaff: boolean,
-              public isSuperuser: boolean
+              public is_active: boolean,
+              public is_staff: boolean,
+              public is_superuser: boolean
   ) {}
 }

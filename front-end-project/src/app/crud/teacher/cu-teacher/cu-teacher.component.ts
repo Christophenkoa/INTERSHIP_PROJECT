@@ -47,8 +47,8 @@ export class CuTeacherComponent implements OnInit {
       tel : ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{9}$')]],
       email : ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
-      is_active : ['true', Validators.required],
-      is_staff: ['true', Validators.required],
+      is_active : [ 'true', Validators.required],
+      is_staff: [ 'true', Validators.required],
       is_superuser: ['false', Validators.required]
     });
   }
@@ -73,6 +73,7 @@ export class CuTeacherComponent implements OnInit {
       return text;
     }
     const password = makePassword();
+    console.log(typeof(this.registerForm.get('is_staff').value, convert(this.registerForm.get('is_staff').value)));
 
     if(this.registerForm.invalid) {return;}
     /** Retrieve values from the form **/
