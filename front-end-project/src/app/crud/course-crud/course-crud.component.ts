@@ -43,9 +43,18 @@ export class CourseCrudComponent implements OnInit {
               private snackbar: MatSnackBar) { }
 
   ngOnInit() {
+    this.getCourses();
     this.GetAllCourse();
     this.TakeValue();
     this.GetAllTeachers();
+  }
+
+  getCourses() {
+    this.courseService.GetAllCourses()
+      .subscribe(
+        (data: any[]) => {console.log(data); },
+        error => {console.log(error); }
+      );
   }
 
   TakeValue() {
@@ -66,7 +75,7 @@ export class CourseCrudComponent implements OnInit {
     this.idarea.push(this.CourseForm.get('teacher_id').value);
     const courses = new CourseModel(this.CourseForm.get('course').value,
                                     this.CourseForm.get('coef').value,
-                                    this.idarea
+                                    this.CourseForm.get('teacher_id').value
     );
 
     this.courseService.CreateCourse(courses)

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Quiz} from '../../models/quiz_folder/quiz';
-import {Question} from '../../models/quiz_folder/question';
-import {Answer} from '../../models/quiz_folder/answer';
 import {QuizService} from '../../services/quizz/quiz.service';
 
 @Component({

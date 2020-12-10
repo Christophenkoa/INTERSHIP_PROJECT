@@ -27,8 +27,9 @@ class Teacher(User):
 class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
-    teacher = models.ForeignKey(Teacher, blank=True, on_delete=models.CASCADE)
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    # teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
         return self.entitled
@@ -36,9 +37,9 @@ class Course(models.Model):
 
 class Class(models.Model):
     level = models.CharField(max_length=255)
-    class_number = models.IntegerField(null=True)
-    option = models.CharField(max_length=10, null=True)
-    serie = models.CharField(max_length=5, null=True)
+    class_number = models.IntegerField(blank=True)
+    option = models.CharField(max_length=10, null=True, blank=True)
+    serie = models.CharField(max_length=5, null=True, blank=True)
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
     courses = models.ManyToManyField(Course, blank=True)
     teacher = models.ManyToManyField(Teacher, blank=True)
@@ -72,7 +73,7 @@ class Evaluation(models.Model):
 class Chapter(models.Model):
     entitled = models.CharField(max_length=255)
     text = models.TextField()
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __str__(self):

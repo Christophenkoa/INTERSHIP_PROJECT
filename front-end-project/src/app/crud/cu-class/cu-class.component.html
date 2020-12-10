@@ -65,6 +65,21 @@
             </mat-form-field>
           </div>
       </div>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Course(s) list </mat-label>
+            <mat-select formControlName="coursesList" matInput required multiple>
+              <mat-option *ngFor="let Allcourse of courseList" [value]="Allcourse">
+                {{ 'Entitled: ' + Allcourse.entitled + ', coefficient: ' + Allcourse.coefficient + ', teacher: ' + Allcourse.course_teacher.first_name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ClassForm.get('coursesList').errors?.required">
+              Required courses list
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
       <mat-dialog-actions align="center">
         <button mat-raised-button color="primary" style="margin-right: 10px">Save</button>
         <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
@@ -73,4 +88,3 @@
 
     </form>
 </mat-dialog-content>
-
