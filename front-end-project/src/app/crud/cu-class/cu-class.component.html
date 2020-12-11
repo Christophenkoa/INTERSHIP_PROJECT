@@ -6,7 +6,7 @@
 
 
 <mat-dialog-content>
-    <form (ngSubmit)="OnSubmitForm()" [formGroup]="ClassForm">
+    <form [formGroup]="ClassForm">
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <mat-form-field class="full-width" appearance="legacy">
@@ -41,7 +41,7 @@
         <div class="col-md-6 mb-3">
           <mat-form-field class="full-width" appearance="legacy">
             <mat-label> Serie </mat-label>
-            <mat-select formControlName="serie" matInput [required]="isSerie==true" [disabled]="isSerie ==false">
+            <mat-select formControlName="serie" matInput [required]="isSerie==true" [disabled]="isSerie==false">
               <mat-option *ngFor="let serie of serial" [value]="serie" (click)="TakeSerie(serie)">
                 {{ serie }}
               </mat-option>
@@ -81,10 +81,8 @@
         </div>
       </div>
       <mat-dialog-actions align="center">
-        <button mat-raised-button color="primary" style="margin-right: 10px">Save</button>
-        <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnSubmitForm()" [mat-dialog-close]="ClassForm.value">Save</button>
+        <button mat-raised-button (click)="ReturnFunct()" color="warn">Cancel</button>
       </mat-dialog-actions>
-
-
     </form>
 </mat-dialog-content>

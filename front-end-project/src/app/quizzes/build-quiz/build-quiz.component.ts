@@ -21,7 +21,7 @@ export class BuildQuizComponent implements OnInit {
   myQuiz: Quiz;
 
   classes: ClassesModel[] =  [new ClassesModel(0,
-    '', '', '', [])];
+    '', '', '', [], [])];
 
   // keep value of the selected class
   selectedClass: number;
