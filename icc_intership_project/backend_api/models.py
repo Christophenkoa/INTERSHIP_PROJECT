@@ -27,7 +27,7 @@ class Teacher(User):
 class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     # teacher = models.ManyToManyField(Teacher, blank=True)
 
@@ -40,7 +40,7 @@ class Class(models.Model):
     class_number = models.IntegerField(blank=True)
     option = models.CharField(max_length=10, null=True, blank=True)
     serie = models.CharField(max_length=5, null=True, blank=True)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
     courses = models.ManyToManyField(Course, blank=True)
     teacher = models.ManyToManyField(Teacher, blank=True)
 
@@ -51,7 +51,7 @@ class Class(models.Model):
 class Student(User):
     dateOfBirth = models.DateField()
     regis_number = models.CharField(max_length=255)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )
 
