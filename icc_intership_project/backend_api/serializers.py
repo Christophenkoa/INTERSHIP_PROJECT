@@ -36,7 +36,8 @@ class CourseSerializer(serializers.ModelSerializer):
 class ClassSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
     all_courses = serializers.SerializerMethodField()
-    teacher = TeacherSerializer
+    teachers = serializers.SerializerMethodField()
+    # teacher = TeacherSerializer
 
     class Meta:
         model = Class
@@ -44,6 +45,9 @@ class ClassSerializer(serializers.ModelSerializer):
 
     def get_all_courses(self, obj):
         return CourseSerializer(obj.courses.all(), many=True).data
+
+    def get_teachers(self, obj):
+        return TeacherSerializer(obj.teacher.all(), many=True).data
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -53,8 +57,8 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         # fields = '__all__'
-        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'dateOfBirth',
-                  'regis_number', 'my_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+        fields = ['regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password', 'dateOfBirth',
+                    'my_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
 
     # def get_my_class(self, obj):
     #     return ClassSerializer(obj.my_class).data

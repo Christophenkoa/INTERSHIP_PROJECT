@@ -27,13 +27,13 @@
       <mat-form-field appearance="fill">
         <mat-label>Select Course</mat-label>
         <mat-select formControlName="quizCourse">
-          <div *ngIf="classes[selectedClass].all_courses.length; else noCourse">
-            <mat-option *ngFor="let course of classes[selectedClass].all_courses" [value]="course.id">
+          <div *ngIf="classes[selectedClass].courses.length; else noCourse">
+            <mat-option *ngFor="let course of classes[selectedClass].courses" [value]="course.id">
               {{course.entitled}}
             </mat-option>
           </div>
           <ng-template #noCourse>
-            <mat-option [disabled]="!classes[selectedClass].all_courses.length">
+            <mat-option [disabled]="!classes[selectedClass].courses.length">
               <span>Empty course list</span>
             </mat-option>
           </ng-template>

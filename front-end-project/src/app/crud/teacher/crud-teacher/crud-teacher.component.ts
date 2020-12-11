@@ -35,7 +35,7 @@ export class CrudTeacherComponent implements OnInit {
     this.teacherService.GetAllTeacher()
       .subscribe(
         (data) => {
-          this.TEACHER_DATA = new MatTableDataSource(data) ;
+          this.TEACHER_DATA = new MatTableDataSource(data);
           this.TEACHER_DATA.paginator = this.paginator;
         }, (error => console.log(error))
       );
@@ -73,7 +73,7 @@ export class CrudTeacherComponent implements OnInit {
   }
   /* Function that delete a teacher in Data base */
   DeleteMethod(idTeacher) {
-    if (confirm('Are you sure to delete this user ?') === true) {
+    if (confirm('Are you sure to delete this teacher ?') === true) {
       this.teacherService.DeleteTeacher(idTeacher)
         .subscribe(data => {
           if (data) {

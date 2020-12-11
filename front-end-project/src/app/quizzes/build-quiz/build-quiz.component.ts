@@ -5,6 +5,7 @@ import {ClassesModel} from '../../models/class/classes.model';
 import {Subject} from 'rxjs';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Quiz} from '../../models/quiz_folder/quiz';
+import {GetClassesModel} from '../../models/class/getclasses.models';
 
 
 @Component({
@@ -19,8 +20,7 @@ export class BuildQuizComponent implements OnInit {
   success: boolean;
 
   myQuiz: Quiz;
-
-  classes: ClassesModel[] =  [new ClassesModel(0,
+  classes: GetClassesModel[] =  [new GetClassesModel(0,
     '', '', '', [], [])];
 
   // keep value of the selected class

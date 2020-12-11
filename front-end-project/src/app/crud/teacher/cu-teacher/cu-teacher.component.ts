@@ -23,7 +23,7 @@ export class CuTeacherComponent implements OnInit {
 
   ngOnInit() {
     this.RegisterForm();
-    if(this.data){
+    if (this.data) {
       this.registerForm.setValue({
         username: this.data.username,
         first_name: this.data.first_name,
@@ -35,6 +35,8 @@ export class CuTeacherComponent implements OnInit {
         is_staff: this.data.is_staff,
         is_superuser: this.data.is_superuser
       });
+    } else {
+      return;
     }
     console.log(this.data.id);
   }
