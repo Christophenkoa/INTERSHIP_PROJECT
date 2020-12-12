@@ -56,11 +56,11 @@ export class CuTeacherComponent implements OnInit {
   }
 
   OnSubmitForm() {
-    /** Function which convert a string value to boolean **/
+    /* Function which convert a string value to boolean */
     function convert(value) {
       if (value === "true" || value === 'true'){
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -69,7 +69,7 @@ export class CuTeacherComponent implements OnInit {
       var text = '';
       var lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
 
-      for (var i = 0; i < 10; i++)
+      for(var i = 0; i < 10; i++)
         text += lettre.charAt(Math.floor(Math.random() * lettre.length));
 
       return text;
@@ -77,8 +77,8 @@ export class CuTeacherComponent implements OnInit {
     const password = makePassword();
     console.log(typeof(this.registerForm.get('is_staff').value, convert(this.registerForm.get('is_staff').value)));
 
-    if(this.registerForm.invalid) {return;}
-    /** Retrieve values from the form **/
+    if (this.registerForm.invalid) { return; }
+    /* Retrieve values from the form */
     const teacher = new TeacherModel( this.registerForm.get('username').value,
                                       this.registerForm.get('first_name').value,
                                       this.registerForm.get('last_name').value,

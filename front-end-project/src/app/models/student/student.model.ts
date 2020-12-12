@@ -9,7 +9,7 @@ export class StudentModel {
               public is_active: boolean,
               public is_staff: boolean,
               public is_superuser: boolean,
-              /*public my_class: number,
-              public courses: number[]*/
+              public my_class: number,
+              public courses: number[]
               ) {}
 }

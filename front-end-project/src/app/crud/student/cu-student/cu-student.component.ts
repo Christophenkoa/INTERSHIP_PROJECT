@@ -2,10 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentModel } from '../../../models/student/student.model';
 import { StudentsService } from '../../../services/student/students.service';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {ClassService} from "../../../services/classes/class.service";
-import {GetClassesModel} from "../../../models/class/getclasses.models";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ClassService} from '../../../services/classes/class.service';
+import {GetClassesModel} from '../../../models/class/getclasses.models';
 
 @Component({
   selector: 'app-cu-student',
@@ -16,7 +16,7 @@ export class CuStudentComponent implements OnInit {
 
   registerForm: FormGroup;
   classArray: GetClassesModel[] = [];
-  classTaken: GetClassesModel[] = [];
+  classTaken: GetClassesModel;
   idClass: number;
   idCourse: number[] = [];
 
@@ -28,7 +28,7 @@ export class CuStudentComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public Studentdata: any) { }
 
   ngOnInit() {
-    this.RegisterForm();
+    this.RegisterStudentForm();
     this.GetAllClasses();
     if (this.Studentdata) {
       this.registerForm.setValue({
@@ -36,7 +36,7 @@ export class CuStudentComponent implements OnInit {
         first_name : this.Studentdata.first_name,
         last_name : this.Studentdata.last_name,
         tel : this.Studentdata.tel,
-        email : this.Studentdata.email,
+        my_class : this.Studentdata.myClass,
         dateOfBirth : this.Studentdata.dateOfBirth,
         gender : this.Studentdata.gender,
         is_active : this.Studentdata.is_active,
@@ -48,13 +48,13 @@ export class CuStudentComponent implements OnInit {
     }
   }
 
-  RegisterForm() {
+  RegisterStudentForm() {
     this.registerForm = this.formBuiler.group({
       regis_number : ['', Validators.required],
       first_name : ['', Validators.required],
       last_name : ['', Validators.required],
       tel : ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{9}$')]],
-      myClass: ['', Validators.required],
+      my_class: ['', Validators.required],
       dateOfBirth : ['', Validators.required],
       gender: ['', Validators.required],
       is_active : ['true', Validators.required],
@@ -63,8 +63,9 @@ export class CuStudentComponent implements OnInit {
     });
   }
 
+  /* Function that send student information to back end */
   OnSubmitForm() {
-    /** Function which convert a string value to boolean **/
+    /* Function which convert a string value to boolean */
     function convert(value) {
       if (value === "true" || value === 'true') {
         return true;
@@ -88,35 +89,35 @@ export class CuStudentComponent implements OnInit {
 
     if (this.registerForm.invalid) {return; }
 
-    this.classTaken = this.registerForm.get('myClass').value;
-    console.log(this.classTaken);
+    this.classTaken = this.registerForm.get('my_class').value;
 
-    for (var i = 0; i < this.classTaken.length; i++) {
-      this.idClass = this.classTaken[i].id;
-      for (var j = 0; j < this.classTaken[i].courses.length; j++) {
-        this.idCourse.push(this.classTaken[i].courses[j].id);
-      }
+    for (var i = 0; i < this.classTaken.all_courses.length; i++) {
+      this.idCourse.push(this.classTaken.all_courses[i].id);
     }
 
-    console.log(this.idClass + ' , ' + this.idCourse);
-
+    console.log(this.registerForm.get('dateOfBirth').value);
+    // console.log(this.classTaken);
+    console.log(this.classTaken.id + ' , ' + this.idCourse);
     /* Retrieve values from the form */
     const student = new StudentModel( this.registerForm.get('regis_number').value,
                                       this.registerForm.get('first_name').value,
                                       this.registerForm.get('last_name').value,
                                       password,
                                       this.registerForm.get('tel').value,
-                                      this.registerForm.get('date_Birth').value,
+                                      this.registerForm.get('dateOfBirth').value,
                                       this.registerForm.get('gender').value,
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
-                                      convert(this.registerForm.get('is_superuser').value));
-    /* Send informations
+                                      convert(this.registerForm.get('is_superuser').value),
+                                      this.idClass,
+                                      this.idCourse);
+    /* Send informations */
     this.studentsService.CreateStudent(student)
       .subscribe(data => {
         console.log(data);
-      }, error => console.log(error)); */
+      }, error => console.log(error));
   }
+
 
   /* Update function  */
   OnUpdateForm() {
@@ -140,11 +141,22 @@ export class CuStudentComponent implements OnInit {
                                       this.registerForm.get('last_name').value,
                                       this.Studentdata.password,
                                       this.registerForm.get('tel').value,
-                                      this.registerForm.get('date_Birth').value,
+                                      this.registerForm.get('dateOfBirth').value,
                                       this.registerForm.get('gender').value,
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
-                                      convert(this.registerForm.get('is_superuser').value));
+                                      convert(this.registerForm.get('is_superuser').value),
+                                      this.idClass,
+                                      this.idCourse);
+
+    this.classTaken = this.registerForm.get('my_class').value;
+
+    for (var i = 0; i < this.classTaken.all_courses.length; i++) {
+      this.idCourse.push(this.classTaken.all_courses[i].id);
+    }
+
+    this.studentsService.UpdateStudent(student, this.Studentdata.id)
+      .subscribe();
   }
 
   GetAllClasses() {

@@ -101,12 +101,12 @@
         <div class="col-md-6 mb-3">
           <mat-form-field class="full-width" appearance="legacy">
             <mat-label> My classroom </mat-label>
-            <mat-select formControlName="myClass" matInput required>
+            <mat-select formControlName="my_class" matInput required>
               <mat-option *ngFor="let class of classArray" [value]="class">
                 {{ class.level + ' ' + class.class_number + ' ' + class.option + ' ' + class.serie}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="registerForm.get('myClass').errors?.required">
+            <mat-error *ngIf="registerForm.get('my_class').errors?.required">
               Required classroom
             </mat-error>
           </mat-form-field>
@@ -125,8 +125,8 @@
       <div class="form-row">
         <div class="col-md-12">
           <mat-dialog-actions align="center">
-            <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!Studentdata">Submit</button>
-            <button mat-raised-button color="primary" (click)="OnUpdateForm()" *ngIf="Studentdata">Update</button>
+            <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!Studentdata" [mat-dialog-close]="registerForm.value">Submit</button>
+            <button mat-raised-button color="primary" (click)="OnUpdateForm()" *ngIf="Studentdata" [mat-dialog-close]="Studentdata" cdkFocusInitial>Update</button>
             <button mat-raised-button (click)="ClosePopup()" color="warn">Cancel</button>
           </mat-dialog-actions>
         </div>
