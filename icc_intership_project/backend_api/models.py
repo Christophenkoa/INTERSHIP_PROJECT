@@ -4,6 +4,14 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+# class User:
+#     first_name = models.CharField(max_length=150, blank=True)
+#     last_name = models.CharField(max_length=150, blank=True)
+#     email = models.EmailField(max_length=150, blank=True)
+#     is_staff = models.BooleanField()
+#     is_active = models.BooleanField()
+#     is_superuser = models.BooleanField()
+
 
 class Admin(User):
     tel = models.PositiveIntegerField()
@@ -18,7 +26,7 @@ class Teacher(User):
     is_active = models.BooleanField
     is_staff = models.BooleanField
     is_superuser = models.BooleanField
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=3)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
 
     def __str__(self):
         return self.username
@@ -27,8 +35,9 @@ class Teacher(User):
 class Course(models.Model):
     entitled = models.CharField(max_length=255)
     coefficient = models.IntegerField()
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
     # teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
@@ -49,7 +58,9 @@ class Class(models.Model):
 
 
 class Student(User):
+    tel = models.PositiveIntegerField()
     dateOfBirth = models.DateField()
+    gender = models.CharField(max_length=1)
     regis_number = models.CharField(max_length=255)
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
@@ -88,7 +99,7 @@ class Quiz(models.Model):
     classe = models.ForeignKey(Class, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     student = models.ManyToManyField(Student, through='QuizTaker',
-                                     through_fields=('associated_quiz', 'associated_student'),)
+                                     through_fields=('associated_quiz', 'associated_student'), )
 
     @property
     def questions(self):

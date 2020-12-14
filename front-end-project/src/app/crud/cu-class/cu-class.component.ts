@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ClassesModel } from '../../models/class/classes.model';
-import {CoursesService} from "../../services/courses/courses.service";
-import {CourseModel} from "../../models/course/courses.model";
-import {GetcourseModel} from "../../models/course/getcourses.model";
+import {CoursesService} from '../../services/courses/courses.service';
+import {CourseModel} from '../../models/course/courses.model';
+import {GetcourseModel} from '../../models/course/getcourses.model';
+import {ClassService} from '../../services/classes/class.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialogRef} from '@angular/material/dialog';
+import {ClassViewComponent} from '../../class-view/class-view.component';
 
 @Component({
   selector: 'app-cu-class',
@@ -15,7 +19,7 @@ export class CuClassComponent implements OnInit {
 
   ClassForm: FormGroup;
   Class: string[] = ['6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Tle'];
-  ClassNumber: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  ClassNumber: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   serial: string[] = ['A4', 'C', 'D', 'TI'];
   options: string[] = ['All', 'Esp'];
   isSerie = true;
@@ -28,7 +32,9 @@ export class CuClassComponent implements OnInit {
   id: number[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private courseService: CoursesService) { }
+              private courseService: CoursesService,
+              private classesService: ClassService,
+              public dialogRef: MatDialogRef<CuClassComponent>) { }
 
   ngOnInit() {
     this.ClassesForm();
@@ -53,14 +59,12 @@ export class CuClassComponent implements OnInit {
 
     this.TakeCourseSelected = this.ClassForm.get('coursesList').value;
 
-    for (var i = 0; i < this.TakeCourseSelected.length; i++) {
+    for(var i = 0; i < this.TakeCourseSelected.length; i++) {
       this.idCourserarray.push(this.TakeCourseSelected[i].id);
       this.idTeacherarray.push(this.TakeCourseSelected[i].course_teacher.id);
     }
 
-    console.log(this.idCourserarray + ' , ' + this.idTeacherarray);
-
-    // this.idarray.push(this.ClassForm.get('coursesList').value); this.TakeCourseSelected
+    // console.log(this.idCourserarray + ' , ' + this.idTeacherarray);
 
     const classes = new ClassesModel(
       this.ClassForm.get('class_number').value,
@@ -71,7 +75,12 @@ export class CuClassComponent implements OnInit {
       this.idTeacherarray
     );
 
-    console.log(classes);
+    // console.log(classes);
+
+    this.classesService.CreateClass(classes)
+      .subscribe((data) => {
+        console.log(data);
+      }, error => console.log(error));
   }
 
   /* Take serie in the form */
@@ -113,5 +122,8 @@ export class CuClassComponent implements OnInit {
     }
   }
 
+  ReturnFunct() {
+    this.dialogRef.close();
+  }
 
 }

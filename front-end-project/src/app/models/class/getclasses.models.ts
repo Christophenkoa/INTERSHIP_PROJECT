@@ -1,4 +1,5 @@
 import {GetcourseModel} from '../course/getcourses.model';
+import {TeacherModel} from '../teacher/teacher.model';
 
 export class GetClassesModel {
   id: number;
@@ -8,6 +9,6 @@ export class GetClassesModel {
     public level: string,
     public serie: string,
     public all_courses: GetcourseModel[],
-    public teachers: number[]
+    public teacher: TeacherModel[]
   ) {}
 }

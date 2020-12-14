@@ -20,7 +20,6 @@ export class BuildQuizComponent implements OnInit {
   success: boolean;
 
   myQuiz: Quiz;
-
   classes: GetClassesModel[] =  [new GetClassesModel(0,
     '', '', '', [], [])];
 

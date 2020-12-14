@@ -1,17 +1,19 @@
-export class StudentModel {
+import {CourseModel} from "../course/courses.model";
+import {ClassesModel} from "../class/classes.model";
+
+export class GetstudentModel {
   id: number;
-  constructor(public username: string,
-              public regis_number: string,
+  constructor(public regis_number: string,
               public first_name: string,
               public last_name: string,
               public password: string,
               public tel: number,
-              public dateOfBirth: string,
+              public dateOfBirth: Date,
               public gender: string,
               public is_active: boolean,
               public is_staff: boolean,
               public is_superuser: boolean,
-              public my_class: number,
-              public courses: number[]
-              ) {}
+              public my_class: ClassesModel,
+              public courses: CourseModel[]
+  ) {}
 }

@@ -4,26 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {CuStudentComponent} from '../cu-student/cu-student.component';
 import { MatDialogConfig } from '@angular/material';
 import { StudentModel } from '../../../models/student/student.model';
+import {StudentsService} from '../../../services/student/students.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 
 @Component({
   selector: 'app-crud-student',
@@ -32,37 +15,78 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CrudStudentComponent implements OnInit {
 
-  constructor(private dialog: MatDialog){ }
+  constructor(private dialog: MatDialog,
+              private studentService: StudentsService,
+              public infoBull: MatSnackBar) { }
 
-  /** Differents columns of the table **/
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
-  /** Filter the information in DataTable **/
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  /* Differents columns of the table */
+  studentColumns: string[] = ['regis_number', 'first_name', 'last_name', 'tel', 'dateOfBirth', 'gender', 'my_class', 'is_active', 'is_superuser', 'is_staff', 'actions'];
+  STUDENT_DATA: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  /* Filter the information in DataTable */
+  applyFilter(filterValue: string) {
+    this.STUDENT_DATA.filter = filterValue.trim().toLowerCase();
+  }
+
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.studentService.GetAllStudent()
+      .subscribe(
+        (data) => {
+          console.log(data);
+        this.STUDENT_DATA = new MatTableDataSource(data);
+        this.STUDENT_DATA.paginator = this.paginator;
+      }, (error => console.log(error)));
   }
 
-  /** Open the CU(Create and Update) interface **/
+  /* Open the CU(Create and Update) interface */
   OpenCreateMethod() {
-    const dialog = new MatDialogConfig();
-    dialog.width = '50%';
-    dialog.height = '75%';
-    dialog.disableClose = true;
-    this.dialog.open(CuStudentComponent, dialog);
+    const dialog = this.dialog.open(CuStudentComponent, {
+      width : '50%',
+      height : '75%',
+      disableClose : true
+    });
+    dialog.afterClosed()
+      .subscribe(data => {
+        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+          duration: 3000
+        });
+      });
   }
 
-  OpenUpdateMethod() {
-    const dialog = new MatDialogConfig();
-    dialog.width = '50%';
-    dialog.height = '75%';
-    dialog.disableClose = true;
-    this.dialog.open(CuStudentComponent, dialog);
+  OpenUpdateMethod(dataStudent) {
+    const dialog = this.dialog.open(CuStudentComponent, {
+      width : '50%',
+      height : '75%',
+      disableClose : true,
+      data: dataStudent,
+    });
+    dialog.afterClosed()
+      .subscribe(data => {
+        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
+          duration: 3000
+        });
+      });
+  }
+
+  /* Function that delete a teacher in Data base */
+  DeleteMethod(idStudent) {
+    console.log(idStudent);
+    if (confirm('Are you sure to delete this student ?') === true) {
+      this.studentService.DeleteStudent(idStudent)
+        .subscribe(data => {
+          if (data) {
+            this.infoBull.open('Student has been deleted !', 'Close', {
+              duration: 3000
+            });
+          }
+        }, error => {
+          this.infoBull.open('Server Error!', 'Close', {
+            duration: 3000
+          });
+          console.log(error);
+        });
+    }
   }
 }
