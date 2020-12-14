@@ -51,18 +51,21 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    # my_class = serializers.SerializerMethodField()
+    my_class = serializers.SerializerMethodField()
     # courses = serializers.SerializerMethodField()
 
     class Meta:
         model = Student
         # fields = '__all__'
-        fields = ['regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password', 'dateOfBirth',
+        fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password', 'dateOfBirth',
                     'my_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
 
-        def create(self, validate_data):
-            print("--------------------",validate_data)
-            return
+    def get_my_class(self, obj):
+        return ClassSerializer(obj.my_class).data
+
+    def create(self,validate_data):
+        print("--------------------",validate_data)
+        return
 
     # def get_my_class(self, obj):
     #     return ClassSerializer(obj.my_class).data

@@ -73,6 +73,7 @@ export class CrudTeacherComponent implements OnInit {
   }
   /* Function that delete a teacher in Data base */
   DeleteMethod(idTeacher) {
+    console.log(idTeacher);
     if (confirm('Are you sure to delete this teacher ?') === true) {
       this.teacherService.DeleteTeacher(idTeacher)
         .subscribe(data => {

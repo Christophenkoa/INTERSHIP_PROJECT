@@ -6,6 +6,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ClassService} from '../../../services/classes/class.service';
 import {GetClassesModel} from '../../../models/class/getclasses.models';
+import * as moment from 'moment';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-cu-student',
@@ -17,13 +19,14 @@ export class CuStudentComponent implements OnInit {
   registerForm: FormGroup;
   classArray: GetClassesModel[] = [];
   classTaken: GetClassesModel;
-  idClass: number;
   idCourse: number[] = [];
+  dateofBirth: string;
 
   constructor(private formBuiler: FormBuilder,
               private studentsService: StudentsService,
               private classeService: ClassService,
               private infobull: MatSnackBar,
+              /*public datepipe: DatePipe,*/
               private dialogRef: MatDialogRef<CuStudentComponent>,
               @Inject(MAT_DIALOG_DATA) public Studentdata: any) { }
 
@@ -95,22 +98,25 @@ export class CuStudentComponent implements OnInit {
       this.idCourse.push(this.classTaken.all_courses[i].id);
     }
 
+    this.dateofBirth = moment(this.registerForm.get('dateOfBirth').value).format('YYYY-MM-DD');
+
     console.log(this.registerForm.get('dateOfBirth').value);
-    // console.log(this.classTaken);
     console.log(this.classTaken.id + ' , ' + this.idCourse);
     /* Retrieve values from the form */
     const student = new StudentModel( this.registerForm.get('regis_number').value,
+                                      this.registerForm.get('regis_number').value,
                                       this.registerForm.get('first_name').value,
                                       this.registerForm.get('last_name').value,
                                       password,
                                       this.registerForm.get('tel').value,
-                                      this.registerForm.get('dateOfBirth').value,
+                                      this.dateofBirth,
                                       this.registerForm.get('gender').value,
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value),
-                                      this.idClass,
+                                      this.classTaken.id,
                                       this.idCourse);
+    console.log(student);
     /* Send informations */
     this.studentsService.CreateStudent(student)
       .subscribe(data => {
@@ -137,6 +143,7 @@ export class CuStudentComponent implements OnInit {
 
     /* Retrieve values from the form */
     const student = new StudentModel( this.registerForm.get('regis_number').value,
+                                      this.registerForm.get('regis_number').value,
                                       this.registerForm.get('first_name').value,
                                       this.registerForm.get('last_name').value,
                                       this.Studentdata.password,
@@ -146,7 +153,7 @@ export class CuStudentComponent implements OnInit {
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value),
-                                      this.idClass,
+                                      this.classTaken.id,
                                       this.idCourse);
 
     this.classTaken = this.registerForm.get('my_class').value;

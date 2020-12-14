@@ -49,7 +49,7 @@
     <!-- my_class Column -->
     <ng-container matColumnDef="my_class">
       <th mat-header-cell *matHeaderCellDef> Class </th>
-      <td *matCellDef="let element"> {{element.my_class}} </td>
+      <td *matCellDef="let element"> {{element.my_class.level +' '+element.my_class.serie+' '+element.my_class.class_number+' '+element.my_class.option}} </td>
     </ng-container>
 
     <!-- is_active Column -->

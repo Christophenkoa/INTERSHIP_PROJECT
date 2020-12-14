@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+# class User:
+#     first_name = models.CharField(max_length=150, blank=True)
+#     last_name = models.CharField(max_length=150, blank=True)
+#     email = models.EmailField(max_length=150, blank=True)
+#     is_staff = models.BooleanField()
+#     is_active = models.BooleanField()
+#     is_superuser = models.BooleanField()
 
 class Admin(User):
     tel = models.PositiveIntegerField()

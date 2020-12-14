@@ -34,6 +34,7 @@ export class CrudStudentComponent implements OnInit {
     this.studentService.GetAllStudent()
       .subscribe(
         (data) => {
+          console.log(data);
         this.STUDENT_DATA = new MatTableDataSource(data);
         this.STUDENT_DATA.paginator = this.paginator;
       }, (error => console.log(error)));
@@ -71,6 +72,7 @@ export class CrudStudentComponent implements OnInit {
 
   /* Function that delete a teacher in Data base */
   DeleteMethod(idStudent) {
+    console.log(idStudent);
     if (confirm('Are you sure to delete this student ?') === true) {
       this.studentService.DeleteStudent(idStudent)
         .subscribe(data => {

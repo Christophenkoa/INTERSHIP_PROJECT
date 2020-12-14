@@ -2,6 +2,7 @@ import {CourseModel} from "../course/courses.model";
 import {ClassesModel} from "../class/classes.model";
 
 export class GetstudentModel {
+  id: number;
   constructor(public regis_number: string,
               public first_name: string,
               public last_name: string,
