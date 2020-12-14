@@ -39,7 +39,7 @@ export class CuStudentComponent implements OnInit {
         first_name : this.Studentdata.first_name,
         last_name : this.Studentdata.last_name,
         tel : this.Studentdata.tel,
-        my_class : this.Studentdata.myClass,
+        my_class : this.Studentdata.student_class,
         dateOfBirth : this.Studentdata.dateOfBirth,
         gender : this.Studentdata.gender,
         is_active : this.Studentdata.is_active,

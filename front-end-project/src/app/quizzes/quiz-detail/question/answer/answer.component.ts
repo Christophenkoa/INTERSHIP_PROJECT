@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Answer} from '../../../../models/quiz_folder/answer';
+import {QuizService} from '../../../../services/quizz/quiz.service';
 
 @Component({
   selector: 'app-answer',
@@ -11,10 +12,13 @@ export class AnswerComponent implements OnInit {
   @Input()
   answer: Answer;
 
-  @Input()
-  selectedAnswer: number;
-
   letter: string;
+
+  constructor(private quizService: QuizService) { }
+
+  ngOnInit() {
+    this.letter = String.fromCharCode(65 + this.answer.id);
+  }
 
   isSelected() {
     return this.select;
@@ -22,13 +26,7 @@ export class AnswerComponent implements OnInit {
 
   choose() {
     this.select = true;
-    console.log(this.answer.id);
-  }
-
-  constructor() { }
-
-  ngOnInit() {
-    this.letter = String.fromCharCode(65 + this.answer.id);
+    this.quizService.selectedAnswer.emit(this.answer);
   }
 
 }

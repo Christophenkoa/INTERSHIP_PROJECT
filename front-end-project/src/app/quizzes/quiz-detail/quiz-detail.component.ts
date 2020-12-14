@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {QuizService} from '../../services/quizz/quiz.service';
+import {Answer} from '../../models/quiz_folder/answer';
 
 @Component({
   selector: 'app-quiz-detail',
@@ -10,8 +11,11 @@ import {QuizService} from '../../services/quizz/quiz.service';
 export class QuizDetailComponent implements OnInit {
   quiz: Quiz = null;
   currentIndex = 0;
-  selectedAnswer: number;
-  answers = [];
+  tempUserAnswer: Answer = null;
+  userAnswerList: Answer[] = [];
+
+  nextDisable = false;
+  previousDisable = false;
 
   constructor(private quizService: QuizService) { }
 
@@ -21,44 +25,48 @@ export class QuizDetailComponent implements OnInit {
         (data: any) => {this.quiz = data; console.log(this.quiz); },
         (error) => {console.log(error); }
       );
+    this.quizService.selectedAnswer.subscribe(
+      (answer: Answer) => {
+        this.tempUserAnswer = answer;
+        console.log(this.tempUserAnswer);
+      }
+    );
+  }
+
+
+  submitQuiz() {
+    console.log('final result: ' + this.userAnswerList);
+    console.log(this.userAnswerList);
   }
 
   saveAnswer() {
-  }
-
-  submitQuiz() {
+    if (this.quiz.questions.length >= this.userAnswerList.length) {
+      if (this.tempUserAnswer != null) {
+        this.userAnswerList.push(this.tempUserAnswer);
+        this.tempUserAnswer = null;
+        console.log(this.userAnswerList);
+      } else {
+        // need an emitter here
+        this.nextDisable = true;
+      }
+    }
   }
 
   next() {
+    this.saveAnswer();
     if (this.currentIndex === this.quiz.questions.length - 1) {
       this.submitQuiz();
       return;
     }
-
-    if (this.selectedAnswer != null) {
-      this.saveAnswer();
-    }
-
     if (this.currentIndex !== this.quiz.questions.length - 1) {
       this.currentIndex += 1;
-      this.selectedAnswer = null;
     }
-  }
-
-  selectAnswer(id: number) {
-    console.log(id);
-    this.selectedAnswer = id;
-    this.answers[this.currentIndex] = id;
   }
 
   previous() {
-    if (this.selectedAnswer != null) {
-      this.saveAnswer();
-    }
-
+    this.userAnswerList.length === 0 ? this.previousDisable = true : this.userAnswerList.pop();
     if (this.currentIndex !== 0) {
       this.currentIndex -= 1;
-      this.selectedAnswer = null;
     }
   }
 
