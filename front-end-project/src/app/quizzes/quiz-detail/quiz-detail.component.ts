@@ -16,7 +16,7 @@ export class QuizDetailComponent implements OnInit {
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
-    this.quizService.getSelectedQuiz(30)
+    this.quizService.getSelectedQuiz(1)
       .subscribe(
         (data: any) => {this.quiz = data; console.log(this.quiz); },
         (error) => {console.log(error); }

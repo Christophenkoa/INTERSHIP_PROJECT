@@ -7,7 +7,7 @@ export class GetClassesModel {
     public option: string,
     public level: string,
     public serie: string,
-    public courses: GetcourseModel[],
-    public teacher: number[]
+    public all_courses: GetcourseModel[],
+    public teachers: number[]
   ) {}
 }

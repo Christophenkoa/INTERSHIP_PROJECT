@@ -37,6 +37,7 @@ import { CuStudentComponent } from './crud/student/cu-student/cu-student.compone
 import { CuTeacherComponent } from './crud/teacher/cu-teacher/cu-teacher.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 
+
 /*CKE Editor import*/
 import { CKEditorModule } from 'ng2-ckeditor';
 
@@ -72,6 +73,7 @@ import {StudentsService} from './services/student/students.service';
 import {TeachersService} from './services/teacher/teachers.service';
 import {QuizService} from './services/quizz/quiz.service';
 import {NoteService} from './services/notes/note.service';
+import { StudentHomeComponent } from './home/student-home/student-home.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +102,7 @@ import {NoteService} from './services/notes/note.service';
     QuizResultComponent,
     BuildQuizComponent,
     DisplayCourseComponent,
+    StudentHomeComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
   imports: [

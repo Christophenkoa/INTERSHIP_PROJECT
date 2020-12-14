@@ -7,6 +7,7 @@ import {Answer} from '../../../../models/quiz_folder/answer';
   styleUrls: ['./answer.component.scss']
 })
 export class AnswerComponent implements OnInit {
+  select = false;
   @Input()
   answer: Answer;
 
@@ -16,7 +17,12 @@ export class AnswerComponent implements OnInit {
   letter: string;
 
   isSelected() {
-    return true;
+    return this.select;
+  }
+
+  choose() {
+    this.select = true;
+    console.log(this.answer.id);
   }
 
   constructor() { }
