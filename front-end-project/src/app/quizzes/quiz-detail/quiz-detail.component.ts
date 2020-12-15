@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Answer} from '../../models/quiz_folder/answer';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-quiz-detail',
@@ -17,7 +18,7 @@ export class QuizDetailComponent implements OnInit {
   nextDisable = false;
   previousDisable = false;
 
-  constructor(private quizService: QuizService) { }
+  constructor(private quizService: QuizService, private router: Router) { }
 
   ngOnInit() {
     this.quizService.getSelectedQuiz(1)
@@ -37,6 +38,9 @@ export class QuizDetailComponent implements OnInit {
   submitQuiz() {
     console.log('final result: ' + this.userAnswerList);
     console.log(this.userAnswerList);
+    // save user answers
+    this.quizService.saveUserAnswers(this.userAnswerList);
+    this.router.navigate(['/quiz-result']);
   }
 
   saveAnswer() {

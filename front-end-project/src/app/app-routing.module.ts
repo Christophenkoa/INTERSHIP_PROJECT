@@ -21,6 +21,7 @@ import {QuizListComponent} from './quizzes/quiz-list/quiz-list.component';
 import {QuizDetailComponent} from './quizzes/quiz-detail/quiz-detail.component';
 import {DisplayCourseComponent} from './display-course/display-course.component';
 import {StudentHomeComponent} from './home/student-home/student-home.component';
+import {QuizResultComponent} from './quizzes/quiz-result/quiz-result.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path : 'student',
     component: StudentHomeComponent,
+  },
+  {
+    path : 'quiz-result',
+    component: QuizResultComponent,
   },
   {
     path : 'navMenu/class-info',
