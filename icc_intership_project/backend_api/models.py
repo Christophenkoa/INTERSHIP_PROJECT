@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 #     is_active = models.BooleanField()
 #     is_superuser = models.BooleanField()
 
+
 class Admin(User):
     tel = models.PositiveIntegerField()
 
@@ -36,6 +37,7 @@ class Course(models.Model):
     coefficient = models.IntegerField()
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    # teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
         return self.entitled
@@ -46,7 +48,7 @@ class Class(models.Model):
     class_number = models.IntegerField(blank=True)
     option = models.CharField(max_length=10, null=True, blank=True)
     serie = models.CharField(max_length=5, null=True, blank=True)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
     courses = models.ManyToManyField(Course, blank=True)
     teacher = models.ManyToManyField(Teacher, blank=True)
 
@@ -59,7 +61,7 @@ class Student(User):
     dateOfBirth = models.DateField()
     gender = models.CharField(max_length=1)
     regis_number = models.CharField(max_length=255)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )
 
@@ -96,7 +98,7 @@ class Quiz(models.Model):
     classe = models.ForeignKey(Class, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     student = models.ManyToManyField(Student, through='QuizTaker',
-                                     through_fields=('associated_quiz', 'associated_student'),)
+                                     through_fields=('associated_quiz', 'associated_student'), )
 
     @property
     def questions(self):

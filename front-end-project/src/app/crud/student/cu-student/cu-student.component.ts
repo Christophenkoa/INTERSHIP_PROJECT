@@ -7,7 +7,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ClassService} from '../../../services/classes/class.service';
 import {GetClassesModel} from '../../../models/class/getclasses.models';
 import * as moment from 'moment';
-import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-cu-student',
@@ -26,7 +25,6 @@ export class CuStudentComponent implements OnInit {
               private studentsService: StudentsService,
               private classeService: ClassService,
               private infobull: MatSnackBar,
-              /*public datepipe: DatePipe,*/
               private dialogRef: MatDialogRef<CuStudentComponent>,
               @Inject(MAT_DIALOG_DATA) public Studentdata: any) { }
 
@@ -39,7 +37,8 @@ export class CuStudentComponent implements OnInit {
         first_name : this.Studentdata.first_name,
         last_name : this.Studentdata.last_name,
         tel : this.Studentdata.tel,
-        my_class : this.Studentdata.my_class,
+        // my_class : this.Studentdata.my_class,
+        my_class : this.Studentdata.student_class,
         dateOfBirth : this.Studentdata.dateOfBirth,
         gender : this.Studentdata.gender,
         is_active : this.Studentdata.is_active,
@@ -70,7 +69,7 @@ export class CuStudentComponent implements OnInit {
   OnSubmitForm() {
     /* Function which convert a string value to boolean */
     function convert(value) {
-      if (value === "true" || value === 'true') {
+      if (value === 'true' || value === 'true') {
         return true;
       } else {
         return false;
@@ -79,11 +78,12 @@ export class CuStudentComponent implements OnInit {
 
     /* Function that generates a 10-character password */
     function makePassword() {
-      var text = '';
-      var lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
+      let text = '';
+      const lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
 
-      for (var i = 0; i < 10; i++)
+      for (let i = 0; i < 10; i++) {
         text += lettre.charAt(Math.floor(Math.random() * lettre.length));
+      }
 
       return text;
     }
@@ -94,14 +94,15 @@ export class CuStudentComponent implements OnInit {
 
     this.classTaken = this.registerForm.get('my_class').value;
 
-    for (var i = 0; i < this.classTaken.all_courses.length; i++) {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.classTaken.all_courses.length; i++) {
       this.idCourse.push(this.classTaken.all_courses[i].id);
     }
 
     this.dateofBirth = moment(this.registerForm.get('dateOfBirth').value).format('YYYY-MM-DD');
 
-    console.log(this.registerForm.get('dateOfBirth').value);
-    console.log(this.classTaken.id + ' , ' + this.idCourse);
+    // console.log(this.registerForm.get('dateOfBirth').value);
+    // console.log(this.classTaken.id + ' , ' + this.idCourse);
     /* Retrieve values from the form */
     const student = new StudentModel( this.registerForm.get('regis_number').value,
                                       this.registerForm.get('regis_number').value,
@@ -140,7 +141,13 @@ export class CuStudentComponent implements OnInit {
         return true;
       }
     }
+    this.classTaken = this.registerForm.get('my_class').value;
+    this.dateofBirth = moment(this.registerForm.get('dateOfBirth').value).format('YYYY-MM-DD');
 
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.classTaken.all_courses.length; i++) {
+      this.idCourse.push(this.classTaken.all_courses[i].id);
+    }
     /* Retrieve values from the form */
     const student = new StudentModel( this.registerForm.get('regis_number').value,
                                       this.registerForm.get('regis_number').value,
@@ -148,7 +155,7 @@ export class CuStudentComponent implements OnInit {
                                       this.registerForm.get('last_name').value,
                                       this.Studentdata.password,
                                       this.registerForm.get('tel').value,
-                                      this.registerForm.get('dateOfBirth').value,
+                                      this.dateofBirth,
                                       this.registerForm.get('gender').value,
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
@@ -156,16 +163,13 @@ export class CuStudentComponent implements OnInit {
                                       this.classTaken.id,
                                       this.idCourse);
 
-    this.classTaken = this.registerForm.get('my_class').value;
-
-    for (var i = 0; i < this.classTaken.all_courses.length; i++) {
-      this.idCourse.push(this.classTaken.all_courses[i].id);
-    }
-
     this.studentsService.UpdateStudent(student, this.Studentdata.id)
-      .subscribe();
+      .subscribe(data => {
+        console.log(data);
+      }, error => console.log(error));
   }
 
+  /* Method that take all class info */
   GetAllClasses() {
     this.classeService.GetAllClasses()
       .subscribe(data => {
@@ -174,6 +178,7 @@ export class CuStudentComponent implements OnInit {
       }, error => console.log(error));
   }
 
+  /* Close the dialog window */
   ClosePopup() {
     this.dialogRef.close();
   }

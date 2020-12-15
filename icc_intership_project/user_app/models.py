@@ -1,16 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from icc_intership_project.class_management_app.models import Class, Course
 
 
 # Create your models here.
-class Admin(AbstractUser):
+class Admin(User):
     email = models.EmailField()
     password = models.CharField(max_length=255)
     tel = models.PositiveIntegerField()
 
 
-class Teacher(AbstractUser):
+class Teacher(User):
     gender = models.CharField(max_length=1)
     admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
 

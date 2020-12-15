@@ -21,10 +21,10 @@ export class StudentsService {
   }
 
   DeleteStudent(id: number) {
-    return this.http.delete('http://127.0.0.1:8000/user/student/student/' + id + '/');
+    return this.http.delete('http://127.0.0.1:8000/user/student/' + id + '/');
   }
 
   UpdateStudent(student: StudentModel, id: number) {
-    return this.http.put('http://127.0.0.1:8000/user/student/student/' + id + '/', student);
+    return this.http.put('http://127.0.0.1:8000/user/student/' + id + '/', student);
   }
 }

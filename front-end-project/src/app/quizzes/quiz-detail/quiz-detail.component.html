@@ -11,10 +11,10 @@
   </div>
 
   <div class="buttons" *ngIf="quiz!=null">
-    <button (click)="previous()">
+    <button (click)="previous()" [disabled]="previousDisable">
       Previous
     </button>
-    <button  (click)="next()" [innerHtml]="currentIndex == quiz.questions.length - 1 ? 'Submit' : 'Next'">
+    <button  (click)="next()" [disabled]="nextDisable" [innerHtml]="currentIndex == quiz.questions.length - 1 ? 'Submit' : 'Next'">
     </button>
   </div>
 </div>
