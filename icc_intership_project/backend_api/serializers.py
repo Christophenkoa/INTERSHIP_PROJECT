@@ -22,7 +22,6 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
-    #teacher = TeacherSerializer
     course_teacher = serializers.SerializerMethodField()
 
     class Meta:
@@ -37,7 +36,6 @@ class ClassSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
     all_courses = serializers.SerializerMethodField()
     teachers = serializers.SerializerMethodField()
-    # teacher = TeacherSerializer
 
     class Meta:
         model = Class
@@ -51,25 +49,20 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    my_class = serializers.SerializerMethodField()
-    # courses = serializers.SerializerMethodField()
+    # my_class = serializers.SerializerMethodField()
 
     class Meta:
         model = Student
-        # fields = '__all__'
-        fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password', 'dateOfBirth',
-                    'my_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
-
-    def get_my_class(self, obj):
-        return ClassSerializer(obj.my_class).data
-
-    def create(self,validate_data):
-        print("--------------------",validate_data)
-        return
+        fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
+                  'dateOfBirth', 'my_admin', 'is_superuser', 'is_staff', 'is_active', 'my_class', 'courses']
 
     # def get_my_class(self, obj):
     #     return ClassSerializer(obj.my_class).data
-    #
+
+    # def create(self,validate_data):
+    #     print("--------------------",validate_data)
+    #     return
+
     # def get_courses(self, obj):
     #     return CourseSerializer(obj.my_class.courses, many=True).data
     #     fields = ['first_name', 'last_name', 'username', 'evaluation', 'email', 'password', 'dateOfBirth',

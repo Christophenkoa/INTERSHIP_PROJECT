@@ -36,7 +36,6 @@ class Course(models.Model):
     coefficient = models.IntegerField()
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    # teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
         return self.entitled
