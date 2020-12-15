@@ -50,7 +50,7 @@ class ClassSerializer(serializers.ModelSerializer):
         return TeacherSerializer(obj.teacher.all(), many=True).data
 
     def get_all_students(self, obj):
-        return 
+        return
 
 
 class StudentSerializer(serializers.ModelSerializer):

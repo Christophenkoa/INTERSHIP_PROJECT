@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {CuClassComponent} from '../crud/cu-class/cu-class.component';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ClassService} from "../services/classes/class.service";
-import {GetClassesModel} from "../models/class/getclasses.models";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ClassService} from '../services/classes/class.service';
+import {GetClassesModel} from '../models/class/getclasses.models';
 
 @Component({
   selector: 'app-class-view',
@@ -35,12 +35,13 @@ export class ClassViewComponent implements OnInit {
       });
   }
 
+  /* Get all classes and display them in this page */
   GetAllClasses() {
     this.classesService.GetAllClasses()
       .subscribe(data => {
         this.Allclasses = data;
         console.log(this.Allclasses);
-      })
+      });
   }
 
 }

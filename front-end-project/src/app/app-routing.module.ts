@@ -45,7 +45,7 @@ const routes: Routes = [
     component: StudentHomeComponent,
   },
   {
-    path : 'navMenu/class-info',
+    path : 'navMenu/class-info/:id',
     component: ClassInfoComponent,
   },
   {

@@ -6,18 +6,18 @@
 
 <!-- class group1 -->
 <div class="row m-3">
-  <mat-card class="col-sm-4">
+  <mat-card class="col-sm-4" *ngFor="let classe of Allclasses">
     <div class="p-2 bg-light">
       <mat-card-header>
         <div class="mx-auto">
-          <mat-card-title>6ème 1</mat-card-title>
+          <mat-card-title>{{ classe.level + ' ' + classe.class_number + ' ' + classe.serie + ' ' + classe.option }}</mat-card-title>
           <mat-card-subtitle>card subtitle</mat-card-subtitle>
         </div>
       </mat-card-header>
 
       <mat-card-content>
         <div class="text-center">
-          <button mat-raised-button color="primary" style="margin-right: 5px" routerLink="/navMenu/class-info"> Class detail </button>
+          <button mat-raised-button color="primary" style="margin-right: 5px" routerLink="/navMenu/class-info/{{ classe.id }}"> Class detail </button>
           <button mat-raised-button color="accent" routerLink="/navMenu/add-note"> Set mark </button>
         </div>
       </mat-card-content>
