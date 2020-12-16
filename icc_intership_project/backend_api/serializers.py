@@ -13,7 +13,8 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender',
+                  'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
 
     # def create(self,validate_data):
     #     print("--------------------",validate_data)
@@ -22,7 +23,6 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
-    #teacher = TeacherSerializer
     course_teacher = serializers.SerializerMethodField()
 
     class Meta:
@@ -37,7 +37,7 @@ class ClassSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
     all_courses = serializers.SerializerMethodField()
     teachers = serializers.SerializerMethodField()
-    # teacher = TeacherSerializer
+    all_students = serializers.SerializerMethodField()
 
     class Meta:
         model = Class
@@ -49,9 +49,13 @@ class ClassSerializer(serializers.ModelSerializer):
     def get_teachers(self, obj):
         return TeacherSerializer(obj.teacher.all(), many=True).data
 
+    def get_all_students(self, obj):
+        return
+
 
 class StudentSerializer(serializers.ModelSerializer):
     # my_class = serializers.SerializerMethodField()
+
     student_class = serializers.SerializerMethodField()
     # courses = serializers.SerializerMethodField()
 
@@ -64,6 +68,10 @@ class StudentSerializer(serializers.ModelSerializer):
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
 
+    # def create(self,validate_data):
+    #     print("--------------------",validate_data)
+    #     return
+
     # def get_my_class(self, obj):
     #     return ClassSerializer(obj.my_class).data
 
@@ -71,9 +79,6 @@ class StudentSerializer(serializers.ModelSerializer):
     #     print("--------------------",validate_data)
     #     return
 
-    # def get_my_class(self, obj):
-    #     return ClassSerializer(obj.my_class).data
-    #
     # def get_courses(self, obj):
     #     return CourseSerializer(obj.my_class.courses, many=True).data
     #     fields = ['first_name', 'last_name', 'username', 'evaluation', 'email', 'password', 'dateOfBirth',

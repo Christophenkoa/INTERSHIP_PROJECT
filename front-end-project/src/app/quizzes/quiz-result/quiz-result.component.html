@@ -1,30 +1,35 @@
 <div *ngIf="userAnswers.length != 0 && myQuiz.questions.length !=0">
 
-  <div class="m-5">
-    <img alt="" class="img-fluid"
-    src="../../../assets/images/congratulation.jpg">
+  <div style="display: flex;justify-content: center;align-items: baseline;">
+    <div>
+      <img alt="" class="img-fluid"
+           src="../../../assets/images/congratulation.jpg">
+    </div>
+    <div>
+      <mat-card>
+        <h4>
+          Congratulation you reach til the end<br>
+          Your score is: <br>
+          <b>{{result.toFixed(2)}}/100</b><br>
+          <b *ngIf="result<50"><em> Sorry you failed the quiz test, try again!</em></b>
+          <b *ngIf="result>= 50"><em> Congratulation you succeeded the quiz test!</em></b><br>
+          <em>Always try to improve yourself!</em>
+        </h4>
+      </mat-card>
+    </div>
   </div>
 
-  <mat-accordion>
+  <mat-accordion class="m-2">
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Check your result here
+          Consult your result here
         </mat-panel-title>
       </mat-expansion-panel-header>
 
         <div class="m-3 p-2">
           <div *ngFor="let question of myQuiz.questions; let i = index">
-<!--            <span>{{answer.answer}}</span>-->
-<!--            <span *ngIf="answer.is_true else false_answer" class="material-icons" style="color: blue;">-->
-<!--              check_circle-->
-<!--            </span>-->
-<!--            <ng-template #false_answer>-->
-<!--              <span class="material-icons" style="color: red;">-->
-<!--                cancel-->
-<!--              </span>-->
-<!--            </ng-template>-->
 
             <div class="">
                 <span class="font-weight-bold">{{question.question_desc}}</span>

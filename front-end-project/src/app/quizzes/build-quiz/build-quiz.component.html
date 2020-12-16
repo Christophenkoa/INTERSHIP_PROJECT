@@ -24,8 +24,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-<!--    <p> Selected food: {{classes[selectedClass].all_courses[0].entitled}} </p>-->
-    <p> Selected food: {{selectedClass}} </p>
+
     <div>
 
       <mat-form-field appearance="fill">
@@ -73,9 +72,9 @@
                   <input matInput placeholder="enter a proposition" formControlName="answer">
                 </mat-form-field>
 
-                <mat-radio-group formControlName="isCorrect">
+                <mat-radio-group formControlName="is_true">
                   <mat-radio-button class="mr-1" value="true">True</mat-radio-button>
-                  <mat-radio-button class="example-margin" value="false" checked>False</mat-radio-button>
+                  <mat-radio-button class="" value="false" checked>False</mat-radio-button>
                 </mat-radio-group>
 
                 <span *ngIf="getAnswers(question).length > 1">
@@ -132,4 +131,3 @@
   <h3>Quiz created successfully!</h3>
 </div>
 
-<!--<pre> {{quizForm.value | json}} </pre>-->

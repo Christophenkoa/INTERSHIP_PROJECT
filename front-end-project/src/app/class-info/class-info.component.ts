@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatPaginator} from '@angular/material';
 import {MatTableDataSource} from '@angular/material/table';
 import {CuClassComponent} from '../crud/cu-class/cu-class.component';
+import {ActivatedRoute} from '@angular/router';
+import {ClassService} from "../services/classes/class.service";
 
 @Component({
   selector: 'app-class-info',
@@ -10,32 +12,34 @@ import {CuClassComponent} from '../crud/cu-class/cu-class.component';
 })
 export class ClassInfoComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,
+              private route: ActivatedRoute,
+              private classService: ClassService) {
   }
 
   /** First table student **/
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  studentColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  STUDENT_DATA: MatTableDataSource<any>;
 
   /** second table teacher **/
   teacherColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSources = new MatTableDataSource<PeriodicVar>(TEACHER_DATA);
+  TEACHER_DATA: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) studentpaginator: MatPaginator;
 
   @ViewChild(MatPaginator, {static: true}) teacherpaginator: MatPaginator;
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSources.paginator = this.teacherpaginator;
+    this.STUDENT_DATA.paginator = this.studentpaginator;
+    this.PopulatePage();
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.STUDENT_DATA.filter = filterValue.trim().toLowerCase();
   }
 
   teacherFilter(filterVal: string) {
-    this.dataSources.filter = filterVal.trim().toLowerCase();
+    this.TEACHER_DATA.filter = filterVal.trim().toLowerCase();
   }
 
   OpenCUMethod() {
@@ -44,6 +48,18 @@ export class ClassInfoComponent implements OnInit {
     dialog.height = '60%';
     dialog.disableClose = true;
     this.dialog.open(CuClassComponent, dialog);
+  }
+
+  /* Display all students, teachers and courses in the class selected. */
+  PopulatePage() {
+    /* For teacher */
+    const id = this.route.snapshot.params['id'];
+    console.log(id);
+    this.classService.GetSingleClass(+id)
+      .subscribe((TeacherData) => {
+        this.TEACHER_DATA = new MatTableDataSource(TeacherData);
+        this.TEACHER_DATA.paginator = this.teacherpaginator;
+      }, error => console.log(error));
   }
 }
 

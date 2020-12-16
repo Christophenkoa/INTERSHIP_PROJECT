@@ -15,7 +15,4 @@ export class QuestionComponent implements OnInit {
   ngOnInit() {
     console.log(this.question);
   }
-  isSelected() {
-    return true;
-  }
 }

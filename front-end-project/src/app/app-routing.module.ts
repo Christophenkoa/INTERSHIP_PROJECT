@@ -50,7 +50,7 @@ const routes: Routes = [
     component: QuizResultComponent,
   },
   {
-    path : 'navMenu/class-info',
+    path : 'navMenu/class-info/:id',
     component: ClassInfoComponent,
   },
   {

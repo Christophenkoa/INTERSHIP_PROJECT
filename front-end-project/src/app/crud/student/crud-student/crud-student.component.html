@@ -55,19 +55,19 @@
     <!-- is_active Column -->
     <ng-container matColumnDef="is_active">
       <th mat-header-cell *matHeaderCellDef> Is_active ? </th>
-      <td *matCellDef="let element"> {{element.is_active}} </td>
+      <td *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_active}} </mat-chip></mat-chip-list></td>
     </ng-container>
 
     <!-- is_superuser Column -->
     <ng-container matColumnDef="is_superuser">
       <th mat-header-cell *matHeaderCellDef> Is_superuser ? </th>
-      <td *matCellDef="let element"> {{element.is_superuser}} </td>
+      <td *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_superuser}} </mat-chip></mat-chip-list></td>
     </ng-container>
 
     <!-- is_staff Column -->
     <ng-container matColumnDef="is_staff">
       <th mat-header-cell *matHeaderCellDef> Is_staff ? </th>
-      <td *matCellDef="let element"> {{element.is_staff}} </td>
+      <td *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_staff}} </mat-chip></mat-chip-list></td>
     </ng-container>
 
     <!-- Icon Column -->

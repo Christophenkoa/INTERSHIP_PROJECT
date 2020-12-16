@@ -34,7 +34,7 @@ export class CrudStudentComponent implements OnInit {
     this.studentService.GetAllStudent()
       .subscribe(
         (data) => {
-          console.log(data);
+        //  console.log(data);
         this.STUDENT_DATA = new MatTableDataSource(data);
         this.STUDENT_DATA.paginator = this.paginator;
       }, (error => console.log(error)));
