@@ -22,28 +22,33 @@ export class QuizResultComponent implements OnInit {
     console.log('quiz result');
     this.userAnswers = this.quizService.getUserAnswers();
     console.log(this.userAnswers);
-    this.performScore();
     this.quizService.getSelectedQuiz(2).subscribe(
-      (data: Quiz) => {this.myQuiz = data; }
+      (data: Quiz) => {this.myQuiz = data; this.performScore(); }
     );
   }
 
   performScore() {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.userAnswers.length; i++) {
-      if (this.userAnswers[i].is_true) {
-        this.mark = this.mark + 1;
+      if (this.userAnswers[i]) {
+        if (this.userAnswers[i].is_true) {
+          this.mark = this.mark + 1;
+        }
       }
     }
-    this.result = ((this.mark / this.userAnswers.length) * 100);
+    this.result = ((this.mark / this.myQuiz.questions.length) * 100);
   }
 
   setColor(index: number, answer: Answer): string {
-    if (this.userAnswers[index].id === answer.id) {
-      if (this.userAnswers[index].is_true) {
-        return 'green';
+    if (this.userAnswers[index]) {
+      if (this.userAnswers[index].id === answer.id) {
+        if (this.userAnswers[index].is_true) {
+          return 'green';
+        } else {
+          return 'red';
+        }
       } else {
-        return 'red';
+        return 'white';
       }
     } else {
       return 'white';

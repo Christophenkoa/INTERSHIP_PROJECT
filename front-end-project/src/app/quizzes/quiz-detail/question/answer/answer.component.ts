@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Answer} from '../../../../models/quiz_folder/answer';
 import {QuizService} from '../../../../services/quizz/quiz.service';
 
@@ -8,9 +8,12 @@ import {QuizService} from '../../../../services/quizz/quiz.service';
   styleUrls: ['./answer.component.scss']
 })
 export class AnswerComponent implements OnInit {
-  select = false;
+
   @Input()
   answer: Answer;
+
+  @Input()
+  selectedAnswer: number;
 
   letter: string;
 
@@ -21,11 +24,10 @@ export class AnswerComponent implements OnInit {
   }
 
   isSelected() {
-    return this.select;
+    return this.selectedAnswer === this.answer.id;
   }
 
   choose() {
-    this.select = true;
     this.quizService.selectedAnswer.emit(this.answer);
   }
 

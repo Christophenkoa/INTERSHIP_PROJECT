@@ -10,6 +10,9 @@ export class QuestionComponent implements OnInit {
   @Input()
   question: Question;
 
+  @Input()
+  selectedAnswer;
+
   constructor() { }
 
   ngOnInit() {

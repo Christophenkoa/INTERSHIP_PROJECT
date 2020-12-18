@@ -14,7 +14,6 @@ export class QuizService {
   /* manage user choices*/
   userAnswers: Answer[] = [];
 
-
   constructor(private http: HttpClient) {}
 
   /* manage user choices*/

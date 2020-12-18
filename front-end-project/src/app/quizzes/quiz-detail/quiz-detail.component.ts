@@ -14,6 +14,7 @@ export class QuizDetailComponent implements OnInit {
   currentIndex = 0;
   tempUserAnswer: Answer = null;
   userAnswerList: Answer[] = [];
+  selectedAnswer: number;
 
   nextDisable = false;
   previousDisable = false;
@@ -29,11 +30,11 @@ export class QuizDetailComponent implements OnInit {
     this.quizService.selectedAnswer.subscribe(
       (answer: Answer) => {
         this.tempUserAnswer = answer;
+        this.selectedAnswer = this.tempUserAnswer.id;
         console.log(this.tempUserAnswer);
       }
     );
   }
-
 
   submitQuiz() {
     console.log('final result: ' + this.userAnswerList);
@@ -44,17 +45,13 @@ export class QuizDetailComponent implements OnInit {
   }
 
   saveAnswer() {
-    if (this.quiz.questions.length >= this.userAnswerList.length) {
+      this.previousDisable = false;
       if (this.tempUserAnswer != null) {
+        this.selectedAnswer = this.tempUserAnswer.id;
         this.userAnswerList.push(this.tempUserAnswer);
         this.tempUserAnswer = null;
-        console.log(this.userAnswerList);
-      } else {
-        // need an emitter here
-        this.nextDisable = true;
       }
     }
-  }
 
   next() {
     this.saveAnswer();
@@ -65,10 +62,18 @@ export class QuizDetailComponent implements OnInit {
     if (this.currentIndex !== this.quiz.questions.length - 1) {
       this.currentIndex += 1;
     }
+    console.log('nextDisable', this.nextDisable);
   }
 
   previous() {
-    this.userAnswerList.length === 0 ? this.previousDisable = true : this.userAnswerList.pop();
+    if (this.currentIndex === 0) {
+      this.previousDisable = true;
+      console.log('previousDisabled' + this.previousDisable);
+    }
+    if (this.userAnswerList.length === 0) {
+      this.userAnswerList.pop();
+    }
+
     if (this.currentIndex !== 0) {
       this.currentIndex -= 1;
     }
