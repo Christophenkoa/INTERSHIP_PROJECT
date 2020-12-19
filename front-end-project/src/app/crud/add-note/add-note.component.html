@@ -1,24 +1,35 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container" style="text-align: center">
-    <h1>Add note</h1>
+    <h1>Add mark</h1>
   </div>
 </div>
 
 <mat-card style="text-align: center">
-  <mat-card-header >
-    <mat-card-title > Course : Chemistry </mat-card-title>
-  </mat-card-header>
+
   <mat-dialog-content>
     <form (ngSubmit)="OnsubmitNote()" [formGroup]="NoteForm">
+      <mat-card-header >
+        <mat-card-subtitle > Course :
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label>Choose the course</mat-label>
+            <mat-select formControlName="coursesChoose" matInput required>
+              <mat-option *ngFor="let choose of options" [value]="choose">
+                {{ choose }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="NoteForm.get('coursesChoose').errors?.required">
+              Required course
+            </mat-error>
+          </mat-form-field>
+        </mat-card-subtitle>
+      </mat-card-header>
       <mat-form-field class="full-width" appearance="legacy" style="margin-right: -50px;margin-left: auto">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" [matAutocomplete]="auto" placeholder="Enter name..." required>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filterOptions | async"
-                      [value]="option">
+        <mat-select matInput formControlName="name" required>
+          <mat-option *ngFor="let option of options" [value]="option">
             {{ option }}
           </mat-option>
-        </mat-autocomplete>
+        </mat-select>
         <mat-error *ngIf="NoteForm.get('name').errors?.required">
           Required name
         </mat-error>

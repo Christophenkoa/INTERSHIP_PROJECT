@@ -17,11 +17,15 @@ export class CoursesService {
   }
 
   CreateCourse(coursesData: CourseModel) {
-    console.log(coursesData);
+    // console.log(coursesData);
     return this.http.post(this.url, coursesData);
   }
 
   DeleteCourse(id: number) {
-    return this.http.delete(this.url + '/' + id + '/');
+    return this.http.delete(this.url + id + '/');
+  }
+
+  UpdateCourse(id: number, coursesData: CourseModel) {
+    return this.http.put(this.url + id + '/', coursesData);
   }
 }

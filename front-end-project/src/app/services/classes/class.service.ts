@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ClassesModel} from '../../models/class/classes.model';
+import {GetClassesModel} from "../../models/class/getclasses.models";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class ClassService {
     return this.http.get<any[]>(this.url);
   }
 
-  GetSingleClass(id: number): Observable<any[]>  {
-    return this.http.get<any[]>(this.url + id + '/');
+  GetSingleClass(id: number): Observable<GetClassesModel>  {
+    return this.http.get<GetClassesModel>(this.url + id + '/');
   }
 
   CreateClass(classe: ClassesModel) {

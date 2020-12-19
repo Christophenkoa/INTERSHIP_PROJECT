@@ -13,6 +13,15 @@ mat-form-field{
 }
 
 mat-card {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
+}
+
+.hide{
+  display: none;
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
 }

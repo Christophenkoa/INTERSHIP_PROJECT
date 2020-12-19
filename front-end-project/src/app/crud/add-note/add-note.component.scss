@@ -11,3 +11,8 @@ mat-paginator {
   width: 80%;
   margin: auto;
 }
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}

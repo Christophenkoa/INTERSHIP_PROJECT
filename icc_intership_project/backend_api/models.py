@@ -4,15 +4,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-# class User:
-#     first_name = models.CharField(max_length=150, blank=True)
-#     last_name = models.CharField(max_length=150, blank=True)
-#     email = models.EmailField(max_length=150, blank=True)
-#     is_staff = models.BooleanField()
-#     is_active = models.BooleanField()
-#     is_superuser = models.BooleanField()
-
-
 class Admin(User):
     tel = models.PositiveIntegerField()
 
@@ -48,7 +39,7 @@ class Class(models.Model):
     class_number = models.IntegerField(blank=True)
     option = models.CharField(max_length=10, null=True, blank=True)
     serie = models.CharField(max_length=5, null=True, blank=True)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     courses = models.ManyToManyField(Course, blank=True)
     teacher = models.ManyToManyField(Teacher, blank=True)
 
@@ -61,7 +52,7 @@ class Student(User):
     dateOfBirth = models.DateField()
     gender = models.CharField(max_length=1)
     regis_number = models.CharField(max_length=255)
-    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=1)
+    my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )
 
@@ -72,6 +63,7 @@ class Student(User):
 class Evaluation(models.Model):
     eval_date = models.DateField()
     note = models.DecimalField(decimal_places=4, max_digits=8)
+    sequence = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="student")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="course")

@@ -62,7 +62,7 @@ export class AddNoteComponent implements OnInit {
 
   ngOnInit() {
     this.TakeValueForm();
-    this.FilterValue();
+    // this.FilterValue();
     this.dataSource.paginator = this.paginator;
   }
 
@@ -71,27 +71,10 @@ export class AddNoteComponent implements OnInit {
       name : ['', Validators.required],
       date_Eval : ['', Validators.required],
       note : ['', [Validators.required, Validators.pattern(/^\+?\d+((\.|\,)\d+)?$/)]],
-      sequence : ['', Validators.required]
+      sequence : ['', Validators.required],
+      coursesChoose: ['', Validators.required]
     });
   }
-
-  /** Function that filter word and display the best choice **/
-  FilterValue(){
-    this.filterOptions = this.NoteForm.get('name').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      )
-  }
-
-  private _filter(value: string): string[]{
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option =>
-    option.toLowerCase().includes(filterValue));
-  }
-
-  /** End **/
 
   OnsubmitNote() {
 
@@ -103,9 +86,9 @@ export class AddNoteComponent implements OnInit {
     });
   }
 
-  /** Table informations and functions **/
+  /* Table informations and functions */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  /** End **/
+  /* End */
 }

@@ -74,6 +74,7 @@ import {TeachersService} from './services/teacher/teachers.service';
 import {QuizService} from './services/quizz/quiz.service';
 import {NoteService} from './services/notes/note.service';
 import { StudentHomeComponent } from './home/student-home/student-home.component';
+import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
 
 @NgModule({
   declarations: [
@@ -103,8 +104,9 @@ import { StudentHomeComponent } from './home/student-home/student-home.component
     BuildQuizComponent,
     DisplayCourseComponent,
     StudentHomeComponent,
+    CuCoursePopupComponent,
   ],
-  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
+  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent],
   imports: [
     BrowserModule,
     IgxDoughnutChartModule,

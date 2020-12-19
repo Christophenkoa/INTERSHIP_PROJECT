@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {MatTableDataSource} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {PeriodicElement} from '../add-note/add-note.component';
 import { CourseModel } from '../../models/course/courses.model';
@@ -11,6 +11,8 @@ import {TeachersService} from '../../services/teacher/teachers.service';
 import {CoursesService} from '../../services/courses/courses.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {GetcourseModel} from '../../models/course/getcourses.model';
+import {CuStudentComponent} from "../student/cu-student/cu-student.component";
+import {CuCoursePopupComponent} from "./cu-course-popup/cu-course-popup.component";
 
 
 @Component({
@@ -20,16 +22,7 @@ import {GetcourseModel} from '../../models/course/getcourses.model';
 })
 export class CourseCrudComponent implements OnInit {
 
-  CourseForm: FormGroup;
   COURSE_DATA: MatTableDataSource<any>;
-  update = false;
-  idarea: number[] = [];
-
-  courses: string[] = [
-    'English', 'French', 'Chemistry', 'Physic', 'Mathematic',
-    'EPS', 'PCT', 'Deutsch', 'Spanish', 'History', 'Geographic'
-  ];
-  teachers: TeacherModel[] = [];
 
   /* Table variables */
   displayedColumns: string[] = ['entitled', 'coefficient', 'teacher', 'actions'];
@@ -40,66 +33,25 @@ export class CourseCrudComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private teacherService: TeachersService,
               private courseService: CoursesService,
-              private snackbar: MatSnackBar) { }
+              private dialog: MatDialog,
+              public infoBull: MatSnackBar) { }
 
   ngOnInit() {
     this.getCourses();
     this.GetAllCourse();
-    this.TakeValue();
-    this.GetAllTeachers();
   }
 
   getCourses() {
     this.courseService.GetAllCourses()
       .subscribe(
-        (data: any[]) => {console.log(data); },
+        (data) => {console.log(data); },
         error => {console.log(error); }
       );
   }
 
-  TakeValue() {
-    this.CourseForm = this.formBuilder.group({
-      course: ['', Validators.required],
-      coef: ['', [Validators.required, Validators.max(6), Validators.min(1)]],
-      teacher_id: ['', Validators.required]
-    });
-  }
-
-  OnSubmitForm() {
-    if (this.CourseForm.invalid) {return; }
-
-    console.log(
-      this.CourseForm.
-      get('course').value + ' , ' + this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('teacher_id').value
-    );
-    this.idarea.push(this.CourseForm.get('teacher_id').value);
-    const courses = new CourseModel(this.CourseForm.get('course').value,
-                                    this.CourseForm.get('coef').value,
-                                    this.CourseForm.get('teacher_id').value
-    );
-
-    this.courseService.CreateCourse(courses)
-      .subscribe((data: CourseModel) => {
-          console.log(data);
-          this.snackbar.open(data.entitled + ' has been created !', 'Close', {
-            duration: 2500,
-          });
-        },
-        error => console.log(error));
-  }
-
-
   /* Table information and functions */
   applyFilter(filterValue: string) {
     this.COURSE_DATA.filter = filterValue.trim().toLowerCase();
-  }
-
-  /* Get all teachers in Data base */
-  GetAllTeachers() {
-    this.teacherService.GetAllTeacher()
-      .subscribe((data) => {
-        this.teachers = data;
-      }, (error => console.log(error)));
   }
 
   /* Get all courses in Data base */
@@ -123,4 +75,32 @@ export class CourseCrudComponent implements OnInit {
     }
   }
 
+  OpenCreateMethod() {
+    const dialog = this.dialog.open(CuCoursePopupComponent, {
+      width : '30%',
+      height : '65%',
+      disableClose : true
+    });
+    dialog.afterClosed()
+      .subscribe(data => {
+         this.infoBull.open(data.course + ' has been created !', 'Close', {
+           duration: 3000
+         });
+      }, error => console.log(error));
+  }
+
+  OpenUpdateMethod(CourseData) {
+    const dialog = this.dialog.open(CuCoursePopupComponent, {
+      width : '30%',
+      height : '65%',
+      disableClose : true,
+      data : CourseData
+    });
+    dialog.afterClosed()
+      .subscribe(data => {
+        this.infoBull.open(data.course + ' has been updated !', 'Close', {
+          duration: 3000
+        });
+      }, error => console.log(error));
+  }
 }

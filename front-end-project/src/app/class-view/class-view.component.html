@@ -18,7 +18,8 @@
       <mat-card-content>
         <div class="text-center">
           <button mat-raised-button color="primary" style="margin-right: 5px" routerLink="/navMenu/class-info/{{ classe.id }}"> Class detail </button>
-          <button mat-raised-button color="accent" routerLink="/navMenu/add-note"> Set mark </button>
+          <button mat-raised-button color="warn" style="margin-right: 5px" routerLink="/navMenu/add-note/{{ classe.id }}"> Set note </button>
+          <button mat-raised-button color="accent" routerLink="/navMenu/add-mark/{{ classe.id }}"> Set mark </button>
         </div>
       </mat-card-content>
     </div>
