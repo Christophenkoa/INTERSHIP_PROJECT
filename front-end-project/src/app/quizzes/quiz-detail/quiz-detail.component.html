@@ -6,7 +6,9 @@
       <div class="question-number">
         QUESTION  {{currentIndex + 1}} OF {{quiz.questions.length}}
       </div>
-      <app-question [question]="quiz.questions[currentIndex]"></app-question>
+      <app-question [question]="quiz.questions[currentIndex]"
+                    [selectedAnswer]="userAnswerList[currentIndex]">
+      </app-question>
     </div>
   </div>
 

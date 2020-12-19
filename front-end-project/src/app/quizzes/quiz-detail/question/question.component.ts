@@ -10,12 +10,12 @@ export class QuestionComponent implements OnInit {
   @Input()
   question: Question;
 
+  @Input()
+  selectedAnswer;
+
   constructor() { }
 
   ngOnInit() {
     console.log(this.question);
-  }
-  isSelected() {
-    return true;
   }
 }

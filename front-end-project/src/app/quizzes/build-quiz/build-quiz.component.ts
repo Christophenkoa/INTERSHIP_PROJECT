@@ -78,7 +78,7 @@ export class BuildQuizComponent implements OnInit {
   initAnswer() {
     return new FormGroup({
       answer: new FormControl('', Validators.required),
-      isCorrect: new FormControl('false', Validators.required),
+      is_true: new FormControl('false', Validators.required),
     });
   }
 
@@ -125,10 +125,9 @@ export class BuildQuizComponent implements OnInit {
       this.success = true;
       this.myQuiz = new Quiz(quiz.value.quizName, quiz.value.quizCourse,
         15, quiz.value.quizClass, 2, quiz.value.questions);
-
       this.quizService.postQuiz(this.myQuiz)
         .subscribe(
-          (data) => {console.log('return value : ' + data); },
+          (data) => {console.log(data); },
           (error) => {console.log(error); }
         );
 

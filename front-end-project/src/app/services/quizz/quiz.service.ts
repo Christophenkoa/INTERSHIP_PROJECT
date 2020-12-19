@@ -11,17 +11,28 @@ export class QuizService {
   /* catch selected answer */
   selectedAnswer = new EventEmitter<Answer>();
 
+  /* manage user choices*/
+  userAnswers: Answer[] = [];
 
   constructor(private http: HttpClient) {}
+
+  /* manage user choices*/
+  saveUserAnswers(answers: Answer[]) {
+    this.userAnswers = answers;
+  }
+  getUserAnswers() {
+    return this.userAnswers;
+  }
+
 
   getQuiz(): Observable<any[]> {
     // @ts-ignore
     return this.http.get<any[]>(this.url);
   }
 
-  getSelectedQuiz(id: number): Observable<any[]> {
+  getSelectedQuiz(id: number): Observable<any> {
     // @ts-ignore
-    return this.http.get<any[]>(this.url + id + '/');
+    return this.http.get<any>(this.url + id + '/');
   }
 
   postQuiz(quiz: Quiz): Observable<Quiz> {
