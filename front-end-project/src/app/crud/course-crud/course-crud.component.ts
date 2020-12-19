@@ -1,18 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {map, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
-import {PeriodicElement} from '../add-note/add-note.component';
-import { CourseModel } from '../../models/course/courses.model';
-import {TeacherModel} from '../../models/teacher/teacher.model';
 import {TeachersService} from '../../services/teacher/teachers.service';
 import {CoursesService} from '../../services/courses/courses.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {GetcourseModel} from '../../models/course/getcourses.model';
-import {CuStudentComponent} from "../student/cu-student/cu-student.component";
-import {CuCoursePopupComponent} from "./cu-course-popup/cu-course-popup.component";
+import {CuCoursePopupComponent} from './cu-course-popup/cu-course-popup.component';
 
 
 @Component({

@@ -5,6 +5,7 @@ import {CourseModel} from "../../../models/course/courses.model";
 import {TeachersService} from "../../../services/teacher/teachers.service";
 import {CoursesService} from "../../../services/courses/courses.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-cu-course-popup',
@@ -27,7 +28,8 @@ export class CuCoursePopupComponent implements OnInit {
               private teacherService: TeachersService,
               private courseService: CoursesService,
               private dialogRef: MatDialogRef<CuCoursePopupComponent>,
-              @Inject(MAT_DIALOG_DATA) public coursedata: any) { }
+              @Inject(MAT_DIALOG_DATA) public coursedata: any,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.TakeValue();
@@ -84,12 +86,13 @@ export class CuCoursePopupComponent implements OnInit {
     );
     this.idarea.push(this.CourseForm.get('teacher_id').value);
     const courses = new CourseModel(this.CourseForm.get('course').value,
-      this.CourseForm.get('coef').value,
-      this.CourseForm.get('teacher_id').value
-    );
+                                    this.CourseForm.get('coef').value,
+                                    this.CourseForm.get('teacher_id').value);
 
-
-
+    this.courseService.UpdateCourse(this.coursedata.id, courses)
+      .subscribe((data) => {
+        console.log(data);
+      }, error => console.log(error));
   }
 
   /* Get all teachers in Data base */

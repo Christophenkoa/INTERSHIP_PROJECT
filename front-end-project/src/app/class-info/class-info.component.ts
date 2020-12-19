@@ -51,14 +51,6 @@ export class ClassInfoComponent implements OnInit {
     this.COURSE_DATA.filter = filterVal.trim().toLowerCase();
   }
 
-  OpenCUMethod() {
-    const dialog = new MatDialogConfig();
-    dialog.width = '30%';
-    dialog.height = '60%';
-    dialog.disableClose = true;
-    this.dialog.open(CuClassComponent, dialog);
-  }
-
   /* Display all students, teachers and courses in the class selected. */
   PopulatePage() {
     /* For teacher / For course */
@@ -68,10 +60,10 @@ export class ClassInfoComponent implements OnInit {
         (data) => {
           this.classInfo = data;
           this.TEACHER_DATA = new MatTableDataSource(data.teachers);
-          this.COURSE_DATA = new MatTableDataSource(data.all_courses);
-          this.STUDENT_DATA = new MatTableDataSource(data.all_students);
           this.TEACHER_DATA.paginator = this.teacherpaginator;
+          this.COURSE_DATA = new MatTableDataSource(data.all_courses);
           this.COURSE_DATA.paginator = this.coursepaginator;
+          this.STUDENT_DATA = new MatTableDataSource(data.all_students);
           this.STUDENT_DATA.paginator = this.studentpaginator;
         }, error => console.log(error));
     /* For student */

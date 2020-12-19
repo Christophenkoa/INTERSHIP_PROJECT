@@ -75,6 +75,7 @@ import {QuizService} from './services/quizz/quiz.service';
 import {NoteService} from './services/notes/note.service';
 import { StudentHomeComponent } from './home/student-home/student-home.component';
 import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
+import { EvaluationService } from './services/evaluation/evaluation.service';
 
 @NgModule({
   declarations: [
@@ -148,7 +149,8 @@ import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-co
               StudentsService,
               TeachersService,
               QuizService,
-              NoteService],
+              NoteService,
+              EvaluationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

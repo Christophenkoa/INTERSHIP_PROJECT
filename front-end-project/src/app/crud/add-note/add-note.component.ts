@@ -1,40 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute} from '@angular/router';
+import {ClassService} from '../../services/classes/class.service';
+import {StudentModel} from '../../models/student/student.model';
+import {GetcourseModel} from '../../models/course/getcourses.model';
+import {EvaluationService} from '../../services/evaluation/evaluation.service';
+import {EvaluationModel} from '../../models/evaluation/evaluation.model';
+import * as moment from 'moment';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
 
 @Component({
   selector: 'app-add-note',
@@ -42,28 +19,33 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./add-note.component.scss']
 })
 export class AddNoteComponent implements OnInit {
-
-  /** Form variables **/
-  NoteForm: FormGroup;
-  options: string[] = ['One', 'Two', 'Three', 'Four', 'Five', 'Eight'];
-  sequences: string[] = ['seq 1', 'seq 2', 'seq 3', 'seq 4', 'seq 5', 'seq 6'];
-  filterOptions: Observable<string[]>;
+  /* Other variables */
+  StudentArray: StudentModel[] = [];
+  CourseArray: GetcourseModel[] = [];
   dateNow = new Date();
-  /** End **/
-  /** Table variables **/
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  /* End */
+
+  /* Form variables */
+  NoteForm: FormGroup;
+  sequences: string[] = ['seq 1', 'seq 2', 'seq 3', 'seq 4', 'seq 5', 'seq 6'];
+  /* End */
+  /* Table variables */
+  displayedColumns: string[] = ['name', 'sequence', 'date_eval', 'courseChoose', 'note', 'actions'];
+  EVALUATION_DATA: MatTableDataSource<EvaluationModel>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  /** End **/
+  /* End */
 
   constructor(private formBuilder: FormBuilder,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private route: ActivatedRoute,
+              private classService: ClassService,
+              private evaluationService: EvaluationService) { }
 
   ngOnInit() {
     this.TakeValueForm();
-    // this.FilterValue();
-    this.dataSource.paginator = this.paginator;
+    this.GetAllStudent();
+    this.GetAllEvaluation();
   }
 
   TakeValueForm() {
@@ -72,23 +54,67 @@ export class AddNoteComponent implements OnInit {
       date_Eval : ['', Validators.required],
       note : ['', [Validators.required, Validators.pattern(/^\+?\d+((\.|\,)\d+)?$/)]],
       sequence : ['', Validators.required],
-      coursesChoose: ['', Validators.required]
+      courseChoose: ['', Validators.required]
     });
   }
 
   OnsubmitNote() {
+    if (this.NoteForm.invalid) {return; }
+    const dateEval = moment(this.NoteForm.get('date_Eval').value).format('YYYY-MM-DD');
+    const evaluation = new EvaluationModel(dateEval,
+                                          this.NoteForm.get('note').value,
+                                          this.NoteForm.get('sequence').value,
+                                          this.NoteForm.get('name').value,
+                                          this.NoteForm.get('courseChoose').value);
 
-    if(this.NoteForm.invalid){return;}
+    /*console.log(this.NoteForm.get('name').value + ' , ' + this.NoteForm.get('date_Eval').value + ' , ' +
+      this.NoteForm.get('note').value + ' , ' + this.NoteForm.get('sequence').value + ' , ' + this.NoteForm.get('courseChoose').value);*/
 
-    console.log(this.NoteForm.get('name').value + ' , ' + this.NoteForm.get('date_Eval').value + ' , ' + this.NoteForm.get('note').value);
-    this.snackBar.open('Data saved', 'Close',{
-      duration: 2000,
-    });
+    this.evaluationService.CreateEvaluation(evaluation)
+      .subscribe(data => {
+        console.log(data);
+        this.snackBar.open('Mark has been saved !', 'Close',{
+          duration: 2000,
+        });
+      }, error => console.log(error));
   }
 
   /* Table informations and functions */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.EVALUATION_DATA.filter = filterValue.trim().toLowerCase();
   }
   /* End */
+
+  GetAllStudent() {
+    const id  = this.route.snapshot.params['id'];
+    this.classService.GetSingleClass(id)
+      .subscribe((data) => {
+        this.StudentArray = data.all_students;
+        this.CourseArray = data.all_courses;
+      }, error => console.log(error));
+  }
+
+  /* Get all evaluations in database */
+  GetAllEvaluation() {
+    this.evaluationService.GetAllEvaluation()
+      .subscribe((data) => {
+        console.log(data);
+        this.EVALUATION_DATA = new MatTableDataSource(data);
+        this.EVALUATION_DATA.paginator = this.paginator;
+      });
+  }
+
+  /* Delete method with id of the evaluation */
+  DeleteMethod(idEval) {
+    console.log(idEval);
+    if (confirm('Are you sure to delete this course ?') === true) {
+      this.evaluationService.DeleteEvaluation(idEval)
+        .subscribe(result => {
+          console.log(result);
+          this.snackBar.open('This mark has been deleted !', 'close', {
+            duration: 3000
+          });
+        }, error => console.log(error));
+    }
+  }
 }

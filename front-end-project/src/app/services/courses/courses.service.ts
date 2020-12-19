@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CourseModel} from '../../models/course/courses.model';
 import {GetcourseModel} from '../../models/course/getcourses.model';
+import {EvaluationModel} from "../../models/evaluation/evaluation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,5 @@ export class CoursesService {
   UpdateCourse(id: number, coursesData: CourseModel) {
     return this.http.put(this.url + id + '/', coursesData);
   }
+
 }
