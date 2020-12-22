@@ -22,12 +22,14 @@ import {QuizDetailComponent} from './quizzes/quiz-detail/quiz-detail.component';
 import {DisplayCourseComponent} from './display-course/display-course.component';
 import {StudentHomeComponent} from './home/student-home/student-home.component';
 import {QuizResultComponent} from './quizzes/quiz-result/quiz-result.component';
+import {AuthGuardService, LoginGuardService} from './services/auth-guard/auth-guard.service';
 
 
 const routes: Routes = [
   {
     path : '',
     component : HomeComponent,
+    canActivate: [AuthGuardService, LoginGuardService],
   },
   {
     path : 'navMenu/class-view',
@@ -36,14 +38,17 @@ const routes: Routes = [
   {
     path : 'login',
     component: LoginComponent,
+    canActivate: [LoginGuardService],
   },
   {
     path : 'navMenu',
     component: MainNavComponent,
+    canActivate: [AuthGuardService, LoginGuardService],
   },
   {
     path : 'student',
     component: StudentHomeComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path : 'quiz-result',
