@@ -6,6 +6,7 @@ class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = ['username', 'email', 'password', 'tel', 'is_superuser', 'is_staff', 'is_active']
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
 
 class TeacherSerializer(serializers.ModelSerializer):
@@ -15,6 +16,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender',
                   'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     # def create(self,validate_data):
     #     print("--------------------",validate_data)
@@ -64,6 +66,7 @@ class StudentSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
                   'dateOfBirth', 'my_class', 'student_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
