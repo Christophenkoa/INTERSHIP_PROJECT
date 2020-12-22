@@ -110,8 +110,8 @@
           </div>
           <div class="col-md-6 mb-3">
             <mat-dialog-actions>
-              <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!data" [mat-dialog-close]="registerForm.value">Submit</button>
-              <button mat-raised-button color="primary" (click)="UpdateForm()" *ngIf="data" [mat-dialog-close]="data" cdkFocusInitial>Update</button>
+              <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!data" [mat-dialog-close]="registerForm.value" [disabled]="registerForm.invalid">Submit</button>
+              <button mat-raised-button color="primary" (click)="UpdateForm()" *ngIf="data" [mat-dialog-close]="data" cdkFocusInitial [disabled]="registerForm.invalid">Update</button>
               <button mat-raised-button (click)="ReturnButton()" color="warn">Cancel</button>
             </mat-dialog-actions>
           </div>

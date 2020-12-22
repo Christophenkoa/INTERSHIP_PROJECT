@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ClassesModel} from '../../models/class/classes.model';
 import {AuthService} from '../auth-guard/auth.service';
+import {GetClassesModel} from '../../models/class/getclasses.models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ClassService {
     return this.http.get<any[]>(this.url, {headers: this.authService.httpHeaders});
   }
 
-  GetSingleClass(id: number): Observable<any[]>  {
-    return this.http.get<any[]>(this.url + id + '/', {headers: this.authService.httpHeaders});
+  GetSingleClass(id: number): Observable<GetClassesModel>  {
+    return this.http.get<GetClassesModel>(this.url + id + '/', {headers: this.authService.httpHeaders});
   }
 
   CreateClass(classe: ClassesModel) {

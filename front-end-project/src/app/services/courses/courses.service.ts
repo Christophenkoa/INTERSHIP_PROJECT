@@ -23,6 +23,11 @@ export class CoursesService {
   }
 
   DeleteCourse(id: number) {
-    return this.http.delete(this.url + '/' + id + '/', {headers: this.authService.httpHeaders});
+    return this.http.delete(this.url + id + '/', {headers: this.authService.httpHeaders});
   }
+
+  UpdateCourse(id: number, coursesData: CourseModel) {
+    return this.http.put(this.url + id + '/', coursesData, {headers: this.authService.httpHeaders});
+  }
+
 }

@@ -59,11 +59,11 @@ const routes: Routes = [
     component: ClassInfoComponent,
   },
   {
-    path : 'navMenu/add-note',
+    path : 'navMenu/add-note/:id',
     component: CourseEditorComponent,
   },
   {
-    path : 'navMenu/add-mark',
+    path : 'navMenu/add-mark/:id',
     component: AddNoteComponent,
   },
   {

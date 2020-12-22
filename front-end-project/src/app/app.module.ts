@@ -81,6 +81,8 @@ import {NoteService} from './services/notes/note.service';
 import { StudentHomeComponent } from './home/student-home/student-home.component';
 import {UserManagerService} from './services/user/user-manager.service';
 import {AuthService} from './services/auth-guard/auth.service';
+import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
+import { EvaluationService } from './services/evaluation/evaluation.service';
 
 @NgModule({
   declarations: [
@@ -110,8 +112,9 @@ import {AuthService} from './services/auth-guard/auth.service';
     BuildQuizComponent,
     DisplayCourseComponent,
     StudentHomeComponent,
+    CuCoursePopupComponent,
   ],
-  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent],
+  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent],
   imports: [
     BrowserModule,
     IgxDoughnutChartModule,
@@ -163,7 +166,8 @@ import {AuthService} from './services/auth-guard/auth.service';
               QuizService,
               NoteService,
               UserManagerService,
-              AuthService, ],
+              AuthService,
+              EvaluationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

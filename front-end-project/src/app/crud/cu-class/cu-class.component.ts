@@ -64,7 +64,7 @@ export class CuClassComponent implements OnInit {
       this.idTeacherarray.push(this.TakeCourseSelected[i].course_teacher.id);
     }
 
-    // console.log(this.idCourserarray + ' , ' + this.idTeacherarray);
+    console.log(this.idCourserarray + ' , ' + this.idTeacherarray);
 
     const classes = new ClassesModel(
       this.ClassForm.get('class_number').value,
