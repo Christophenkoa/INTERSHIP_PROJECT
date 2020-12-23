@@ -43,7 +43,7 @@ export class CrudTeacherComponent implements OnInit {
 
   EditTeacher(teacherdata) {
     const dialogRef = this.dialog.open(CuTeacherComponent, {
-      width : '60%',
+      width : '40%',
       height : '70%',
       disableClose : true,
       data : teacherdata,
@@ -60,7 +60,7 @@ export class CrudTeacherComponent implements OnInit {
   /* Open the CU(Create and Update) interface */
   OpenCUMethod() {
     const dialog = this.dialog.open(CuTeacherComponent, {
-      width : '60%',
+      width : '40%',
       height : '70%',
       disableClose : true
     });

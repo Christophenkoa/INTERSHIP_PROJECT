@@ -5,7 +5,7 @@
 <form (ngSubmit)="OnSubmitForm()" [formGroup]="NoteForm">
   <mat-form-field appearance="fill">
     <mat-label>Select Course</mat-label>
-    <mat-select formControlName="course">
+    <mat-select formControlName="course" matInput required>
       <div *ngIf="courses.length != 0; else noClass">
         <mat-option *ngFor="let course of courses; let i = index" [value]="course.id">
           {{course.entitled}}
@@ -17,18 +17,27 @@
         </mat-option>
       </ng-template>
     </mat-select>
+    <mat-error *ngIf="NoteForm.get('course').errors?.required">
+      This field is required.
+    </mat-error>
   </mat-form-field>
 
   <div>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="enter your note title" formControlName="entitled">
+      <input matInput placeholder="enter your note title" formControlName="entitled" required>
+      <mat-error *ngIf="NoteForm.get('entitled').errors?.required">
+        This field is required.
+      </mat-error>
     </mat-form-field>
   </div>
 
   <ckeditor
     formControlName="text"
-    debounce="500">
+    debounce="500" matInput required>
   </ckeditor>
+  <!--<mat-error *ngIf="NoteForm.get('text').errors?.required">
+    This field is required.
+  </mat-error>-->
   <!--    [(ngModel)]="ckeditorContent"-->
 
   <div style="width: fit-content; margin: auto;">

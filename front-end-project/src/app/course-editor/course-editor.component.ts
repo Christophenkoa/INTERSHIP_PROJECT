@@ -4,6 +4,10 @@ import {ChapterModel} from '../models/chapter/chapters.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CourseModel} from '../models/course/courses.model';
 import {CoursesService} from '../services/courses/courses.service';
+import {ActivatedRoute} from '@angular/router';
+import {ClassService} from '../services/classes/class.service';
+import {GetcourseModel} from '../models/course/getcourses.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare var CKEDITOR: any;
 @Component({
@@ -12,12 +16,15 @@ declare var CKEDITOR: any;
   styleUrls: ['./course-editor.component.scss']
 })
 export class CourseEditorComponent implements OnInit {
-  public ckeditorContent = 'Enter your note here';
-  myNote = new ChapterModel('default title', '', 1);
   NoteForm: FormGroup;
-  courses: CourseModel[] = [];
+  courses: GetcourseModel[] = [];
 
-  constructor(private noteService: NoteService, private formBuilder: FormBuilder, private courseService: CoursesService) { }
+  constructor(private noteService: NoteService,
+              private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private courseService: CoursesService,
+              private classService: ClassService,
+              private snack: MatSnackBar) { }
 
   ngOnInit() {
     this.getCoursesData();
@@ -33,11 +40,12 @@ export class CourseEditorComponent implements OnInit {
   }
 
   getCoursesData() {
-    this.courseService.GetAllCourses()
-      .subscribe(
-        (data: any) => {this.courses = data; console.log(data); },
-        (error) => {console.log(error); }
-      );
+    const id = this.route.snapshot.params['id'];
+    this.classService.GetSingleClass(id)
+      .subscribe((data) => {
+        console.log(data);
+        this.courses = data.all_courses;
+      });
   }
 
   noteForm() {
@@ -50,18 +58,25 @@ export class CourseEditorComponent implements OnInit {
   }
 
   OnSubmitForm() {
+    if (this.NoteForm.invalid) {return; }
     this.getData();
   }
 
   getData() {
-    console.log(CKEDITOR.instances.content.getData());
-    this.myNote.text = CKEDITOR.instances.content.getData();
-    console.log(this.myNote);
-    this.noteService.CreateNote(this.myNote)
+    const note = new ChapterModel(this.NoteForm.get('entitled').value,
+                                  this.NoteForm.get('text').value,
+                                  this.NoteForm.get('course').value);
+
+    console.log(note);
+    this.noteService.CreateNote(note)
       .subscribe(
-        (data: any) => {console.log(data); },
+        (data: any) => {
+          console.log(data);
+          this.snack.open(data.entitled + ' are been saved !', 'Close', {
+            duration: 3000
+            });
+          },
         (error) => {console.log(error); }
       );
   }
-
 }

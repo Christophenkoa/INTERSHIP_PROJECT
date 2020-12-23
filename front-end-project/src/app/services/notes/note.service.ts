@@ -12,10 +12,10 @@ url = 'http://127.0.0.1:8000/class_management/chapter/';
 
   constructor(private http: HttpClient) { }
 
-  GetNotes(): Observable<ChapterModel[]> {
+  GetAllNotes(): Observable<ChapterModel[]> {
     return this.http.get<ChapterModel[]>(this.url);
   }
-  GetNote(id: number): Observable<ChapterModel> {
+  GetSingleNote(id: number): Observable<ChapterModel> {
     return this.http.get<ChapterModel>(this.url + id + '/');
   }
   CreateNote(note: ChapterModel) {

@@ -22,6 +22,7 @@ export class AddNoteComponent implements OnInit {
   /* Other variables */
   StudentArray: StudentModel[] = [];
   CourseArray: GetcourseModel[] = [];
+  EvaluationsArray: EvaluationModel[] = [];
   dateNow = new Date();
   /* End */
 
@@ -96,10 +97,15 @@ export class AddNoteComponent implements OnInit {
 
   /* Get all evaluations in database */
   GetAllEvaluation() {
+    const id  = this.route.snapshot.params['id'];
     this.evaluationService.GetAllEvaluation()
       .subscribe((data) => {
-        console.log(data);
-        this.EVALUATION_DATA = new MatTableDataSource(data);
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].student_note.my_class.toString() === id) {
+            this.EvaluationsArray.push(data[i]);
+          }
+        }
+        this.EVALUATION_DATA = new MatTableDataSource(this.EvaluationsArray);
         this.EVALUATION_DATA.paginator = this.paginator;
       });
   }

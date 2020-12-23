@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NoteService} from '../services/notes/note.service';
 import {ChapterModel} from '../models/chapter/chapters.model';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-display-course',
@@ -9,15 +10,13 @@ import {ChapterModel} from '../models/chapter/chapters.model';
 })
 export class DisplayCourseComponent implements OnInit {
   isPlay = false;
-  myNote = new ChapterModel('chapter title', 'chapter body', 1);
+  myNote: ChapterModel;
 
-  constructor(private noteService: NoteService) { }
+  constructor(private noteService: NoteService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.noteService.GetNote(2)
-      .subscribe(
-        (data: any) => {this.myNote = data;}
-      );
+    this.GetSingleChapter();
   }
 
   public toggle() {
@@ -29,6 +28,14 @@ export class DisplayCourseComponent implements OnInit {
     if (!play) {
       return;
     }
+  }
+
+  GetSingleChapter() {
+    const id = this.route.snapshot.params['id'];
+    this.noteService.GetSingleNote(id)
+      .subscribe(
+        (data) => {this.myNote = data;}
+      );
   }
 
 }

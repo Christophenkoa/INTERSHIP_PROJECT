@@ -3,148 +3,17 @@
 </div>
 
 <mat-accordion>
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let course of Course_list">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Chemistry
+        {{ course.entitled }}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-nav-list class="p-3">
-      <a mat-list-item routerLink="">
-        <span>Chapitre 1</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 2</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 3</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 4</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 5</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 6</span>
+    <mat-nav-list class="p-3" *ngFor="let chapter of course.chapter_list">
+      <a mat-list-item routerLink="/navMenu/display-course/{{ chapter.id }}">
+        <span> {{ chapter.entitled }} </span>
       </a>
     </mat-nav-list>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Mathematic
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list class="p-3">
-      <a mat-list-item routerLink="">
-        <span>Chapitre 1</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 2</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 3</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 4</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 5</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 6</span>
-      </a>
-    </mat-nav-list>
-
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Physic
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list class="p-3">
-      <a mat-list-item routerLink="">
-        <span>Chapitre 1</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 2</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 3</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 4</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 5</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 6</span>
-      </a>
-    </mat-nav-list>
-
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        French
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list class="p-3">
-      <a mat-list-item routerLink="">
-        <span>Chapitre 1</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 2</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 3</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 4</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 5</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 6</span>
-      </a>
-    </mat-nav-list>
-
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        English
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list class="p-3">
-      <a mat-list-item routerLink="">
-        <span>Chapitre 1</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 2</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 3</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 4</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 5</span>
-      </a>
-      <a mat-list-item routerLink="">
-        <span>Chapitre 6</span>
-      </a>
-    </mat-nav-list>
-
   </mat-expansion-panel>
 </mat-accordion>
 

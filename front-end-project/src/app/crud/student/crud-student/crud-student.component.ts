@@ -43,8 +43,8 @@ export class CrudStudentComponent implements OnInit {
   /* Open the CU(Create and Update) interface */
   OpenCreateMethod() {
     const dialog = this.dialog.open(CuStudentComponent, {
-      width : '50%',
-      height : '75%',
+      width : '40%',
+      height : '70%',
       disableClose : true
     });
     dialog.afterClosed()
@@ -57,8 +57,8 @@ export class CrudStudentComponent implements OnInit {
 
   OpenUpdateMethod(dataStudent) {
     const dialog = this.dialog.open(CuStudentComponent, {
-      width : '50%',
-      height : '75%',
+      width : '40%',
+      height : '70%',
       disableClose : true,
       data: dataStudent,
     });
