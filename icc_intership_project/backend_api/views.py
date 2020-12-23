@@ -11,6 +11,12 @@ from .serializers import *
 
 
 # user
+class UserView(ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+
 class AdminView(ModelViewSet):
     serializer_class = AdminSerializer
     queryset = Admin.objects.all()

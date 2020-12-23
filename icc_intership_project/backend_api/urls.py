@@ -10,6 +10,7 @@ class_management_router = DefaultRouter()
 quiz_router = DefaultRouter()
 
 # user router
+user_router.register('user', UserView, basename='user')
 user_router.register('admin', AdminView, basename='admin')
 user_router.register('teacher', TeacherView, basename='teacher')
 user_router.register('student', StudentView, basename='student')

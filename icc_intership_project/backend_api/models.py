@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 class Admin(User):
     tel = models.PositiveIntegerField()
+    clear_password = models.CharField(max_length=255)
 
     def __str__(self):
         return self.username
@@ -17,6 +18,7 @@ class Teacher(User):
     is_active = models.BooleanField
     is_staff = models.BooleanField
     is_superuser = models.BooleanField
+    clear_password = models.CharField(max_length=255)
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
 
     def __str__(self):
@@ -52,6 +54,7 @@ class Student(User):
     dateOfBirth = models.DateField()
     gender = models.CharField(max_length=1)
     regis_number = models.CharField(max_length=255)
+    clear_password = models.CharField(max_length=255)
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE, default=2)
     my_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, through='Evaluation', through_fields=('student', 'course'), )

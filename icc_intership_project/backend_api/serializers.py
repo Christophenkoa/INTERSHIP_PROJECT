@@ -2,11 +2,26 @@ from .models import *
 from rest_framework import serializers
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = ['username', 'email', 'password', 'tel', 'is_superuser', 'is_staff', 'is_active']
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    def create(self, validated_data):
+        print('my validated data', validated_data)
+        user = super(StudentSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.clear_password = validated_data['password']
+        print('clear password: ', user.clear_password)
+        user.save()
+        return user
 
 
 class TeacherSerializer(serializers.ModelSerializer):
@@ -17,6 +32,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender',
                   'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    def create(self, validated_data):
+        print('my validated data', validated_data)
+        user = super(StudentSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.clear_password = validated_data['password']
+        print('clear password: ', user.clear_password)
+        user.save()
+        return user
 
     # def create(self,validate_data):
     #     print("--------------------",validate_data)
@@ -81,6 +105,15 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
+
+    def create(self, validated_data):
+        print('my validated data', validated_data)
+        user = super(StudentSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.clear_password = validated_data['password']
+        print('clear password: ', user.clear_password)
+        user.save()
+        return user
 
     # def create(self,validate_data):
     #     print("--------------------",validate_data)
