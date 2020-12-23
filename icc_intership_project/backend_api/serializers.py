@@ -16,7 +16,7 @@ class AdminSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print('my validated data', validated_data)
-        user = super(StudentSerializer, self).create(validated_data)
+        user = super(AdminSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
         print('clear password: ', user.clear_password)
@@ -35,7 +35,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print('my validated data', validated_data)
-        user = super(StudentSerializer, self).create(validated_data)
+        user = super(TeacherSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
         print('clear password: ', user.clear_password)
