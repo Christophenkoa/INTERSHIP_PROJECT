@@ -69,13 +69,13 @@ export class CuTeacherComponent implements OnInit {
       var text = '';
       var lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
 
-      for(var i = 0; i < 10; i++)
+      for( var i = 0; i < 10; i++)
         text += lettre.charAt(Math.floor(Math.random() * lettre.length));
 
       return text;
     }
     const password = makePassword();
-    console.log(typeof(this.registerForm.get('is_staff').value, convert(this.registerForm.get('is_staff').value)));
+    // console.log(typeof(this.registerForm.get('is_staff').value, convert(this.registerForm.get('is_staff').value)));
 
     if (this.registerForm.invalid) { return; }
     /* Retrieve values from the form */
@@ -105,7 +105,7 @@ export class CuTeacherComponent implements OnInit {
   }
 
   /* Update function */
-  UpdateForm(){
+  UpdateForm() {
 
     if(this.registerForm.invalid) {return;}
     const teacherUpdated = new TeacherModel( this.registerForm.get('username').value,

@@ -27,6 +27,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { LoginComponent } from './login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -64,8 +65,12 @@ import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
 import { DisplayCourseComponent } from './display-course/display-course.component';
 import {HttpClientModule} from '@angular/common/http';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+
 /* Services Lists */
-import {AuthGuardService} from './services/auth-guard/auth-guard.service';
+import {AuthGuardService, LoginGuardService} from './services/auth-guard/auth-guard.service';
 import {ClassService} from './services/classes/class.service';
 import {CoursesService} from './services/courses/courses.service';
 import {QuizzesService} from './services/quizz/quizzes.service';
@@ -74,6 +79,8 @@ import {TeachersService} from './services/teacher/teachers.service';
 import {QuizService} from './services/quizz/quiz.service';
 import {NoteService} from './services/notes/note.service';
 import { StudentHomeComponent } from './home/student-home/student-home.component';
+import {UserManagerService} from './services/user/user-manager.service';
+import {AuthService} from './services/auth-guard/auth.service';
 import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
 import { EvaluationService } from './services/evaluation/evaluation.service';
 
@@ -140,9 +147,17 @@ import { EvaluationService } from './services/evaluation/evaluation.service';
     MatExpansionModule,
     HttpClientModule,
     MatChipsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:4200'],
+        disallowedRoutes: ['http://example.com/examplebadroute/'],
+      },
+    }),
   ],
   providers: [
               AuthGuardService,
+              LoginGuardService,
               ClassService,
               CoursesService,
               QuizzesService,
@@ -150,6 +165,8 @@ import { EvaluationService } from './services/evaluation/evaluation.service';
               TeachersService,
               QuizService,
               NoteService,
+              UserManagerService,
+              AuthService,
               EvaluationService],
   bootstrap: [AppComponent]
 })
