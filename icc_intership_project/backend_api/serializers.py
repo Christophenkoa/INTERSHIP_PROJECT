@@ -1,5 +1,10 @@
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .models import *
 from rest_framework import serializers
+# from rest_framework_jwt import views as jwt_views
+from rest_framework_jwt import serializers as jwt_serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -94,6 +99,7 @@ class StudentSerializer(serializers.ModelSerializer):
     # my_class = serializers.SerializerMethodField()
 
     student_class = serializers.SerializerMethodField()
+
     # courses = serializers.SerializerMethodField()
 
     class Meta:
@@ -220,3 +226,12 @@ class QuizTakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuizTaker
         fields = '__all__'
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['username'] = user.username
+        token['is_superuser'] = user.is_superuser
+        return token
