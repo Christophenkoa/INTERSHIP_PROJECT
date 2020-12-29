@@ -21,7 +21,7 @@ export class AuthService {
   authentication = new EventEmitter<boolean>();
 
   // @ts-ignore
-  httpHeaders = new HttpHeaders({'Content-type': 'application/json', 'Authorization': 'JWT ' + localStorage.getItem('token') });
+  httpHeaders = new HttpHeaders({'Content-type': 'application/json', 'Authorization': 'JWT ' + this.getToken() });
 
   constructor(public jwtHelper: JwtHelperService, private router: Router) { }
 
@@ -41,7 +41,11 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  get token(): string {
+  getToken(): string {
     return localStorage.getItem('token');
+  }
+
+  getAccesLevel() {
+    // implement
   }
 }

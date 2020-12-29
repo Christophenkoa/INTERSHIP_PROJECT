@@ -5,6 +5,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {CuTeacherComponent} from '../cu-teacher/cu-teacher.component';
 import {TeachersService} from '../../../services/teacher/teachers.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subject, Subscription} from "rxjs";
+import {TeacherModel} from "../../../models/teacher/teacher.model";
 
 
 @Component({
@@ -15,8 +17,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class CrudTeacherComponent implements OnInit {
 
   TEACHER_DATA: MatTableDataSource<any>;
+  teacherSubscription: Subscription;
+  teacherArray: TeacherModel[] = [];
+  Singleteacher: TeacherModel;
+  teacherSubject = new Subject<TeacherModel[]>();
 
-  /** Differents columns of the table **/
+  /* Differents columns of the table */
   displayedColumns: string[] = ['username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'is_superuser', 'is_staff', 'is_active', 'actions'];
 
   /** Filter the information in DataTable **/
@@ -31,14 +37,9 @@ export class CrudTeacherComponent implements OnInit {
               public infoBull: MatSnackBar) { }
 
   ngOnInit() {
-    /* Call function for take all teachers */
-    this.teacherService.GetAllTeacher()
-      .subscribe(
-        (data) => {
-          this.TEACHER_DATA = new MatTableDataSource(data);
-          this.TEACHER_DATA.paginator = this.paginator;
-        }, (error => console.log(error))
-      );
+    this.GetAllTeacher();
+    /*if (this.teacherService.teacher) {
+    }*/
   }
 
   EditTeacher(teacherdata) {
@@ -55,7 +56,6 @@ export class CrudTeacherComponent implements OnInit {
           duration: 3000
         });
       });
-    // console.log(teacherdata);
   }
   /* Open the CU(Create and Update) interface */
   OpenCUMethod() {
@@ -65,11 +65,30 @@ export class CrudTeacherComponent implements OnInit {
       disableClose : true
     });
     dialog.afterClosed()
-      .subscribe(data => {
+      .subscribe((data: TeacherModel) => {
+        if (data) {
+          this.teacherArray.push(data);
+          console.log(this.teacherArray);
+        }
         this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
           duration: 3000
         });
       });
+  }
+
+  GetAllTeacher() {
+    /* Call function for take all teachers */
+    this.teacherSubscription = this.teacherService.GetAllTeacher()
+      .subscribe(
+        (data) => {
+          for (var i= 0; i < data.length; i++) {
+            this.teacherArray.push(data[i]);
+          }
+          this.TEACHER_DATA = new MatTableDataSource(this.teacherArray);
+          this.TEACHER_DATA.paginator = this.paginator;
+        }, (error => console.log(error))
+      );
+    this.teacherSubject.next(this.teacherArray);
   }
   /* Function that delete a teacher in Data base */
   DeleteMethod(idTeacher) {
