@@ -37,6 +37,9 @@ export class AuthService {
     localStorage.removeItem('username');
     localStorage.removeItem('auth');
     localStorage.removeItem('expire_time');
+    localStorage.removeItem('is_superuser');
+    localStorage.removeItem('is_staff');
+    localStorage.removeItem('is_active');
     this.authentication.emit(false);
     this.router.navigate(['/login']);
   }
