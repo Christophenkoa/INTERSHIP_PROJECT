@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   loginForm: FormGroup;
   error: any;
+  user: User = null;
 
 
   constructor(private formBuiler: FormBuilder,
@@ -55,9 +56,14 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', loginResult.token);
 
         const decoded = jwt_decode<JwtPayload>(loginResult.token);
-        localStorage.setItem('id', '' + decoded.user_id);
-        localStorage.setItem('username', '' + decoded.username);
         localStorage.setItem('expire_time', '' + decoded.exp);
+
+        this.user = loginResult.user;
+        localStorage.setItem('id', '' + this.user.id);
+        localStorage.setItem('username', '' + this.user.username);
+        localStorage.setItem('is_superuser', '' + this.user.is_superuser);
+        localStorage.setItem('is_staff', '' + this.user.is_staff);
+        localStorage.setItem('is_active', '' + this.user.is_active);
 
         console.log(decoded);
         this.router.navigate(['/quiz']);
@@ -77,4 +83,13 @@ interface JwtPayload {
 
 interface Token {
   token: string;
+  user: User;
+}
+
+interface User {
+  id: number;
+  username: string;
+  is_superuser: boolean;
+  is_staff: boolean;
+  is_active: boolean;
 }
