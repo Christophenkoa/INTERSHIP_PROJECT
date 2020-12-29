@@ -6,6 +6,8 @@ import { MatDialogConfig } from '@angular/material';
 import { StudentModel } from '../../../models/student/student.model';
 import {StudentsService} from '../../../services/student/students.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {GetstudentModel} from "../../../models/student/getstudent.model";
+import {Subject, Subscription} from "rxjs";
 
 
 @Component({
@@ -22,6 +24,9 @@ export class CrudStudentComponent implements OnInit {
   /* Differents columns of the table */
   studentColumns: string[] = ['regis_number', 'first_name', 'last_name', 'tel', 'dateOfBirth', 'gender', 'my_class', 'is_active', 'is_superuser', 'is_staff', 'actions'];
   STUDENT_DATA: MatTableDataSource<any>;
+  studentArray: GetstudentModel[] = [];
+  studentSubscription: Subscription;
+  studentSubject = new Subject<GetstudentModel[]>();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -31,13 +36,7 @@ export class CrudStudentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.studentService.GetAllStudent()
-      .subscribe(
-        (data) => {
-        //  console.log(data);
-        this.STUDENT_DATA = new MatTableDataSource(data);
-        this.STUDENT_DATA.paginator = this.paginator;
-      }, (error => console.log(error)));
+    this.GetAllStudents();
   }
 
   /* Open the CU(Create and Update) interface */
@@ -49,10 +48,28 @@ export class CrudStudentComponent implements OnInit {
     });
     dialog.afterClosed()
       .subscribe(data => {
-        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
-          duration: 3000
-        });
+        if (data) {
+          console.log(data);
+          // this.studentArray.push(data);
+          this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+            duration: 3000
+          });
+        }
       });
+  }
+
+  GetAllStudents() {
+    this.studentSubscription = this.studentService.GetAllStudent()
+      .subscribe(
+        (data) => {
+          for (var i= 0;i< data.length; i++) {
+            this.studentArray.push(data[i]);
+          }
+          // console.log(data);
+          this.STUDENT_DATA = new MatTableDataSource(this.studentArray);
+          this.STUDENT_DATA.paginator = this.paginator;
+        }, (error => console.log(error)));
+    this.studentSubject.next(this.studentArray);
   }
 
   OpenUpdateMethod(dataStudent) {

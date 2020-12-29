@@ -1,5 +1,10 @@
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .models import *
 from rest_framework import serializers
+# from rest_framework_jwt import views as jwt_views
+from rest_framework_jwt import serializers as jwt_serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,7 +21,7 @@ class AdminSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print('my validated data', validated_data)
-        user = super(StudentSerializer, self).create(validated_data)
+        user = super(AdminSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
         print('clear password: ', user.clear_password)
@@ -31,15 +36,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender',
                   'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
-        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+        # extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def create(self, validated_data):
         # print('my validated data', validated_data)
         # user = super(TeacherSerializer, self).create(validated_data)
         user = super().create(validated_data)
+        print('my validated data', validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
-        # print('clear password: ', user.clear_password)
         user.save()
         return user
 
@@ -108,6 +113,7 @@ class StudentSerializer(serializers.ModelSerializer):
     # my_class = serializers.SerializerMethodField()
 
     student_class = serializers.SerializerMethodField()
+
     # courses = serializers.SerializerMethodField()
 
     class Meta:
@@ -115,14 +121,14 @@ class StudentSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
                   'dateOfBirth', 'my_class', 'student_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
-        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+        # extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
 
     def create(self, validated_data):
         print('my validated data', validated_data)
-        user = super(StudentSerializer, self).create(validated_data)
+        user = super().create(validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
         print('clear password: ', user.clear_password)
@@ -237,3 +243,12 @@ class QuizTakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuizTaker
         fields = '__all__'
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['username'] = user.username
+        token['is_superuser'] = user.is_superuser
+        return token

@@ -4,6 +4,7 @@ import { StudentModel } from '../../models/student/student.model';
 import {TeacherModel} from '../../models/teacher/teacher.model';
 import {Observable} from 'rxjs';
 import {AuthService} from '../auth-guard/auth.service';
+import {GetstudentModel} from "../../models/student/getstudent.model";
 
 
 @Injectable({
@@ -18,8 +19,8 @@ export class StudentsService {
     return this.http.post('http://127.0.0.1:8000/user/student/', student, {headers: this.authService.httpHeaders});
   }
 
-  GetAllStudent(): Observable<any[]> {
-    return this.http.get<StudentModel[]>('http://127.0.0.1:8000/user/student/', {headers: this.authService.httpHeaders});
+  GetAllStudent(): Observable<GetstudentModel[]> {
+    return this.http.get<GetstudentModel[]>('http://127.0.0.1:8000/user/student/', {headers: this.authService.httpHeaders});
   }
 
   DeleteStudent(id: number) {

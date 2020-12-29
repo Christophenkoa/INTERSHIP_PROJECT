@@ -40,7 +40,7 @@ export class CuTeacherComponent implements OnInit {
     } else {
       return;
     }
-    console.log(this.data.id);
+    console.log(this.data.id + ' ' + this.data.password);
   }
 
   RegisterForm() {

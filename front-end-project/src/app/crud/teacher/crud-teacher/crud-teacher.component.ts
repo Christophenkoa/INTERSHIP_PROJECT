@@ -19,7 +19,6 @@ export class CrudTeacherComponent implements OnInit {
   TEACHER_DATA: MatTableDataSource<any>;
   teacherSubscription: Subscription;
   teacherArray: TeacherModel[] = [];
-  Singleteacher: TeacherModel;
   teacherSubject = new Subject<TeacherModel[]>();
 
   /* Differents columns of the table */
@@ -38,8 +37,7 @@ export class CrudTeacherComponent implements OnInit {
 
   ngOnInit() {
     this.GetAllTeacher();
-    /*if (this.teacherService.teacher) {
-    }*/
+    console.log(this.teacherArray);
   }
 
   EditTeacher(teacherdata) {
@@ -55,6 +53,7 @@ export class CrudTeacherComponent implements OnInit {
         this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
           duration: 3000
         });
+        this.teacherSubject.next(this.teacherArray);
       });
   }
   /* Open the CU(Create and Update) interface */
@@ -69,10 +68,10 @@ export class CrudTeacherComponent implements OnInit {
         if (data) {
           this.teacherArray.push(data);
           console.log(this.teacherArray);
+          this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+            duration: 3000
+          });
         }
-        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
-          duration: 3000
-        });
       });
   }
 
