@@ -104,7 +104,7 @@ export class CuStudentComponent implements OnInit {
     // console.log(this.registerForm.get('dateOfBirth').value);
     // console.log(this.classTaken.id + ' , ' + this.idCourse);
     /* Retrieve values from the form */
-    const student = new StudentModel( this.registerForm.get('regis_number').value,
+    const student = new StudentModel( this.registerForm.get('first_name').value + '.' + this.registerForm.get('last_name').value,
                                       this.registerForm.get('regis_number').value,
                                       this.registerForm.get('first_name').value,
                                       this.registerForm.get('last_name').value,

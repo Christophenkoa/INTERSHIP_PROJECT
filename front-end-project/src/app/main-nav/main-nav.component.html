@@ -13,13 +13,13 @@
           </mat-icon>
           <span style="font-size: 0.8em;">Home</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/class-info">
+     <!-- <a mat-list-item routerLink="/navMenu/class-info">
           <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
             account_circle
           </mat-icon>
         <span style="font-size: 0.8em;">User Profile</span>
-      </a>
-      <a mat-list-item routerLink="/navMenu/add-note">
+      </a>-->
+      <!--<a mat-list-item routerLink="/navMenu/add-note">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           note_add
         </mat-icon>
@@ -30,38 +30,38 @@
           assignment
         </mat-icon>
         <span style="font-size: 0.8em;">Add Mark</span>
-      </a>
-      <a mat-list-item routerLink="/navMenu/class-view">
+      </a>-->
+      <a mat-list-item routerLink="/navMenu/class-view" class="classView">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           article
         </mat-icon>
         <span style="font-size: 0.8em;">Classes List</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/class-info">
+      <!--<a mat-list-item routerLink="/navMenu/class-info">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           sticky_note_2
         </mat-icon>
         <span style="font-size: 0.8em;">Class Description</span>
-      </a>
-      <a mat-list-item routerLink="/navMenu/student">
+      </a>-->
+      <a mat-list-item routerLink="/navMenu/student" class="student">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           receipt_long
         </mat-icon>
         <span style="font-size: 0.8em;">Manage Student</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/teacher">
+      <a mat-list-item routerLink="/navMenu/teacher" class="teacher">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           receipt_long
         </mat-icon>
         <span style="font-size: 0.8em;">Manage Teacher</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/add-course">
+      <a mat-list-item routerLink="/navMenu/add-course" class="course">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           receipt_long
         </mat-icon>
         <span style="font-size: 0.8em;">Manage Course</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/course-list">
+      <a mat-list-item routerLink="/navMenu/course-list" class="course_list">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           receipt_long
         </mat-icon>
@@ -84,7 +84,7 @@
       <span>front-end-project</span>
       <span class="spacer"></span>
       <mat-icon color="accent" class="icon-spacer">account_circle</mat-icon>
-      <span style="font-size: large;padding: 0 10px;">Hello, username</span>
+      <span style="font-size: large;padding: 0 10px;">Hello, {{username}}</span>
       <button mat-mini-fab matBadge="15" matBadgeColor="primary" matTooltip="Notifications">
         <mat-icon>notification_important</mat-icon>
       </button>
@@ -94,15 +94,9 @@
 
     <div class="m-3">
       <!-- Add Content Here -->
-      <!--<app-class-info></app-class-info>-->
-      <!--<app-crud-student></app-crud-student>-->
-      <!--    <app-main-space></app-main-space>-->
-      <!--    <app-course-editor></app-course-editor>-->
-      <!--<app-note-class></app-note-class>-->
-      <!--<app-crud-student></app-crud-student>-->
+
       <router-outlet></router-outlet>
-      <!--<app-crud-teacher></app-crud-teacher>-->
-      <!--<app-add-note></app-add-note>-->
+
     </div>
 
   </mat-sidenav-content>
