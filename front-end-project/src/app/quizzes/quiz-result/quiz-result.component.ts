@@ -22,7 +22,7 @@ export class QuizResultComponent implements OnInit {
     console.log('quiz result');
     this.userAnswers = this.quizService.getUserAnswers();
     console.log(this.userAnswers);
-    this.quizService.getSelectedQuiz(2).subscribe(
+    this.quizService.getSelectedQuiz(1).subscribe(
       (data: Quiz) => {this.myQuiz = data; this.performScore(); }
     );
   }

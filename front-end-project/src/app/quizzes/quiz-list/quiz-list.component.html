@@ -1,25 +1,38 @@
-<h1>Quiz list</h1>
-<ul>
+<!--<h1>Quiz list</h1>-->
+<!--<ul>-->
 
-  <div *ngFor="let quiz_item of quiz">
+<!--  <div *ngFor="let quiz_item of quiz">-->
 
-    <h2>{{quiz_item.entitled}}</h2>
+<!--    <h2>{{quiz_item.entitled}}</h2>-->
 
-    <div>
-      <ul *ngFor="let question of quiz_item.questions">
-        <li>{{question.question_desc}}</li>
+<!--    <div>-->
+<!--      <ul *ngFor="let question of quiz_item.questions">-->
+<!--        <li>{{question.question_desc}}</li>-->
 
-        <div>
-          <ul *ngFor="let answer of question.answers">
-            <li>
-              {{answer.answer}} -- <span>
-              <small>It is <em>{{answer.is_true}}</em></small></span>
-            </li>
-          </ul>
-        </div>
+<!--        <div>-->
+<!--          <ul *ngFor="let answer of question.answers">-->
+<!--            <li>-->
+<!--              {{answer.answer}} &#45;&#45; <span>-->
+<!--              <small>It is <em>{{answer.is_true}}</em></small></span>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
 
-      </ul>
-    </div>
+<div class="jumbotron" style="background-color: wheat; text-align: center">
+  <h1 class="display-4">QUIZ LIST</h1>
+</div>
 
-  </div>
-</ul>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let quiz_item of quiz">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{quiz_item.course}} ({{quiz_item.classe.level}})
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list class="p-3">
+      <a mat-list-item routerLink="">
+        <span>{{quiz_item.entitled}}</span>
+      </a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>

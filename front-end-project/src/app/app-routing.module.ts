@@ -29,7 +29,7 @@ const routes: Routes = [
   {
     path : '',
     component : HomeComponent,
-    canActivate: [AuthGuardService, LoginGuardService],
+    canActivate: [AuthGuardService],
   },
   {
     path : 'navMenu/class-view',

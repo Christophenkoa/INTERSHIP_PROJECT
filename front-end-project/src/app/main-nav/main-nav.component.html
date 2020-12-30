@@ -13,36 +13,36 @@
           </mat-icon>
           <span style="font-size: 0.8em;">Home</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/class-info">
-          <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
-            account_circle
-          </mat-icon>
-        <span style="font-size: 0.8em;">User Profile</span>
-      </a>
-      <a mat-list-item routerLink="/navMenu/add-note">
-        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
-          note_add
-        </mat-icon>
-        <span style="font-size: 0.8em;">Add Note</span>
-      </a>
-      <a mat-list-item routerLink="/navMenu/add-mark">
-        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
-          assignment
-        </mat-icon>
-        <span style="font-size: 0.8em;">Add Mark</span>
-      </a>
+<!--      <a mat-list-item routerLink="/navMenu/class-info">-->
+<!--          <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--            account_circle-->
+<!--          </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">User Profile</span>-->
+<!--      </a>-->
+<!--      <a mat-list-item routerLink="/navMenu/add-note">-->
+<!--        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--          note_add-->
+<!--        </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">Add Note</span>-->
+<!--      </a>-->
+<!--      <a mat-list-item routerLink="/navMenu/add-mark">-->
+<!--        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--          assignment-->
+<!--        </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">Add Mark</span>-->
+<!--      </a>-->
       <a mat-list-item routerLink="/navMenu/class-view">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           article
         </mat-icon>
         <span style="font-size: 0.8em;">Classes List</span>
       </a>
-      <a mat-list-item routerLink="/navMenu/class-info">
-        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
-          sticky_note_2
-        </mat-icon>
-        <span style="font-size: 0.8em;">Class Description</span>
-      </a>
+<!--      <a mat-list-item routerLink="/navMenu/class-info">-->
+<!--        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--          sticky_note_2-->
+<!--        </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">Class Description</span>-->
+<!--      </a>-->
       <a mat-list-item routerLink="/navMenu/student">
         <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
           receipt_long
@@ -84,7 +84,7 @@
       <span>front-end-project</span>
       <span class="spacer"></span>
       <mat-icon color="accent" class="icon-spacer">account_circle</mat-icon>
-      <span style="font-size: large;padding: 0 10px;">Hello, username</span>
+      <span style="font-size: large;padding: 0 10px;">Hello, {{username}}</span>
       <button mat-mini-fab matBadge="15" matBadgeColor="primary" matTooltip="Notifications">
         <mat-icon>notification_important</mat-icon>
       </button>
