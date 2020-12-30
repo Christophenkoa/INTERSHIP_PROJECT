@@ -13,8 +13,8 @@ export class ClassService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  GetAllClasses(): Observable<any[]> {
-    return this.http.get<any[]>(this.url, {headers: this.authService.httpHeaders});
+  GetAllClasses(): Observable<GetClassesModel[]> {
+    return this.http.get<GetClassesModel[]>(this.url, {headers: this.authService.httpHeaders});
   }
 
   GetSingleClass(id: number): Observable<GetClassesModel>  {

@@ -87,7 +87,7 @@ const routes: Routes = [
     component: CourseCrudComponent,
   },
   {
-    path : 'course-display',
+    path : 'navMenu/display-course/:id',
     component: DisplayCourseComponent,
   },
   {

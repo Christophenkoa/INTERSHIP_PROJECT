@@ -4,6 +4,7 @@ import { TeacherModel } from '../../../models/teacher/teacher.model';
 import {TeachersService} from '../../../services/teacher/teachers.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cu-teacher',
@@ -17,6 +18,7 @@ export class CuTeacherComponent implements OnInit {
 
   constructor(private formBuiler: FormBuilder,
               private teacherService: TeachersService,
+              private router: Router,
               public infoBull: MatSnackBar,
               public dialogRef: MatDialogRef<CuTeacherComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -38,7 +40,7 @@ export class CuTeacherComponent implements OnInit {
     } else {
       return;
     }
-    console.log(this.data.id);
+    console.log(this.data.id + ' ' + this.data.password);
   }
 
   RegisterForm() {
@@ -69,13 +71,13 @@ export class CuTeacherComponent implements OnInit {
       var text = '';
       var lettre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/#&$|+?!';
 
-      for(var i = 0; i < 10; i++)
+      for( var i = 0; i < 10; i++)
         text += lettre.charAt(Math.floor(Math.random() * lettre.length));
 
       return text;
     }
     const password = makePassword();
-    console.log(typeof(this.registerForm.get('is_staff').value, convert(this.registerForm.get('is_staff').value)));
+    // console.log(typeof(this.registerForm.get('is_staff').value, convert(this.registerForm.get('is_staff').value)));
 
     if (this.registerForm.invalid) { return; }
     /* Retrieve values from the form */
@@ -92,22 +94,13 @@ export class CuTeacherComponent implements OnInit {
                                     );
 
     // console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
-    this.teacherService.CreateTeacher(teacher)
-      .subscribe(data => {
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-          this.infoBull.open('Creation Error', 'Close', {
-            duration: 2000
-          });
-        });
+    this.teacherService.CreateTeacher(teacher);
   }
 
   /* Update function */
-  UpdateForm(){
+  UpdateForm() {
 
-    if(this.registerForm.invalid) {return;}
+    if(this.registerForm.invalid) {return; }
     const teacherUpdated = new TeacherModel( this.registerForm.get('username').value,
                                       this.registerForm.get('first_name').value,
                                       this.registerForm.get('last_name').value,

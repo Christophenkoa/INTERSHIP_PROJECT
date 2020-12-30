@@ -13,12 +13,18 @@ import {GetClassesModel} from '../models/class/getclasses.models';
 export class ClassViewComponent implements OnInit {
 
   Allclasses: GetClassesModel[] = [];
+  classChooseArray: GetClassesModel[] = [];
+  id: string;
+  isStaff: string;
 
   constructor(private dialog: MatDialog,
               public infoBull: MatSnackBar,
               public classesService: ClassService) { }
   ngOnInit() {
     this.GetAllClasses();
+    console.log(typeof localStorage.getItem('is_staff'));
+    this.id = localStorage.getItem('id');
+    this.isStaff = localStorage.getItem('is_staff');
   }
 
   OpenCUMethod() {
@@ -38,8 +44,18 @@ export class ClassViewComponent implements OnInit {
   /* Get all classes and display them in this page */
   GetAllClasses() {
     this.classesService.GetAllClasses()
-      .subscribe(data => {
+      .subscribe((data) => {
         this.Allclasses = data;
+        for (var i = 0; i < data.length; i++) {
+          for (var j = 0; j < data[i].teachers.length; j++) {
+            // console.log('Hello world !!!');
+            if (this.id === data[i].teachers[j].id.toString() && this.isStaff === 'true') {
+              this.classChooseArray.push(data[i]);
+              console.log(this.classChooseArray);
+            }
+          }
+        }
+        console.log(this.classChooseArray);
         console.log(this.Allclasses);
       });
   }

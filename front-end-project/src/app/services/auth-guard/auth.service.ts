@@ -8,7 +8,7 @@ import { tap, shareReplay } from 'rxjs/operators';
 // import * as jwtDecode from 'jwt-decode';
 import jwt_decode from 'jwt-decode';
 import * as moment from 'moment';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 
 
 import {JwtHelperService} from '@auth0/angular-jwt';

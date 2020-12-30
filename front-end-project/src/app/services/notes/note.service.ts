@@ -13,6 +13,12 @@ url = 'http://127.0.0.1:8000/class_management/chapter/';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  GetAllNotes(): Observable<ChapterModel[]> {
+    return this.http.get<ChapterModel[]>(this.url);
+  }
+  GetSingleNote(id: number): Observable<ChapterModel> {
+    return this.http.get<ChapterModel>(this.url + id + '/');
+  }
   GetNotes(): Observable<ChapterModel[]> {
     return this.http.get<ChapterModel[]>(this.url, {headers: this.authService.httpHeaders});
   }

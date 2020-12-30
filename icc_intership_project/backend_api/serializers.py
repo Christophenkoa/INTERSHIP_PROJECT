@@ -36,14 +36,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'tel', 'gender',
                   'password', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
-        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+        # extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def create(self, validated_data):
+        # print('my validated data', validated_data)
+        # user = super(TeacherSerializer, self).create(validated_data)
+        user = super().create(validated_data)
         print('my validated data', validated_data)
-        user = super(TeacherSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
-        print('clear password: ', user.clear_password)
         user.save()
         return user
 
@@ -55,6 +56,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     admin = AdminSerializer
     course_teacher = serializers.SerializerMethodField()
+    chapter_list = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
@@ -63,12 +65,24 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_course_teacher(self, obj):
         return TeacherSerializer(obj.teacher).data
 
+    def get_chapter_list(self, obj):
+        return ChapterSerializer(obj.chapter_set.all(), many=True).data
+
+    # def get_class_course(self, obj):
+    #     return ClassSerializer(obj.)
+
+
+# class CourseSerializer1(serializers.ModelSerializer):
+#     class Meta:
+#         model = Course
+#         fields = '__all__'
+
 
 class StudentSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
-                  'dateOfBirth', 'is_superuser', 'is_staff', 'is_active']
+                  'dateOfBirth', 'is_superuser', 'is_staff', 'is_active', 'my_class']
 
 
 class ClassSerializer(serializers.ModelSerializer):
@@ -107,14 +121,14 @@ class StudentSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
                   'dateOfBirth', 'my_class', 'student_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
-        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+        # extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
 
     def create(self, validated_data):
         print('my validated data', validated_data)
-        user = super(StudentSerializer, self).create(validated_data)
+        user = super().create(validated_data)
         user.set_password(validated_data['password'])
         user.clear_password = validated_data['password']
         print('clear password: ', user.clear_password)
@@ -154,11 +168,14 @@ class EvaluationSerializer(serializers.ModelSerializer):
 
 
 class ChapterSerializer(serializers.ModelSerializer):
-    course = CourseSerializer
+    # courseObj = serializers.SerializerMethodField()
 
     class Meta:
         model = Chapter
         fields = '__all__'
+
+    # def get_courseObj(self, obj):
+    #     return CourseSerializer1(obj.course).data
 
 
 # class QuestionQuizSerializer(serializers.ModelSerializer):
