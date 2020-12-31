@@ -1,0 +1,29 @@
+p {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 0px;
+  padding-top: 30px;
+  color: white;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  margin: 0 135px auto;
+}
+
+mat-paginator {
+  width: 100%;
+  margin: auto;
+}
+
+.hide{
+  display: none;
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}

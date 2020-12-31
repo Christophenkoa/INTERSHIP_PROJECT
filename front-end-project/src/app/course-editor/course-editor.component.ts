@@ -18,6 +18,9 @@ declare var CKEDITOR: any;
 export class CourseEditorComponent implements OnInit {
   NoteForm: FormGroup;
   courses: GetcourseModel[] = [];
+  isStaff: string;
+  isSuperuser: string;
+  id: string;
 
   constructor(private noteService: NoteService,
               private formBuilder: FormBuilder,
@@ -27,6 +30,9 @@ export class CourseEditorComponent implements OnInit {
               private snack: MatSnackBar) { }
 
   ngOnInit() {
+    this.isStaff = localStorage.getItem('is_staff');
+    this.isSuperuser = localStorage.getItem('is_superuser');
+    this.id = localStorage.getItem('id');
     this.getCoursesData();
     this.initCourseEditor();
     this.noteForm();
@@ -44,7 +50,16 @@ export class CourseEditorComponent implements OnInit {
     this.classService.GetSingleClass(id)
       .subscribe((data) => {
         console.log(data);
-        this.courses = data.all_courses;
+        if (this.isSuperuser === 'true') {
+          this.courses = data.all_courses;
+        } else {
+          for (var i = 0; i < data.all_courses.length; i++) {
+            if (this.id === data.all_courses[i].course_teacher.id.toString()) {
+              this.courses.push(data.all_courses[i]);
+            }
+          }
+          console.log(this.courses);
+        }
       });
   }
 

@@ -24,6 +24,9 @@ export class AddNoteComponent implements OnInit {
   CourseArray: GetcourseModel[] = [];
   EvaluationsArray: EvaluationModel[] = [];
   dateNow = new Date();
+  isStaff: string;
+  isSuperuser: string;
+  id: string;
   /* End */
 
   /* Form variables */
@@ -44,6 +47,9 @@ export class AddNoteComponent implements OnInit {
               private evaluationService: EvaluationService) { }
 
   ngOnInit() {
+    this.isStaff = localStorage.getItem('is_staff');
+    this.isSuperuser = localStorage.getItem('is_superuser');
+    this.id = localStorage.getItem('id');
     this.TakeValueForm();
     this.GetAllStudent();
     this.GetAllEvaluation();
@@ -74,7 +80,7 @@ export class AddNoteComponent implements OnInit {
     this.evaluationService.CreateEvaluation(evaluation)
       .subscribe(data => {
         console.log(data);
-        this.snackBar.open('Mark has been saved !', 'Close',{
+        this.snackBar.open('Mark has been saved !', 'Close', {
           duration: 2000,
         });
       }, error => console.log(error));
@@ -90,8 +96,20 @@ export class AddNoteComponent implements OnInit {
     const id  = this.route.snapshot.params['id'];
     this.classService.GetSingleClass(id)
       .subscribe((data) => {
+        console.log(data);
+        /* Take all students */
         this.StudentArray = data.all_students;
-        this.CourseArray = data.all_courses;
+        /* Take all courses of this teacher */
+        if (this.isSuperuser === 'true') {
+          this.CourseArray = data.all_courses;
+        } else {
+          for (var i = 0; i < data.all_courses.length; i++) {
+            if (this.id === data.all_courses[i].course_teacher.id.toString()) {
+              this.CourseArray.push(data.all_courses[i]);
+            }
+          }
+          console.log(this.CourseArray);
+        }
       }, error => console.log(error));
   }
 
@@ -100,6 +118,7 @@ export class AddNoteComponent implements OnInit {
     const id  = this.route.snapshot.params['id'];
     this.evaluationService.GetAllEvaluation()
       .subscribe((data) => {
+        console.log(data);
         for (var i = 0; i < data.length; i++) {
           if (data[i].student_note.my_class.toString() === id) {
             this.EvaluationsArray.push(data[i]);

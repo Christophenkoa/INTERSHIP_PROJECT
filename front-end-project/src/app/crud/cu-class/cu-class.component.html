@@ -80,7 +80,7 @@
         </div>
       </div>
       <mat-dialog-actions align="center">
-        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnSubmitForm()" [mat-dialog-close]="ClassForm.value">Save</button>
+        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnSubmitForm()" [mat-dialog-close]="ClassForm.value" [disabled]="ClassForm.invalid">Save</button>
         <button mat-raised-button (click)="ReturnFunct()" color="warn">Cancel</button>
       </mat-dialog-actions>
     </form>
