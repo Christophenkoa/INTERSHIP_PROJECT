@@ -17,6 +17,12 @@ export class CoursesService {
     return this.http.get<GetcourseModel[]>(this.url, {headers: this.authService.httpHeaders});
   }
 
+  getSelectedCourse(id: number): Observable<any> {
+    // @ts-ignore
+    console.log(this.authService.httpHeaders);
+    return this.http.get<any>(this.url + id + '/', {headers: this.authService.httpHeaders});
+  }
+
   CreateCourse(coursesData: CourseModel) {
     console.log(coursesData);
     return this.http.post(this.url, coursesData, {headers: this.authService.httpHeaders});

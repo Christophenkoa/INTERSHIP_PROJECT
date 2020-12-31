@@ -218,12 +218,18 @@ class QuestionSerializer(serializers.ModelSerializer):
 class QuizSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer
     student = StudentSerializer
+    # my_course = serializers.SerializerMethodField()
 
     questions = QuestionSerializer(many=True)
 
     class Meta:
         model = Quiz
+        ordering = ('classe', 'course',)
         fields = ['id', 'entitled', 'course', 'req_time', 'created_at', 'classe', 'teacher', 'questions']
+        depth = 1
+
+    # def get_my_course(self, obj):
+    #     return CourseSerializer(obj.course).data
 
     def create(self, validated_data):
         questions = validated_data.pop('questions')

@@ -10,10 +10,12 @@ import * as $ from 'jquery';
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
+
 export class MainNavComponent implements OnInit {
   username: string;
   isStaff: string;
   isSuperuser: string;
+
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -22,6 +24,7 @@ export class MainNavComponent implements OnInit {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {}
+
 
   ngOnInit() {
     this.username = localStorage.getItem('username');
@@ -33,14 +36,16 @@ export class MainNavComponent implements OnInit {
       return ;
     } else if (this.isStaff === 'true' && this.isSuperuser === 'false') {
       // for teacher
-      $(document).ready(function () {
+      // tslint:disable-next-line:only-arrow-functions
+      $(document).ready(function() {
         $('.course').hide();
         $('.teacher').hide();
         $('.student').hide();
       });
     } else if (this.isStaff === 'false' && this.isSuperuser === 'false') {
       // for student
-      $(document).ready(function () {
+      // tslint:disable-next-line:only-arrow-functions
+      $(document).ready(function() {
         $('.course').hide();
         $('.teacher').hide();
         $('.student').hide();

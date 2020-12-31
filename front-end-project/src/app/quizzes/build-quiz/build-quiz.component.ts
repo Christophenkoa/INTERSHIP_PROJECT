@@ -124,7 +124,7 @@ export class BuildQuizComponent implements OnInit {
     if (! quiz.invalid) {
       this.success = true;
       this.myQuiz = new Quiz(quiz.value.quizName, quiz.value.quizCourse,
-        15, quiz.value.quizClass, 2, quiz.value.questions);
+        15, quiz.value.quizClass, 5, quiz.value.questions);
       this.quizService.postQuiz(this.myQuiz)
         .subscribe(
           (data) => {console.log(data); },

@@ -64,7 +64,7 @@ import { QuizListComponent } from './quizzes/quiz-list/quiz-list.component';
 import { QuizResultComponent } from './quizzes/quiz-result/quiz-result.component';
 import { BuildQuizComponent } from './quizzes/build-quiz/build-quiz.component';
 import { DisplayCourseComponent } from './display-course/display-course.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -81,7 +81,7 @@ import {QuizService} from './services/quizz/quiz.service';
 import {NoteService} from './services/notes/note.service';
 import { StudentHomeComponent } from './home/student-home/student-home.component';
 import {UserManagerService} from './services/user/user-manager.service';
-import {AuthService} from './services/auth-guard/auth.service';
+import {AuthInterceptor, AuthService} from './services/auth-guard/auth.service';
 import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
 import { EvaluationService } from './services/evaluation/evaluation.service';
 
@@ -169,7 +169,12 @@ import { EvaluationService } from './services/evaluation/evaluation.service';
               NoteService,
               UserManagerService,
               AuthService,
-              EvaluationService],
+              EvaluationService,
+              {
+                provide: HTTP_INTERCEPTORS,
+                useClass: AuthInterceptor,
+                multi: true
+              }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,22 +10,22 @@ class_management_router = DefaultRouter()
 quiz_router = DefaultRouter()
 
 # user router
-user_router.register('admin', AdminView, base_name='admin')
-user_router.register('teacher', TeacherView, base_name='teacher')
-user_router.register('student', StudentView, base_name='student')
-user_router.register('user', UserView, base_name='user')
+user_router.register('admin', AdminView, basename='admin')
+user_router.register('teacher', TeacherView, basename='teacher')
+user_router.register('student', StudentView, basename='student')
+user_router.register('user', UserView, basename='user')
 
 # class router
-class_management_router.register('course', CourseView, base_name='course')
-class_management_router.register('class', ClassView, base_name='class')
-class_management_router.register('chapter', ChapterView, base_name='chapter')
-class_management_router.register('evaluation', EvaluationView, base_name='evaluation')
+class_management_router.register('course', CourseView, basename='course')
+class_management_router.register('class', ClassView, basename='class')
+class_management_router.register('chapter', ChapterView, basename='chapter')
+class_management_router.register('evaluation', EvaluationView, basename='evaluation')
 
 # quiz router
-quiz_router.register('quiz', QuizView, base_name='quiz')
-quiz_router.register('question', QuestionView, base_name='question')
-quiz_router.register('answer', AnswerView, base_name='answer')
-quiz_router.register('quiz_taker', QuizTakerView, base_name='quiz_taker')
+quiz_router.register('quiz', QuizView, basename='quiz')
+quiz_router.register('question', QuestionView, basename='question')
+quiz_router.register('answer', AnswerView, basename='answer')
+quiz_router.register('quiz_taker', QuizTakerView, basename='quiz_taker')
 
 urlpatterns = [
     path('user/', include(user_router.urls)),
