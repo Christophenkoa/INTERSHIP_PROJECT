@@ -53,6 +53,7 @@ import { HomeComponent } from './home/home.component';
 
 /* chart */
 import { IgxDoughnutChartModule } from 'igniteui-angular-charts';
+import { ChartsModule } from 'ng2-charts';
 import { CourseCrudComponent } from './crud/course-crud/course-crud.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
@@ -147,6 +148,7 @@ import { EvaluationService } from './services/evaluation/evaluation.service';
     MatExpansionModule,
     HttpClientModule,
     MatChipsModule,
+    ChartsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

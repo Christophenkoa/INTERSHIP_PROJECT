@@ -46,7 +46,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService, LoginGuardService],
   },
   {
-    path : 'student',
+    path : 'navMenu/home-student',
     component: StudentHomeComponent,
     canActivate: [AuthGuardService],
   },

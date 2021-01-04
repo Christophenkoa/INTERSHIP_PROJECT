@@ -47,8 +47,8 @@ export class ClassViewComponent implements OnInit {
   GetAllClasses() {
     this.classesService.GetAllClasses()
       .subscribe((data) => {
-        console.log(data);
-        if (this.isSuperuser === 'true' && this.isStaff === 'true') {
+        // console.log(data);
+        if (this.isSuperuser === 'true') {
           this.classChooseArray = data;
         } else {
           for (var i = 0; i < data.length; i++) {
@@ -59,7 +59,7 @@ export class ClassViewComponent implements OnInit {
             }
           }
         }
-        console.log(this.classChooseArray);
+        // console.log(this.classChooseArray);
       });
   }
 
