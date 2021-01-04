@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Answer} from '../../models/quiz_folder/answer';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 
 @Component({
   selector: 'app-quiz-detail',
@@ -15,14 +15,20 @@ export class QuizDetailComponent implements OnInit {
   tempUserAnswer: Answer = null;
   userAnswerList: Answer[] = [];
   selectedAnswer: number;
+  subscription: any;
 
   nextDisable = false;
   previousDisable = false;
 
-  constructor(private quizService: QuizService, private router: Router) { }
+  constructor(private quizService: QuizService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.quizService.getSelectedQuiz(2)
+    // Get quiz id from url
+    const id = + this.route.snapshot.params.id;
+    this.quizService.selectedQuiz = id;
+
+    // Get the quiz
+    this.quizService.getSelectedQuiz(id)
       .subscribe(
         (data: any) => {this.quiz = data; console.log(this.quiz); },
         (error) => {console.log(error); }

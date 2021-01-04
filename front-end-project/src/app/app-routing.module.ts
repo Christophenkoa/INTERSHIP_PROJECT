@@ -111,7 +111,7 @@ const routes: Routes = [
     component : QuizListComponent,
   },
   {
-    path : 'quiz/participate',
+    path : 'quiz/participate/:id',
     component : QuizDetailComponent,
   },
   {

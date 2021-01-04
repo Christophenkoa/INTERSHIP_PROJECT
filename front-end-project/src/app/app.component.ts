@@ -5,6 +5,7 @@ import {Observable, Subscription} from 'rxjs';
 import {AuthService} from './services/auth-guard/auth.service';
 import Swal from 'sweetalert2';
 import {AuthGuardService} from './services/auth-guard/auth-guard.service';
+import {HttpHeaders} from '@angular/common/http';
 
 
 @Component({
@@ -42,5 +43,11 @@ export class AppComponent implements OnInit {
     this.authService.authentication.subscribe(
       (data) => {this.auth = data; console.log(data); }
     );
+
+    // set header based on token received
+    if (localStorage.getItem('token')) {
+      this.authService.httpHeaders =
+        new HttpHeaders({'Content-type': 'application/json', 'Authorization': 'JWT ' + localStorage.getItem('token')});
+      }
   }
 }
