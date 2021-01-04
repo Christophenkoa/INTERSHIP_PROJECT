@@ -30,7 +30,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-nav-list class="p-3">
-      <a mat-list-item routerLink="">
+      <a (click)="participate(quiz_item.id)">
         <span>{{quiz_item.entitled}}</span>
       </a>
     </mat-nav-list>

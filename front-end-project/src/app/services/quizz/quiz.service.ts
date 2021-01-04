@@ -8,12 +8,16 @@ import {AuthService} from '../auth-guard/auth.service';
 @Injectable()
 export class QuizService {
   private url = 'http://127.0.0.1:8000/quiz_management/quiz/';
+  private url2 = 'http://127.0.0.1:8000/quiz_management/';
 
   /* catch selected answer */
   selectedAnswer = new EventEmitter<Answer>();
 
   /* manage user choices*/
   userAnswers: Answer[] = [];
+
+  // Selected quiz
+  selectedQuiz: number;
 
   constructor(private http: HttpClient, private  authService: AuthService) {}
 
@@ -39,5 +43,11 @@ export class QuizService {
 
   postQuiz(quiz: Quiz): Observable<Quiz> {
     return this.http.post<Quiz>(this.url, quiz, {headers: this.authService.httpHeaders});
+  }
+
+  quizTaker(score: number, start_time: Date, end_time: Date, associated_student: number,
+            associated_quiz: number): Observable<Quiz> {
+    const body = {score, start_time, end_time, associated_student, associated_quiz};
+    return this.http.post<Quiz>(this.url2 + 'quiz_taker/', body , {headers: this.authService.httpHeaders});
   }
 }

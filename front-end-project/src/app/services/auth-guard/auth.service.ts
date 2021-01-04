@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, OnInit} from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import {Observable, Subscription, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subscription, throwError} from 'rxjs';
 
 
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -34,14 +34,14 @@ export class AuthService {
 
         const loginResult = result as Token;
 
-        this.httpHeaders = new HttpHeaders({'Content-type': 'application/json', 'Authorization': 'JWT ' + loginResult.token });
+        // Here we are storing the token and refresh token in the localstorage
+        localStorage.setItem('token', loginResult.token);
+
+        this.httpHeaders = new HttpHeaders({'Content-type': 'application/json', 'Authorization': 'JWT ' + localStorage.getItem('token') });
 
         console.log(result);
         this.authentication.emit(true);
         localStorage.setItem('auth', '' + true);
-
-        // Here we are storing the token and refresh token in the localstorage
-        localStorage.setItem('token', loginResult.token);
 
         const decoded = jwt_decode<JwtPayload>(loginResult.token);
         console.log(decoded);
@@ -56,7 +56,7 @@ export class AuthService {
         localStorage.setItem('is_staff', '' + this.user.is_staff);
         localStorage.setItem('is_active', '' + this.user.is_active);
 
-        this.router.navigate(['/quiz']);
+        this.router.navigate(['']);
       },
 
       error => {
@@ -64,6 +64,7 @@ export class AuthService {
       }
     );
   }
+
   logout() {
     this.tokenSubscription.unsubscribe();
     this.authentication.emit(false);
@@ -82,7 +83,7 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem('token');
   }
-  }
+}
 interface JwtPayload {
   exp: number;
   user_id: number;
@@ -102,18 +103,13 @@ interface User {
   is_active: boolean;
 }
 
-import {
-  HttpResponse,
-  HttpErrorResponse,
-} from '@angular/common/http';
-import {catchError, delay, finalize} from 'rxjs/operators';
+// import { HttpErrorResponse } from '@angular/common/http';
+// import {catchError, delay} from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
 import {UserManagerService} from '../user/user-manager.service';
 
-// import 'rxjs/add/operator/do';
-// import 'rxjs/add/operator/catch';
-// import 'rxjs/add/observable/throw';
-
+import { HttpErrorResponse} from '@angular/common/http';
+import {catchError, filter, take, switchMap, finalize, delay} from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
