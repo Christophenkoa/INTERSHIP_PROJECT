@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EvaluationModel} from "../../models/evaluation/evaluation.model";
-import {MatTableDataSource} from "@angular/material";
-import {MatPaginator} from "@angular/material/paginator";
-import {EvaluationService} from "../../services/evaluation/evaluation.service";
+import {EvaluationModel} from '../../models/evaluation/evaluation.model';
+import {MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {EvaluationService} from '../../services/evaluation/evaluation.service';
 
 @Component({
   selector: 'app-student-home',
