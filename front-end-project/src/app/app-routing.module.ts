@@ -90,16 +90,12 @@ const routes: Routes = [
     path : 'navMenu/display-course/:id',
     component: DisplayCourseComponent,
   },
-  {
-    path : 'navMenu/quiz',
-    component : QuizzesComponent,
-  },
 {
   path : 'navMenu/course-list',
   component: CoursesListComponent,
 },
 {
-    path : 'quiz',
+    path : 'quiz-item/:id',
     component : QuizzesComponent,
   },
   {

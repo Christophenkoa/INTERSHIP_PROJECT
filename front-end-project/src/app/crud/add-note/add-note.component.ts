@@ -93,7 +93,7 @@ export class AddNoteComponent implements OnInit {
   /* End */
 
   GetAllStudent() {
-    const id  = this.route.snapshot.params['id'];
+    const id  = this.route.snapshot.params.id;
     this.classService.GetSingleClass(id)
       .subscribe((data) => {
         console.log(data);
@@ -103,7 +103,8 @@ export class AddNoteComponent implements OnInit {
         if (this.isSuperuser === 'true') {
           this.CourseArray = data.all_courses;
         } else {
-          for (var i = 0; i < data.all_courses.length; i++) {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < data.all_courses.length; i++) {
             if (this.id === data.all_courses[i].course_teacher.id.toString()) {
               this.CourseArray.push(data.all_courses[i]);
             }
@@ -115,11 +116,12 @@ export class AddNoteComponent implements OnInit {
 
   /* Get all evaluations in database */
   GetAllEvaluation() {
-    const id  = this.route.snapshot.params['id'];
+    const id  = this.route.snapshot.params.id;
     this.evaluationService.GetAllEvaluation()
       .subscribe((data) => {
         console.log(data);
-        for (var i = 0; i < data.length; i++) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < data.length; i++) {
           if (data[i].student_note.my_class.toString() === id) {
             this.EvaluationsArray.push(data[i]);
           }

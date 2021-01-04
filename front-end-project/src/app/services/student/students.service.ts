@@ -23,6 +23,10 @@ export class StudentsService {
     return this.http.get<GetstudentModel[]>('http://127.0.0.1:8000/user/student/', {headers: this.authService.httpHeaders});
   }
 
+  GetSpecificStudent(id: number): Observable<GetstudentModel> {
+    return this.http.get<GetstudentModel>('http://127.0.0.1:8000/user/student/' + id + '/', {headers: this.authService.httpHeaders});
+  }
+
   DeleteStudent(id: number) {
     return this.http.delete('http://127.0.0.1:8000/user/student/' + id + '/', {headers: this.authService.httpHeaders});
   }
