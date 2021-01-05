@@ -2,7 +2,7 @@
   <div class="col-md-4">
     <div class="bg-primary m-3" style="height: 170px;">
       <div><p> N° Course </p></div>
-      <div><p>9</p></div>
+      <div><p>{{ NbreCourse }}</p></div>
     </div>
   </div>
   <div class="col-md-4">
@@ -14,14 +14,15 @@
   <div class="col-md-4">
     <div class="bg-danger m-3" style="height: 170px;">
       <div><p> N° Class Size </p></div>
-      <div><p>9</p></div>
+      <div><p>{{ NbreStudent }}</p></div>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-6">
     <mat-card>
+      <mat-card-title style="text-align: center;"><ul> Your Marks </ul></mat-card-title>
       <mat-card-content>
         <mat-form-field floatLabel="never">
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -62,7 +63,8 @@
 
             <ng-container matColumnDef="loading">
               <mat-footer-cell *matFooterCellDef colspan="6">
-                Loading data...
+                <!--Loading data...-->
+                <mat-spinner></mat-spinner>
               </mat-footer-cell>
             </ng-container>
 
@@ -83,10 +85,10 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-6">
     <mat-card>
       <mat-card-content>
-        Hello World !!
+        <canvas id="bar" style="width: 100%"></canvas>
       </mat-card-content>
     </mat-card>
   </div>

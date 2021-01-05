@@ -1,11 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {TeacherModel} from "../../../models/teacher/teacher.model";
-import {CourseModel} from "../../../models/course/courses.model";
-import {TeachersService} from "../../../services/teacher/teachers.service";
-import {CoursesService} from "../../../services/courses/courses.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TeacherModel} from '../../../models/teacher/teacher.model';
+import {CourseModel} from '../../../models/course/courses.model';
+import {TeachersService} from '../../../services/teacher/teachers.service';
+import {CoursesService} from '../../../services/courses/courses.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-cu-course-popup',
@@ -16,6 +18,7 @@ export class CuCoursePopupComponent implements OnInit {
   CourseForm: FormGroup;
   update = false;
   idarea: number[] = [];
+  filteredOptions: Observable<string[]>;
 
   courses: string[] = [
     'English', 'French', 'Chemistry', 'Physic', 'Mathematic',
@@ -44,7 +47,25 @@ export class CuCoursePopupComponent implements OnInit {
     } else {
       return;
     }
+    this.FilterMethod();
   }
+
+  FilterMethod() {
+    /* Autocompletion */
+    this.filteredOptions = this.CourseForm.get('course').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+    /* End */
+  }
+  /* Autocompletion too */
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.courses.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  /* End */
 
   TakeValue() {
     this.CourseForm = this.formBuilder.group({

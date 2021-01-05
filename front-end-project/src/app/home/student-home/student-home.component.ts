@@ -3,6 +3,9 @@ import {EvaluationModel} from '../../models/evaluation/evaluation.model';
 import {MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {EvaluationService} from '../../services/evaluation/evaluation.service';
+import {GetstudentModel} from '../../models/student/getstudent.model';
+import {StudentsService} from '../../services/student/students.service';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-student-home',
@@ -15,13 +18,17 @@ export class StudentHomeComponent implements OnInit {
   isSuperuser: string;
   isActive: string;
   id: string;
+  color = ['red', 'blue', 'pink', 'yellow', 'green', 'orange', 'gray'];
+  NbreCourse = 0;
+  NbreStudent = 0;
 
   displayedColumns: string[] = ['name', 'sequence', 'date_eval', 'courseChoose', 'note'];
   EVALUATION_DATA: MatTableDataSource<EvaluationModel>;
   EvaluationsArray: EvaluationModel[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private evaluationService: EvaluationService) { }
+  constructor(private evaluationService: EvaluationService,
+              private studentService: StudentsService) { }
 
   ngOnInit() {
     this.isStaff = localStorage.getItem('is_staff');
@@ -29,6 +36,8 @@ export class StudentHomeComponent implements OnInit {
     this.id = localStorage.getItem('id');
     this.isActive = localStorage.getItem('is_active');
     this.GetAllEvaluation();
+    this.GetAllStudent();
+    this.BarChartFunction();
   }
 
   /* Table informations and functions */
@@ -40,8 +49,9 @@ export class StudentHomeComponent implements OnInit {
   GetAllEvaluation() {
     this.evaluationService.GetAllEvaluation()
       .subscribe((data) => {
+        console.log(data);
         if (this.isActive === 'true') {
-          for (var i = 0; i < data.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             if (this.id === data[i].student_note.id.toString()) {
               this.EvaluationsArray.push(data[i]);
             }
@@ -49,8 +59,87 @@ export class StudentHomeComponent implements OnInit {
           this.EVALUATION_DATA = new MatTableDataSource(this.EvaluationsArray);
           this.EVALUATION_DATA.paginator = this.paginator;
         }
-      });
+      }, error => console.log(error));
     console.log(this.EvaluationsArray);
   }
+
+  GetAllStudent() {
+    this.studentService.GetAllStudent()
+      .subscribe((data) => {
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          if (this.id === data[i].id.toString()) {
+            this.NbreStudent = data[i].student_class.all_students.length;
+            this.NbreCourse = data[i].student_class.all_courses.length;
+          }
+        }
+      }, error => console.log(error));
+  }
+
+  /* For barChart */
+
+  BarChartFunction() {
+    let TitleCourse = [];
+    const array = [];
+    const Average = [];
+    const barColor = [];
+    this.evaluationService.GetAllEvaluation()
+      .subscribe((data) => {
+        /* Take the course entitle without repetition */
+        for (let i = 0; i < data.length; i++) {
+          if (this.id === data[i].student_note.id.toString()) {
+            array.push(data[i].course_note.entitled);
+            TitleCourse = Array.from(new Set(array));
+          }
+        }
+        /* End */
+        /* Take a mark and calculated the average per course  */
+        for (let j = 0; j < TitleCourse.length; j++) {
+          let nbre = 0;
+          let inter = 0;
+          /* Take n-color in the color array */
+          barColor.push(this.color[Math.floor(Math.random() * this.color.length)]);
+          /* End */
+          for (let n = 0; n < this.EvaluationsArray.length; n++) {
+            if (TitleCourse[j] === this.EvaluationsArray[n].course_note.entitled) {
+              nbre += Number(this.EvaluationsArray[n].note);
+              inter++;
+            }
+          }
+          Average.push((nbre / inter));
+          /*console.log('addition : ' + nbre + ' , ' + 'itération : ' + inter);
+          console.log(Average);
+          console.log(barColor);*/
+          const barChart = new Chart('bar', {
+            type: 'bar',
+            data: {
+              labels: TitleCourse,
+              datasets: [{
+                label: 'Average',
+                data: Average,
+                backgroundColor: barColor,
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              title: {
+                text: 'List of average mark per course',
+                display: true
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }
+          });
+        }
+        /* End */
+      }, error => console.log(error));
+  }
+  /* End */
 
 }

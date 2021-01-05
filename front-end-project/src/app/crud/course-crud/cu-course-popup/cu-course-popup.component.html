@@ -9,11 +9,13 @@
       <div class="col-md-4 mb-3">
         <mat-form-field class="full-width" appearance="legacy">
           <mat-label>Course</mat-label>
-          <mat-select formControlName="course" required>
-            <mat-option *ngFor="let course of courses" [value]="course">
-              {{ course }}
+          <input type="text" placeholder="Enter a course name" matInput
+                 formControlName="course" [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
             </mat-option>
-          </mat-select>
+          </mat-autocomplete>
           <mat-error *ngIf="CourseForm.get('course').errors?.required">
             Required course
           </mat-error>

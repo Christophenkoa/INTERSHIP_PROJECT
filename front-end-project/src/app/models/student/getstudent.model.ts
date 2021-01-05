@@ -1,9 +1,11 @@
 import {CourseModel} from "../course/courses.model";
 import {ClassesModel} from "../class/classes.model";
+import {GetcourseModel} from "../course/getcourses.model";
+import {GetClassesModel} from "../class/getclasses.models";
 
 export class GetstudentModel {
   id: number;
-  student_class: ClassesModel;
+  student_class: GetClassesModel;
   constructor(public regis_number: string,
               public first_name: string,
               public last_name: string,
@@ -15,6 +17,6 @@ export class GetstudentModel {
               public is_staff: boolean,
               public is_superuser: boolean,
               public my_class: ClassesModel,
-              public courses: CourseModel[]
+              public courses: GetcourseModel[]
   ) {}
 }

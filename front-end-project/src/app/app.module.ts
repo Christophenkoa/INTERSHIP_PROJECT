@@ -27,6 +27,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { LoginComponent } from './login/login.component';
@@ -149,6 +150,7 @@ import { EvaluationService } from './services/evaluation/evaluation.service';
     HttpClientModule,
     MatChipsModule,
     ChartsModule,
+    MatProgressSpinnerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
