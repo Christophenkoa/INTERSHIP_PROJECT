@@ -26,11 +26,14 @@
   <mat-expansion-panel *ngFor="let quiz_item of quiz">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{quiz_item.course}} ({{quiz_item.classe.level}})
+        {{quiz_item.course}} <span *ngIf="isStaff == 'true' ">({{quiz_item.classe_details.level}})</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-nav-list class="p-3">
-      <a (click)="participate(quiz_item.id)">
+      <a *ngIf="isStaff == 'false'" (click)="participate(quiz_item.id)" style="cursor: pointer;">
+        <span>{{quiz_item.entitled}}</span>
+      </a>
+      <a *ngIf="isStaff == 'true' " style="cursor: pointer;" [routerLink]="['/quiz-item', quiz_item.id]">
         <span>{{quiz_item.entitled}}</span>
       </a>
     </mat-nav-list>

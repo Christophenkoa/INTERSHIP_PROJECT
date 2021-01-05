@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {QuizService} from '../../services/quizz/quiz.service';
-import {Quiz} from '../../models/quiz_folder/quiz';
 import {Router} from '@angular/router';
+import {StudentsService} from '../../services/student/students.service';
 
 @Component({
   selector: 'app-quiz-list',
@@ -9,16 +9,60 @@ import {Router} from '@angular/router';
   styleUrls: ['./quiz-list.component.scss']
 })
 export class QuizListComponent implements OnInit {
-  public quiz: any = null;
+  public quiz: any[] = [];
+  isStaff: string;
+  isSuperuser: string;
+  id: string;
 
-  constructor(private quizService: QuizService, private router: Router) { }
+  constructor(private quizService: QuizService, private router: Router, private studentService: StudentsService) { }
 
   ngOnInit() {
+    this.isStaff = localStorage.getItem('is_staff');
+    this.isSuperuser = localStorage.getItem('is_superuser');
+    this.id = localStorage.getItem('id');
+    this.loadQuiz();
+  }
+
+  loadQuiz() {
     this.quizService.getQuiz()
       .subscribe(
         (data) => {
-          this.quiz = data;
-          console.log(this.quiz);
+         // console.log(data);
+
+          // if you are a superuser
+          if (this.isSuperuser === 'true') {
+            this.quiz = data;
+
+            // if you are a teacher
+          } else if (this.isStaff === 'true') {
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < data.length; i++) {
+              if (this.id === data[i].teacher_details.id.toString()) {
+                console.log(data[i]);
+                this.quiz.push(data[i]);
+              }
+            }
+
+            // if you are a student
+          } else {
+            console.log('student');
+            let studentClassId = -1;
+            this.studentService.GetSpecificStudent(+ this.id).subscribe(
+              // tslint:disable-next-line:no-shadowed-variable
+              (user) => {
+                studentClassId = user.student_class.id;
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < data.length; i++) {
+                  if (studentClassId === data[i].classe_details.id) {
+                    console.log(data[i]);
+                    this.quiz.push(data[i]);
+                    console.log(this.quiz);
+                  }
+                }
+                },
+              error => {console.log(error); }
+            );
+          }
         },
         (error ) => {
           console.log(error);

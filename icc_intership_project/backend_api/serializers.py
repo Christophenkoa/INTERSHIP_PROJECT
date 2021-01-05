@@ -216,7 +216,8 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class QuizSerializer(serializers.ModelSerializer):
-    teacher = TeacherSerializer
+    teacher_details = serializers.SerializerMethodField()
+    classe_details = serializers.SerializerMethodField()
     student = StudentSerializer
     # my_course = serializers.SerializerMethodField()
 
@@ -225,13 +226,21 @@ class QuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quiz
         ordering = ('classe', 'course',)
-        fields = ['id', 'entitled', 'course', 'req_time', 'created_at', 'classe', 'teacher', 'questions']
-        depth = 1
+        fields = ['id', 'entitled', 'course', 'req_time', 'created_at',
+                  'classe', 'classe_details', 'teacher', 'teacher_details', 'questions']
+        # depth = 1
+
+    def get_teacher_details(self, obj):
+        return TeacherSerializer(obj.teacher).data
+
+    def get_classe_details(self, obj):
+        return ClassSerializer(obj.classe).data
 
     # def get_my_course(self, obj):
     #     return CourseSerializer(obj.course).data
 
     def create(self, validated_data):
+        print(validated_data)
         questions = validated_data.pop('questions')
         quiz = Quiz.objects.create(**validated_data)
         for question in questions:
