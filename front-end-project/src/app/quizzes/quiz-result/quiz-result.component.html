@@ -53,3 +53,7 @@
   </mat-accordion>
 
 </div>
+
+<div *ngIf="userAnswers.length == 0 || myQuiz.questions.length ==0" >
+  <p>You didn't choose any answer from all the previous questions </p>
+</div>

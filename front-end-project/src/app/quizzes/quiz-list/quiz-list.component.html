@@ -26,7 +26,7 @@
   <mat-expansion-panel *ngFor="let quiz_item of quiz">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{quiz_item.course}} <span *ngIf="isStaff == 'true' ">({{quiz_item.classe.level}})</span>
+        {{quiz_item.course}} <span *ngIf="isStaff == 'true' ">({{quiz_item.classe_details.level}})</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-nav-list class="p-3">

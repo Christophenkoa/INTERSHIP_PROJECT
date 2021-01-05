@@ -84,6 +84,7 @@ import {UserManagerService} from './services/user/user-manager.service';
 import {AuthInterceptor, AuthService} from './services/auth-guard/auth.service';
 import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
 import { EvaluationService } from './services/evaluation/evaluation.service';
+import {DialogQuizComponent} from './quizzes/quiz-detail/dialog-quiz/dialog-quiz.component';
 
 @NgModule({
   declarations: [
@@ -114,8 +115,9 @@ import { EvaluationService } from './services/evaluation/evaluation.service';
     DisplayCourseComponent,
     StudentHomeComponent,
     CuCoursePopupComponent,
+    DialogQuizComponent,
   ],
-  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent],
+  entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent, DialogQuizComponent],
   imports: [
     BrowserModule,
     IgxDoughnutChartModule,

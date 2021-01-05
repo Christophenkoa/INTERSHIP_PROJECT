@@ -27,7 +27,7 @@ export class QuizListComponent implements OnInit {
     this.quizService.getQuiz()
       .subscribe(
         (data) => {
-          console.log(data);
+         // console.log(data);
 
           // if you are a superuser
           if (this.isSuperuser === 'true') {
@@ -37,7 +37,7 @@ export class QuizListComponent implements OnInit {
           } else if (this.isStaff === 'true') {
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < data.length; i++) {
-              if (this.id === data[i].teacher.id.toString()) {
+              if (this.id === data[i].teacher_details.id.toString()) {
                 console.log(data[i]);
                 this.quiz.push(data[i]);
               }
@@ -45,6 +45,7 @@ export class QuizListComponent implements OnInit {
 
             // if you are a student
           } else {
+            console.log('student');
             let studentClassId = -1;
             this.studentService.GetSpecificStudent(+ this.id).subscribe(
               // tslint:disable-next-line:no-shadowed-variable
@@ -52,7 +53,7 @@ export class QuizListComponent implements OnInit {
                 studentClassId = user.student_class.id;
                 // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < data.length; i++) {
-                  if (studentClassId === data[i].classe.id) {
+                  if (studentClassId === data[i].classe_details.id) {
                     console.log(data[i]);
                     this.quiz.push(data[i]);
                     console.log(this.quiz);
