@@ -11,6 +11,7 @@ import {GetcourseModel} from '../../models/course/getcourses.model';
 import {EvaluationService} from '../../services/evaluation/evaluation.service';
 import {EvaluationModel} from '../../models/evaluation/evaluation.model';
 import * as moment from 'moment';
+import {map, startWith} from "rxjs/operators";
 
 
 @Component({
@@ -39,6 +40,11 @@ export class AddNoteComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   /* End */
+  Courses: string[] = [
+    'English', 'French', 'Chemistry', 'Physic', 'Mathematic',
+    'EPS', 'PCT', 'Deutsch', 'Spanish', 'History', 'Geographic',
+    'Citizenship'
+  ];
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
@@ -61,7 +67,7 @@ export class AddNoteComponent implements OnInit {
       date_Eval : ['', Validators.required],
       note : ['', [Validators.required, Validators.pattern(/^\+?\d+((\.|\,)\d+)?$/)]],
       sequence : ['', Validators.required],
-      courseChoose: ['', Validators.required]
+      courseChoose: ['', Validators.required],
     });
   }
 

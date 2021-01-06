@@ -1,5 +1,6 @@
 <div class="jumbotron" style="background-color: wheat; text-align: center">
   <h1 class="display-4">Welcome Sir, create a Quiz</h1>
+  <h3 class="display-2" style="color: red"><i><u>N.B </u>: The duration of the quiz is in minutes</i></h3>
 </div>
 
 <form class="question__form m-3 p-3" [formGroup]="quizForm" (ngSubmit)="addQuiz(quizForm)">
@@ -22,6 +23,9 @@
             </mat-option>
           </ng-template>
         </mat-select>
+        <mat-error *ngIf="quizForm.get('quizClass').errors?.required">
+          required field.
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -29,11 +33,14 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Select Course</mat-label>
-        <mat-select formControlName="quizCourse">
+        <mat-select formControlName="quizCourse" required>
           <div *ngIf="classes[selectedClass].all_courses.length; else noCourse">
-            <mat-option *ngFor="let course of classes[selectedClass].all_courses" [value]="course.entitled">
-              {{course.entitled}}
-            </mat-option>
+            <div *ngFor="let course of classes[selectedClass].all_courses">
+              <mat-option *ngIf="course.course_teacher.id.toString() === id" [value]="course.entitled">
+                {{course.entitled}}
+              </mat-option>
+            </div>
+
           </div>
           <ng-template #noCourse>
             <mat-option [disabled]="!classes[selectedClass].all_courses.length">
@@ -41,14 +48,34 @@
             </mat-option>
           </ng-template>
         </mat-select>
+        <mat-error *ngIf="quizForm.get('quizCourse').errors?.required">
+          required field.
+        </mat-error>
       </mat-form-field>
+
     </div>
   </div>
 
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Quiz Name" formControlName="quizName">
+    <input matInput placeholder="Quiz Name" formControlName="quizName" required>
+    <mat-error *ngIf="quizForm.get('quizName').errors?.required">
+      required field.
+    </mat-error>
   </mat-form-field>
+
+  <div>
+    <mat-form-field class="example-full-width">
+      <input type="number" matInput placeholder="The duration of the quiz" formControlName="quizTime" required>
+      <mat-error *ngIf="quizForm.get('quizTime').errors?.required">
+        required field.
+      </mat-error>
+      <mat-error *ngIf="quizForm.get('quizTime').errors?.min || quizForm.get('quizTime').errors?.max">
+        The number must be between 0-300 min.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
 
   <div class="question_form m-5">
     <div formArrayName="questions">
