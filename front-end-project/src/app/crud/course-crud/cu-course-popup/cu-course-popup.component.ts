@@ -19,6 +19,7 @@ export class CuCoursePopupComponent implements OnInit {
   update = false;
   idarea: number[] = [];
   filteredOptions: Observable<string[]>;
+  idAdmin: number;
 
   Courses: string[] = [
     'English', 'French', 'Chemistry', 'Physic', 'Mathematic',
@@ -39,6 +40,8 @@ export class CuCoursePopupComponent implements OnInit {
     this.GetAllTeachers();
     this.PopulateForm();
     this.FilterMethod();
+    this.idAdmin = parseInt(localStorage.getItem('id'));
+    // console.log(this.idAdmin + ' , ' + typeof (this.idAdmin));
   }
 
   FilterMethod() {
@@ -85,9 +88,10 @@ export class CuCoursePopupComponent implements OnInit {
       this.CourseForm.get('coef').value + ' , ' + this.CourseForm.get('teacher_id').value);
     this.idarea.push(this.CourseForm.get('teacher_id').value);
     const courses = new CourseModel(this.CourseForm.get('course').value,
-      this.CourseForm.get('coef').value,
-      this.CourseForm.get('teacher_id').value
-    );
+                                    this.CourseForm.get('coef').value,
+                                    this.CourseForm.get('teacher_id').value,
+                                    this.idAdmin
+                                  );
 
     this.courseService.CreateCourse(courses)
       .subscribe((data: CourseModel) => {
@@ -112,7 +116,8 @@ export class CuCoursePopupComponent implements OnInit {
     this.idarea.push(this.CourseForm.get('teacher_id').value);
     const courses = new CourseModel(this.CourseForm.get('course').value,
                                     this.CourseForm.get('coef').value,
-                                    this.CourseForm.get('teacher_id').value);
+                                    this.CourseForm.get('teacher_id').value,
+                                    this.idAdmin);
 
     this.courseService.UpdateCourse(this.coursedata.id, courses)
       .subscribe((data) => {

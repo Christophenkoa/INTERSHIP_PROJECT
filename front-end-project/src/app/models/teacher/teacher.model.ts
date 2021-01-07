@@ -9,6 +9,7 @@ export class TeacherModel {
               public gender: string,
               public is_active: boolean,
               public is_staff: boolean,
-              public is_superuser: boolean
+              public is_superuser: boolean,
+              public my_admin: number
   ) {}
 }

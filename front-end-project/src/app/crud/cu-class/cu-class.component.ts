@@ -30,6 +30,7 @@ export class CuClassComponent implements OnInit {
   idTeacherarray: number[] = [];
   idCourserarray: number[] = [];
   id: number[] = [];
+  idAdmin: number;
 
   constructor(private formBuilder: FormBuilder,
               private courseService: CoursesService,
@@ -37,6 +38,8 @@ export class CuClassComponent implements OnInit {
               public dialogRef: MatDialogRef<CuClassComponent>) { }
 
   ngOnInit() {
+    this.idAdmin = parseInt(localStorage.getItem('id'));
+    console.log(this.idAdmin + ' , ' + typeof (this.idAdmin));
     this.ClassesForm();
     this.TakeCourse();
   }
@@ -72,7 +75,8 @@ export class CuClassComponent implements OnInit {
       this.ClassForm.get('level').value,
       this.ClassForm.get('serie').value,
       this.idCourserarray,
-      this.idTeacherarray
+      this.idTeacherarray,
+      this.idAdmin
     );
 
     // console.log(classes);

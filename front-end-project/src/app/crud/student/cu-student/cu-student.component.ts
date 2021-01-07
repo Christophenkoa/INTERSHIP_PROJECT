@@ -20,6 +20,7 @@ export class CuStudentComponent implements OnInit {
   classTaken: GetClassesModel;
   idCourse: number[] = [];
   dateofBirth: string;
+  idAdmin: string;
 
   constructor(private formBuiler: FormBuilder,
               private studentsService: StudentsService,
@@ -29,6 +30,7 @@ export class CuStudentComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public Studentdata: any) { }
 
   ngOnInit() {
+    this.idAdmin = localStorage.getItem('id');
     this.RegisterStudentForm();
     this.GetAllClasses();
     if (this.Studentdata) {
@@ -116,6 +118,7 @@ export class CuStudentComponent implements OnInit {
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value),
                                       this.classTaken.id,
+                                      parseInt(this.idAdmin),
                                       this.idCourse);
     console.log(student);
     /* Send informations */
@@ -161,6 +164,7 @@ export class CuStudentComponent implements OnInit {
                                       convert(this.registerForm.get('is_staff').value),
                                       convert(this.registerForm.get('is_superuser').value),
                                       this.classTaken.id,
+                                      parseInt(this.idAdmin),
                                       this.idCourse);
 
     this.studentsService.UpdateStudent(student, this.Studentdata.id)
