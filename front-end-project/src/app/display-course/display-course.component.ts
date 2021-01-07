@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NoteService} from '../services/notes/note.service';
 import {ChapterModel} from '../models/chapter/chapters.model';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
+
+// text to speech library
+import Speech from 'speak-tts';
 
 @Component({
   selector: 'app-display-course',
@@ -10,31 +13,54 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DisplayCourseComponent implements OnInit {
   isPlay = false;
-  myNote: ChapterModel;
+  myNote: ChapterModel = new ChapterModel('', '', 1);
 
   constructor(private noteService: NoteService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.GetSingleChapter();
+    this.readNote();
   }
 
   public toggle() {
+    this.readNote();
     this.isPlay = !this.isPlay;
-    this.listenNote(this.isPlay);
+    // this.listenNote(this.isPlay);
   }
 
   listenNote(play: boolean) {
-    if (!play) {
-      return;
+    if (true) {
+      this.readNote();
+    }
+  }
+
+  readNote() {
+    console.log('readMethod');
+    if ('speechSynthesis' in window) {
+      const msg = new SpeechSynthesisUtterance();
+      console.log(msg);
+      const voices = window.speechSynthesis.getVoices();
+      msg.voice = voices[1];
+      msg.volume = 1; // From 0 to 1
+      msg.rate = 1; // From 0.1 to 10
+      msg.pitch = 2; // From 0 to 2
+      msg.lang = 'es';
+      msg.text = this.myNote.text;
+      console.log(msg);
+      window.speechSynthesis.speak(msg);
+      console.log(window.speechSynthesis.speaking);
+    } else {
+      // Speech Synthesis Not Supported 😣
+      console.log('Sorry, your browser doesn\'t support text to speech!');
     }
   }
 
   GetSingleChapter() {
-    const id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params.id;
     this.noteService.GetSingleNote(id)
       .subscribe(
-        (data) => {this.myNote = data;}
+        (data) => {this.myNote = data; console.log(this.myNote); }
       );
   }
 

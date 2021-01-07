@@ -17,7 +17,7 @@ url = 'http://127.0.0.1:8000/class_management/chapter/';
     return this.http.get<ChapterModel[]>(this.url);
   }
   GetSingleNote(id: number): Observable<ChapterModel> {
-    return this.http.get<ChapterModel>(this.url + id + '/');
+    return this.http.get<ChapterModel>(this.url + id + '/', {headers: this.authService.httpHeaders});
   }
   GetNotes(): Observable<ChapterModel[]> {
     return this.http.get<ChapterModel[]>(this.url, {headers: this.authService.httpHeaders});
