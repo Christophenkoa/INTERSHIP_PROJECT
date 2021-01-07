@@ -9,13 +9,12 @@
       <div class="col-md-4 mb-3">
         <mat-form-field class="full-width" appearance="legacy">
           <mat-label>Course</mat-label>
-          <input type="text" placeholder="Enter a course name" matInput
-                 formControlName="course" [matAutocomplete]="auto" required>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
+          <input type="text" placeholder="Pick one" aria-label="Number" matInput formControlName="course" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
           <mat-error *ngIf="CourseForm.get('course').errors?.required">
             Required course
           </mat-error>
@@ -54,8 +53,8 @@
     <div class="form-row">
       <div class="col-md-12">
         <mat-dialog-actions align="center">
-          <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!coursedata" [mat-dialog-close]="CourseForm.value" [disabled]="CourseForm.invalid">Submit</button>
-          <button mat-raised-button color="primary" (click)="OnUpdateForm()" *ngIf="coursedata" [mat-dialog-close]="CourseForm.value" cdkFocusInitial [disabled]="CourseForm.invalid">Update</button>
+          <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!coursedata" [disabled]="CourseForm.invalid">Submit</button>
+          <button mat-raised-button color="primary" (click)="OnUpdateForm()" *ngIf="coursedata" cdkFocusInitial [disabled]="CourseForm.invalid">Update</button>
           <button mat-raised-button (click)="ClosePopup()" color="warn">Cancel</button>
         </mat-dialog-actions>
       </div>

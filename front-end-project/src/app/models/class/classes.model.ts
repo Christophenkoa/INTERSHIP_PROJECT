@@ -8,6 +8,7 @@ export class ClassesModel {
     public level: string,
     public serie: string,
     public courses: number[],
-    public teacher: number[]
+    public teacher: number[],
+    public my_admin: number
   ) {}
 }

@@ -82,7 +82,7 @@ class StudentSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
-                  'dateOfBirth', 'is_superuser', 'is_staff', 'is_active', 'my_class']
+                  'dateOfBirth', 'is_superuser', 'is_staff', 'is_active', 'my_class', 'my_admin']
 
 
 class ClassSerializer(serializers.ModelSerializer):
@@ -94,7 +94,7 @@ class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
         fields = ['id', 'level', 'class_number', 'option', 'serie', 'all_courses',
-                  'teachers', 'all_students', 'courses', 'teacher']
+                  'teachers', 'all_students', 'courses', 'teacher', 'my_admin']
 
     def get_all_courses(self, obj):
         # print(obj.courses.all())

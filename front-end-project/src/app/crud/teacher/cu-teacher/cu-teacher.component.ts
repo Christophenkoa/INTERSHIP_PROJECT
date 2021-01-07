@@ -15,6 +15,7 @@ export class CuTeacherComponent implements OnInit {
 
   registerForm: FormGroup;
   hide = true;
+  idAdmin: number;
 
   constructor(private formBuiler: FormBuilder,
               private teacherService: TeachersService,
@@ -24,6 +25,8 @@ export class CuTeacherComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.idAdmin = parseInt(localStorage.getItem('id'));
+    // console.log(this.idAdmin + ' , ' + typeof (this.idAdmin));
     this.RegisterForm();
     if (this.data) {
       this.registerForm.setValue({
@@ -40,7 +43,7 @@ export class CuTeacherComponent implements OnInit {
     } else {
       return;
     }
-    console.log(this.data.id + ' ' + this.data.password);
+    // console.log(this.data.id + ' ' + this.data.password);
   }
 
   RegisterForm() {
@@ -90,7 +93,8 @@ export class CuTeacherComponent implements OnInit {
                                       this.registerForm.get('gender').value,
                                       convert(this.registerForm.get('is_active').value),
                                       convert(this.registerForm.get('is_staff').value),
-                                      convert(this.registerForm.get('is_superuser').value)
+                                      convert(this.registerForm.get('is_superuser').value),
+                                      this.idAdmin
                                     );
 
     // console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
@@ -110,7 +114,8 @@ export class CuTeacherComponent implements OnInit {
                                       this.registerForm.get('gender').value,
                                       this.registerForm.get('is_active').value,
                                       this.registerForm.get('is_staff').value,
-                                      this.registerForm.get('is_superuser').value
+                                      this.registerForm.get('is_superuser').value,
+                                      this.idAdmin
     );
     // console.log("Oui, c'est bon " + typeof(this.registerForm.get('is_active').value));
     this.teacherService.UpdateTeacher(teacherUpdated, this.data.id)

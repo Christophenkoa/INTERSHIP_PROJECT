@@ -6,8 +6,8 @@ import { MatDialogConfig } from '@angular/material';
 import { StudentModel } from '../../../models/student/student.model';
 import {StudentsService} from '../../../services/student/students.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {GetstudentModel} from "../../../models/student/getstudent.model";
-import {Subject, Subscription} from "rxjs";
+import {GetstudentModel} from '../../../models/student/getstudent.model';
+import {Subject, Subscription} from 'rxjs';
 
 
 @Component({
@@ -50,7 +50,6 @@ export class CrudStudentComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           console.log(data);
-          // this.studentArray.push(data);
           this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
             duration: 3000
           });
@@ -62,7 +61,7 @@ export class CrudStudentComponent implements OnInit {
     this.studentSubscription = this.studentService.GetAllStudent()
       .subscribe(
         (data) => {
-          for (var i= 0;i< data.length; i++) {
+          for (var i= 0;i < data.length; i++) {
             this.studentArray.push(data[i]);
           }
           // console.log(data);

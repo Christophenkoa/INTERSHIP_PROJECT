@@ -99,11 +99,11 @@ const routes: Routes = [
     component : QuizzesComponent,
   },
   {
-    path : 'quiz/create',
+    path : 'navMenu/quiz/create',
     component : BuildQuizComponent,
   },
   {
-    path : 'quiz/list',
+    path : 'navMenu/quiz/list',
     component : QuizListComponent,
   },
   {

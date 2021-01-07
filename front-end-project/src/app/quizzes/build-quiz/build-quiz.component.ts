@@ -6,6 +6,7 @@ import {Subject} from 'rxjs';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {GetClassesModel} from '../../models/class/getclasses.models';
+import {MatSnackBar} from "@angular/material";
 
 
 @Component({
@@ -15,13 +16,17 @@ import {GetClassesModel} from '../../models/class/getclasses.models';
 })
 export class BuildQuizComponent implements OnInit {
 
-  constructor(private classService: ClassService, private quizService: QuizService) { }
+  constructor(private classService: ClassService,
+              private quizService: QuizService,
+              private infoBull: MatSnackBar) { }
   quizForm: FormGroup;
   success: boolean;
+  id: string;
+  isStaff: string;
+  isSuperuser: string;
 
   myQuiz: Quiz;
-  classes: GetClassesModel[] =  [new GetClassesModel(0,
-    '', '', '', [], [])];
+  classes: GetClassesModel[] =  [];
 
   // keep value of the selected class
   selectedClass: number;
@@ -32,13 +37,32 @@ export class BuildQuizComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.id = localStorage.getItem('id');
+    this.isStaff = localStorage.getItem('is_staff');
+    this.isSuperuser = localStorage.getItem('is_superuser');
     this.selectedClass = 0;
     this.createForm();
     this.success = false;
     // Normally we should filter classes per teacher
     this.classService.GetAllClasses()
       .subscribe(
-        (data) => {this.classes = data; console.log(this.classes); },
+        (data) => {
+          if (this.isSuperuser === 'true') {
+            this.classes = data;
+            console.log(this.classes);
+          } else if (this.isStaff === 'true') {
+            for (var i = 0; i < data.length; i++) {
+              let tour = 0;
+              for (var j = 0; j < data[i].all_courses.length; j++) {
+                if (this.id === data[i].all_courses[j].course_teacher.id.toString() && tour === 0) {
+                  this.classes.push(data[i]);
+                  tour++;
+                }
+              }
+            }
+            console.log(data);
+          }
+          },
         (error) => {console.log(error); }
       );
   }
@@ -58,7 +82,7 @@ export class BuildQuizComponent implements OnInit {
       quizClass: new FormControl('', Validators.required),
       quizCourse: new FormControl('', Validators.required),
       quizName: new FormControl('', Validators.required),
-      // answers: answerPropositions
+      quizTime: new FormControl('', [Validators.required, Validators.min(0), Validators.max(300)]),
       questions: new FormArray([
         this.initQuestion(),
       ]),
@@ -124,11 +148,16 @@ export class BuildQuizComponent implements OnInit {
     if (! quiz.invalid) {
       this.success = true;
       this.myQuiz = new Quiz(quiz.value.quizName, quiz.value.quizCourse,
-        15, quiz.value.quizClass, 5, quiz.value.questions);
+        quiz.value.quizTime, quiz.value.quizClass, +this.id, quiz.value.questions);
       console.log(this.myQuiz);
       this.quizService.postQuiz(this.myQuiz)
         .subscribe(
-          (data) => {console.log(data); },
+          (data) => {
+            console.log(data);
+            this.infoBull.open('Quiz "' + data.entitled + '" has been saved !', 'Close', {
+              duration: 2500
+            });
+            },
           (error) => {console.log(error); }
         );
 
