@@ -1,39 +1,80 @@
-<div class="row">
+<div class="row" style="margin-bottom: 50px">
   <div class="col-md-4">
-    <div class="bg-primary m-3" style="height: 170px;"></div>
+    <div class="bg-primary m-3" style="height: 170px;">
+      <div><p> N° of Course(s) taught </p></div>
+      <div><p>{{ NbreCourse }}</p></div>
+    </div>
   </div>
   <div class="col-md-4">
-    <div class="bg-success m-3" style="height: 170px;"></div>
+    <div class="bg-success m-3" style="height: 170px;">
+      <div><p> N° Quiz Created </p></div>
+      <div><p>8</p></div>
+    </div>
   </div>
   <div class="col-md-4">
-<!--    student and teacher-->
-    <div class="bg-danger m-3" style="height: 170px;">
-      <igx-doughnut-chart height="100%" width="100%">
-        <igx-ring-series
-          [dataSource]="data"
-          labelMemberPath="Label"
-          valueMemberPath="Value">
-        </igx-ring-series>
-      </igx-doughnut-chart>
+    <div class="bg-secondary m-3" style="height: 170px;">
+      <div><p> N° Class </p></div>
+      <div><p>{{ NbreClass }}</p></div>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-8">
-    <div class="bg-dark m-3" style="height: 270px;"></div>
+  <div class="col-md-6">
+    <mat-card>
+      <mat-card-title>Table of Course(s) and Class(es)</mat-card-title>
+      <mat-card-content>
+
+        <mat-form-field floatLabel="never">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="COURSES_DATA" class="mat-elevation-z8">
+
+            <!-- entitled Column -->
+            <ng-container matColumnDef="entitled">
+              <th mat-header-cell *matHeaderCellDef> Course </th>
+              <td mat-cell *matCellDef="let element"> {{ element.entitled }} </td>
+            </ng-container>
+
+            <!-- Sequence Column -->
+            <ng-container matColumnDef="classes">
+              <th mat-header-cell *matHeaderCellDef> Class(es) </th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngFor="let cours of element.classes">
+                  {{ cours.level + ' ' + cours.class_number + ' ' + cours.option + ' ' + cours.serie }}
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-spinner></mat-spinner>
+              </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="noData">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+              </mat-footer-cell>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': COURSES_DATA!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(COURSES_DATA!=null && COURSES_DATA.data.length==0)}"></mat-footer-row>
+          </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <div class="col-md-4">
-    <div class="bg-info m-3" style="height: 270px;">
-
-      <igx-doughnut-chart height="100%" width="100%">
-        <igx-ring-series
-          [dataSource]="data"
-          labelMemberPath="Label"
-          valueMemberPath="Value">
-        </igx-ring-series>
-      </igx-doughnut-chart>
-
-    </div>
+  <div class="col-md-6">
+    <mat-card>
+      <mat-card-content>
+        <canvas id="bar" style="width: 100%"></canvas>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

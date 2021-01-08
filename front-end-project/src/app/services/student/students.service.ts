@@ -4,7 +4,7 @@ import { StudentModel } from '../../models/student/student.model';
 import {TeacherModel} from '../../models/teacher/teacher.model';
 import {Observable} from 'rxjs';
 import {AuthService} from '../auth-guard/auth.service';
-import {GetstudentModel} from "../../models/student/getstudent.model";
+import {GetstudentModel} from '../../models/student/getstudent.model';
 
 
 @Injectable({

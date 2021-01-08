@@ -6,6 +6,7 @@ import {EvaluationService} from '../../services/evaluation/evaluation.service';
 import {GetstudentModel} from '../../models/student/getstudent.model';
 import {StudentsService} from '../../services/student/students.service';
 import { Chart } from 'chart.js';
+import {QuizService} from "../../services/quizz/quiz.service";
 
 @Component({
   selector: 'app-student-home',
@@ -21,6 +22,7 @@ export class StudentHomeComponent implements OnInit {
   color = ['red', 'blue', 'pink', 'yellow', 'green', 'orange', 'gray'];
   NbreCourse = 0;
   NbreStudent = 0;
+  NbreQuiz = 0;
 
   displayedColumns: string[] = ['name', 'sequence', 'date_eval', 'courseChoose', 'note'];
   EVALUATION_DATA: MatTableDataSource<EvaluationModel>;
@@ -28,7 +30,8 @@ export class StudentHomeComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private evaluationService: EvaluationService,
-              private studentService: StudentsService) { }
+              private studentService: StudentsService,
+              private quizService: QuizService) { }
 
   ngOnInit() {
     this.isStaff = localStorage.getItem('is_staff');
@@ -64,6 +67,7 @@ export class StudentHomeComponent implements OnInit {
   }
 
   GetAllStudent() {
+    let studentClassId: number;
     this.studentService.GetAllStudent()
       .subscribe((data) => {
         console.log(data);
@@ -73,6 +77,25 @@ export class StudentHomeComponent implements OnInit {
             this.NbreCourse = data[i].student_class.all_courses.length;
           }
         }
+      }, error => console.log(error));
+    /* number of quiz */
+    this.quizService.getQuiz()
+      .subscribe((data) => {
+        this.studentService.GetSpecificStudent(+ this.id).subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
+          (user) => {
+            studentClassId = user.student_class.id;
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < data.length; i++) {
+              if (studentClassId === data[i].classe_details.id) {
+                console.log(data[i]);
+                this.NbreQuiz++;
+              }
+            }
+            console.log(this.NbreQuiz);
+          },
+          error => {console.log(error); }
+        );
       }, error => console.log(error));
   }
 

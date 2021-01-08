@@ -20,7 +20,7 @@ export class DisplayCourseComponent implements OnInit {
 
   ngOnInit() {
     this.GetSingleChapter();
-    this.readNote();
+    // this.readNote();
   }
 
   public toggle() {
@@ -39,14 +39,15 @@ export class DisplayCourseComponent implements OnInit {
     console.log('readMethod');
     if ('speechSynthesis' in window) {
       const msg = new SpeechSynthesisUtterance();
-      console.log(msg);
+      // console.log(msg);
       const voices = window.speechSynthesis.getVoices();
       msg.voice = voices[1];
       msg.volume = 1; // From 0 to 1
       msg.rate = 1; // From 0.1 to 10
       msg.pitch = 2; // From 0 to 2
-      msg.lang = 'es';
-      msg.text = this.myNote.text;
+      msg.lang = 'en-GB';
+      // msg.text = this.myNote.text;
+      msg.text = 'Hello World';
       console.log(msg);
       window.speechSynthesis.speak(msg);
       console.log(window.speechSynthesis.speaking);

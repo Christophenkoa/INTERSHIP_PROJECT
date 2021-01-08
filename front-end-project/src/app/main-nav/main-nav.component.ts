@@ -33,7 +33,10 @@ export class MainNavComponent implements OnInit {
 
     if (this.isStaff === 'true' && this.isSuperuser === 'true') {
       // for administrator
-      return ;
+      $(document).ready(() => {
+        $('.home_student').hide();
+      });
+      // return ;
     } else if (this.isStaff === 'true' && this.isSuperuser === 'false') {
       // for teacher
       // tslint:disable-next-line:only-arrow-functions
@@ -41,6 +44,7 @@ export class MainNavComponent implements OnInit {
         $('.course').hide();
         $('.teacher').hide();
         $('.student').hide();
+        $('.home_student').hide();
       });
     } else if (this.isStaff === 'false' && this.isSuperuser === 'false') {
       // for student
@@ -50,9 +54,10 @@ export class MainNavComponent implements OnInit {
         $('.teacher').hide();
         $('.student').hide();
         $('.classView').hide();
+        $('.quiz_create').hide();
+        $('.home').hide();
       });
     }
-
   }
 
   logout() {

@@ -4,6 +4,7 @@ import {CuClassComponent} from '../crud/cu-class/cu-class.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ClassService} from '../services/classes/class.service';
 import {GetClassesModel} from '../models/class/getclasses.models';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-class-view',
@@ -26,6 +27,12 @@ export class ClassViewComponent implements OnInit {
     this.id = localStorage.getItem('id');
     this.isStaff = localStorage.getItem('is_staff');
     this.isSuperuser = localStorage.getItem('is_superuser');
+
+    if (this.isStaff === 'true' && this.isSuperuser === 'false') {
+      $(document).ready(() => {
+        $('.create_boutton').hide();
+      });
+    }
   }
 
   /* Open the CRUD class */

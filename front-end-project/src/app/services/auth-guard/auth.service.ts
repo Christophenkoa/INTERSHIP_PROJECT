@@ -56,7 +56,11 @@ export class AuthService {
         localStorage.setItem('is_staff', '' + this.user.is_staff);
         localStorage.setItem('is_active', '' + this.user.is_active);
 
-        this.router.navigate(['']);
+        if (this.user.is_staff === false && this.user.is_superuser === false) {
+          this.router.navigate(['/navMenu/home-student']);
+        } else {
+          this.router.navigate(['']);
+        }
       },
 
       error => {
