@@ -5,16 +5,17 @@
   </div>
 
   <div class="note">
-    <div class="chapter_content mt-5">
+    <div class="chapter_content text-justify text-secondary font-weight-normal mt-5 mb-3">
       <div [innerHTML]="myNote.text"></div>
     </div>
   </div>
 
-  <div class="play_button" style="width: 20%;margin: auto;">
+  <div class="p-1 mt-5 rounded" style="background-color: red">
+    <div class="play_button text-center">
           <span style="cursor: pointer">
             <button mat-fab color="primary" aria-label="listen note music" *ngIf="!isPlay">
               <mat-icon
-                class="play-button md-48"
+                class="play-button"
                 (click)="toggle()">
                 play_arrow
               </mat-icon>
@@ -22,12 +23,13 @@
 
             <button mat-fab color="primary" aria-label="pause note music" *ngIf="isPlay">
               <mat-icon
-                class="pause-button md-48"
+                class="pause-button"
                 (click)="toggle()">
                 pause_arrow
               </mat-icon>
             </button>
-
           </span>
+    </div>
   </div>
+
 </div>
