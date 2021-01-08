@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Answer} from '../../models/quiz_folder/answer';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Quiz} from '../../models/quiz_folder/quiz';
+import {QuizTaker} from '../../models/quiz_folder/quizTaker';
 
 @Component({
   selector: 'app-quiz-result',
@@ -14,11 +15,16 @@ export class QuizResultComponent implements OnInit {
   result = 0.0;
   userAnswers: Answer[] = [];
   myQuiz: Quiz = new Quiz('', 1, 0, 1, 1, []);
+  quizTaker: QuizTaker = null;
 
   constructor(private quizService: QuizService) {
   }
 
   ngOnInit() {
+    console.log('quizTakerId is ' + this.quizService.quizTakerId);
+    this.quizService.getSelectedQuizTaker(this.quizService.quizTakerId).subscribe(
+      (data: QuizTaker) => {this.quizTaker = data; console.log(this.quizTaker); }
+    );
     console.log('quiz result');
     this.userAnswers = this.quizService.getUserAnswers();
     console.log(this.userAnswers);
@@ -37,6 +43,12 @@ export class QuizResultComponent implements OnInit {
       }
     }
     this.result = ((this.mark / this.myQuiz.questions.length) * 100);
+    this.quizTaker.end_time = new Date();
+    this.quizTaker.score = this.result;
+    this.quizService.quizTakerUpdate(this.quizTaker).subscribe(
+      () => {console.log('put operation succeeded'); },
+      () => {console.log('put operation failed'); }
+    );
   }
 
   setColor(index: number, answer: Answer): string {

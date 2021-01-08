@@ -43,7 +43,7 @@ export class QuizDetailComponent implements OnInit, OnDestroy {
           // first time to load the component
           // hide is the quiz time key
           if (localStorage.getItem('hide') == null) {
-            this.timeLeft = this.quiz.req_time;
+            this.timeLeft = this.quiz.req_time * 60;
             localStorage.setItem('hide', this.timeLeft + '');
           }
 

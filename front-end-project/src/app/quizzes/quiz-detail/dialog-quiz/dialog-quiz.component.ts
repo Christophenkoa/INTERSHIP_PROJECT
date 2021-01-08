@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialogRef} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dialog-quiz',
@@ -8,13 +9,14 @@ import {MatDialogRef} from '@angular/material';
 })
 export class DialogQuizComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DialogQuizComponent>) { }
+  constructor(public dialogRef: MatDialogRef<DialogQuizComponent>, private router: Router) { }
 
   ngOnInit() {
   }
 
   ReturnFunct() {
     this.dialogRef.close();
+    this.router.navigate(['/navMenu/quiz/list']);
   }
 
 }

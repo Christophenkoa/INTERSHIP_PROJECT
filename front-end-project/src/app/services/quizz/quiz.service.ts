@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {Answer} from '../../models/quiz_folder/answer';
 import {AuthService} from '../auth-guard/auth.service';
+import {QuizTaker} from '../../models/quiz_folder/quizTaker';
 
 @Injectable()
 export class QuizService {
@@ -18,6 +19,9 @@ export class QuizService {
 
   // Selected quiz
   selectedQuiz: number;
+
+  // selected quizTaker
+  quizTakerId: number;
 
   constructor(private http: HttpClient, private  authService: AuthService) {}
 
@@ -45,9 +49,17 @@ export class QuizService {
     return this.http.post<Quiz>(this.url, quiz, {headers: this.authService.httpHeaders});
   }
 
-  quizTaker(score: number, start_time: Date, end_time: Date, associated_student: number,
-            associated_quiz: number): Observable<Quiz> {
-    const body = {score, start_time, end_time, associated_student, associated_quiz};
-    return this.http.post<Quiz>(this.url2 + 'quiz_taker/', body , {headers: this.authService.httpHeaders});
+  quizTaker(quizTaker: QuizTaker): Observable<Quiz> {
+    return this.http.post<Quiz>(this.url2 + 'quiz_taker/', quizTaker , {headers: this.authService.httpHeaders});
+  }
+
+  getSelectedQuizTaker(id: number): Observable<any> {
+    // @ts-ignore
+    console.log(this.authService.httpHeaders);
+    return this.http.get<any>(this.url2 + 'quiz_taker/' + id + '/', {headers: this.authService.httpHeaders});
+  }
+
+  quizTakerUpdate(quizTaker: QuizTaker): Observable<Quiz> {
+    return this.http.put<Quiz>(this.url2 + 'quiz_taker/' + quizTaker.id + '/', quizTaker , {headers: this.authService.httpHeaders});
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {QuizService} from '../../services/quizz/quiz.service';
 import {Router} from '@angular/router';
 import {StudentsService} from '../../services/student/students.service';
+import {QuizTaker} from '../../models/quiz_folder/quizTaker';
 
 @Component({
   selector: 'app-quiz-list',
@@ -76,8 +77,13 @@ export class QuizListComponent implements OnInit {
   }
 
   setQuizTaker(score: number, studentId: number, quizId: number) {
-    this.quizService.quizTaker(score, new Date(), new Date(), studentId, quizId).subscribe(
-      (data) => {console.log(data);  this.router.navigate(['/quiz/participate', quizId]); },
+    const quizTaker = new QuizTaker(score, new Date(), new Date(), studentId, quizId);
+    this.quizService.quizTaker(quizTaker).subscribe(
+      (data) => {
+        console.log(data);
+        // take quizTakerId value
+        this.quizService.quizTakerId = data.id;
+        this.router.navigate(['/quiz/participate', quizId]); },
       (error) => { console.log(error); }
     );
   }

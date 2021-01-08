@@ -34,13 +34,14 @@
       <mat-form-field appearance="fill">
         <mat-label>Select Course</mat-label>
         <mat-select formControlName="quizCourse" required>
-          <div *ngIf="classes[selectedClass].all_courses.length; else noCourse">
-            <div *ngFor="let course of classes[selectedClass].all_courses">
-              <mat-option *ngIf="course.course_teacher.id.toString() === id" [value]="course.entitled">
-                {{course.entitled}}
-              </mat-option>
+          <div *ngIf="classes.length">
+            <div *ngIf="classes[selectedClass].all_courses.length; else noCourse">
+              <div *ngFor="let course of classes[selectedClass].all_courses">
+                <mat-option *ngIf="course.course_teacher.id.toString() === id" [value]="course.entitled">
+                  {{course.entitled}}
+                </mat-option>
+              </div>
             </div>
-
           </div>
           <ng-template #noCourse>
             <mat-option [disabled]="!classes[selectedClass].all_courses.length">

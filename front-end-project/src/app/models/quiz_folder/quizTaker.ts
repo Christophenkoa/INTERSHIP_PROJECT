@@ -1,10 +1,10 @@
 export class QuizTaker {
+  id: number;
   constructor(
-    public userId: number,
-    public quizId: number,
     public score: number,
-    public completed: boolean,
-    public startTime: Date,
-    public endTime: Date
+    public start_time: Date,
+    public end_time: Date,
+    public associated_student: number,
+    public associated_quiz: number
   ) {}
 }

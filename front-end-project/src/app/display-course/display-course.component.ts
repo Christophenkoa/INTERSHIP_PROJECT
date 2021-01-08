@@ -20,7 +20,6 @@ export class DisplayCourseComponent implements OnInit {
 
   ngOnInit() {
     this.GetSingleChapter();
-    this.readNote();
   }
 
   public toggle() {
@@ -37,18 +36,21 @@ export class DisplayCourseComponent implements OnInit {
 
   readNote() {
     console.log('readMethod');
+    const message = 'The title of this chapter is : ' + this.myNote.entitled + '.  ' + ' That is the content: ' + this.myNote.text;
     if ('speechSynthesis' in window) {
       const msg = new SpeechSynthesisUtterance();
       console.log(msg);
       const voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[1];
+      msg.voice = voices[3];
+      console.log(voices);
       msg.volume = 1; // From 0 to 1
-      msg.rate = 1; // From 0.1 to 10
-      msg.pitch = 2; // From 0 to 2
-      msg.lang = 'es';
-      msg.text = this.myNote.text;
+      msg.rate = 0.8; // From 0.1 to 10
+      msg.pitch = 1; // From 0 to 2
+      msg.lang = 'en-GB';
+      msg.text = message;
       console.log(msg);
       window.speechSynthesis.speak(msg);
+      console.log(voices);
       console.log(window.speechSynthesis.speaking);
     } else {
       // Speech Synthesis Not Supported 😣
