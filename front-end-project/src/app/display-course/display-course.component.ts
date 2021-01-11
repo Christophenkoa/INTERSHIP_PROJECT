@@ -20,10 +20,6 @@ export class DisplayCourseComponent implements OnInit {
 
   ngOnInit() {
     this.GetSingleChapter();
-<<<<<<< HEAD
-    // this.readNote();
-=======
->>>>>>> f853e435f4115daa5ac828798eccd065824dff7c
   }
 
   public toggle() {
@@ -48,18 +44,10 @@ export class DisplayCourseComponent implements OnInit {
       msg.voice = voices[3];
       console.log(voices);
       msg.volume = 1; // From 0 to 1
-<<<<<<< HEAD
-      msg.rate = 1; // From 0.1 to 10
-      msg.pitch = 2; // From 0 to 2
-      msg.lang = 'en-GB';
-      // msg.text = this.myNote.text;
-      msg.text = 'Hello World';
-=======
       msg.rate = 0.8; // From 0.1 to 10
       msg.pitch = 1; // From 0 to 2
       msg.lang = 'en-GB';
       msg.text = message;
->>>>>>> f853e435f4115daa5ac828798eccd065824dff7c
       console.log(msg);
       window.speechSynthesis.speak(msg);
       console.log(voices);
