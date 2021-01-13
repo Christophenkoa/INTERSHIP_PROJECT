@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
-        fields = ['username', 'email', 'password', 'tel', 'is_superuser', 'is_staff', 'is_active']
+        fields = ['id', 'username', 'email', 'password', 'tel', 'is_superuser', 'is_staff', 'is_active']
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def create(self, validated_data):
