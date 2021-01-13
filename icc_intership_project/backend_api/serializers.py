@@ -48,9 +48,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    # def create(self,validate_data):
-    #     print("--------------------",validate_data)
-    #     return
+    # def validate(self, data):
+    #     print('DATA--------------------', data)
+    #     user = Teacher.objects.get(username=data['username'])
+    #     if user:
+    #         print('--------------------HELLO')
+    #         raise serializers.ValidationError('This username already exists !')
+    #     else:
+    #         print('--------------------HELLO')
+    #         return data
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -102,6 +108,13 @@ class ClassSerializer(serializers.ModelSerializer):
         fields = ['id', 'level', 'class_number', 'option', 'serie', 'all_courses',
                   'teachers', 'all_students', 'courses', 'teacher', 'my_admin']
 
+    def validate(self, data):
+        classe = Class.objects.filter(level=data['level'], class_number=data['class_number'], serie=data['serie'], option=data['option'])
+        if classe:
+            raise serializers.ValidationError('This class already exists !')
+        print('------------------DATA', data)
+        return data
+
     def get_all_courses(self, obj):
         # print(obj.courses.all())
         return CourseSerializer(obj.courses.all(), many=True).data
@@ -128,6 +141,13 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
                   'dateOfBirth', 'my_class', 'student_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
         # extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    def validate(self, data):
+        user = Student.objects.get(username=data['username'])
+        if user:
+            raise serializers.ValidationError('This username already exists !')
+        else:
+            return data
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data

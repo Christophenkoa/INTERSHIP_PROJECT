@@ -87,6 +87,8 @@ import {AuthInterceptor, AuthService} from './services/auth-guard/auth.service';
 import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-course-popup.component';
 import { EvaluationService } from './services/evaluation/evaluation.service';
 import {DialogQuizComponent} from './quizzes/quiz-detail/dialog-quiz/dialog-quiz.component';
+import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
+import {OtherServiceService} from "./services/other/other-service.service";
 
 @NgModule({
   declarations: [
@@ -118,6 +120,7 @@ import {DialogQuizComponent} from './quizzes/quiz-detail/dialog-quiz/dialog-quiz
     StudentHomeComponent,
     CuCoursePopupComponent,
     DialogQuizComponent,
+    AdminPanelComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent, DialogQuizComponent],
   imports: [
@@ -175,6 +178,7 @@ import {DialogQuizComponent} from './quizzes/quiz-detail/dialog-quiz/dialog-quiz
               UserManagerService,
               AuthService,
               EvaluationService,
+              OtherServiceService,
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: AuthInterceptor,

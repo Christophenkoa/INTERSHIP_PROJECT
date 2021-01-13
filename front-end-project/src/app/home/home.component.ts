@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ClassService} from "../services/classes/class.service";
-import {CoursesService} from "../services/courses/courses.service";
-import {GetcourseModel} from "../models/course/getcourses.model";
-import {GetClassesModel} from "../models/class/getclasses.models";
-import {EvaluationModel} from "../models/evaluation/evaluation.model";
-import {MatTableDataSource} from "@angular/material";
-import {MatPaginator} from "@angular/material/paginator";
-import {Chart} from "chart.js";
+import {ClassService} from '../services/classes/class.service';
+import {CoursesService} from '../services/courses/courses.service';
+import {GetcourseModel} from '../models/course/getcourses.model';
+import {GetClassesModel} from '../models/class/getclasses.models';
+import {EvaluationModel} from '../models/evaluation/evaluation.model';
+import {MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {Chart} from 'chart.js';
+import {QuizService} from '../services/quizz/quiz.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -22,14 +23,18 @@ export class HomeComponent implements OnInit {
   NbreClass = 0;
   NbreQuiz = 0;
   ClassArray: GetClassesModel[] = [];
-  color = ['red', 'blue', 'pink', 'yellow', 'green', 'orange', 'gray'];
+  color = ['red', 'blue', 'pink', 'yellow', 'green', 'orange', 'gray', 'aqua',
+            'aquamarine', 'indigo', 'lime', 'magenta', 'gold', 'cyan', 'coral',
+            'FireBrick', 'LightSeaGreen', 'Navy', 'Teal', 'Tomato', 'YellowGreen',
+            'Fuchsia', 'Azure', 'Moccasin', 'Olive', 'OrangeRed', 'SpringGreen'];
 
   displayedColumns: string[] = ['entitled', 'classes'];
   COURSES_DATA: MatTableDataSource<GetcourseModel>;
   courseArray: GetcourseModel[] = [];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private classeService: ClassService,
-              private courseService: CoursesService) { }
+              private courseService: CoursesService,
+              private quizService: QuizService) { }
 
   ngOnInit() {
     this.isStaff = localStorage.getItem('is_staff');
@@ -38,6 +43,7 @@ export class HomeComponent implements OnInit {
     this.isActive = localStorage.getItem('is_active');
     this.GetAllCourse();
     this.GetAllClasses();
+    this.GetAllQuiz();
   }
 
   /* Table informations and functions */
@@ -49,7 +55,7 @@ export class HomeComponent implements OnInit {
   GetAllCourse() {
     this.courseService.GetAllCourses()
       .subscribe((data) => {
-        console.log(data);
+        // console.log(data);
         if (this.isStaff === 'true' && this.isSuperuser === 'false') {
           for (let i = 0; i < data.length; i++) {
             if (this.id === data[i].course_teacher.id.toString()) {
@@ -60,13 +66,22 @@ export class HomeComponent implements OnInit {
           }
           this.COURSES_DATA = new MatTableDataSource(this.courseArray);
           this.COURSES_DATA.paginator = this.paginator;
-          console.log(this.COURSES_DATA);
+          // console.log(this.COURSES_DATA);
         }
       });
-    /*this.classeService.GetAllClasses()
+  }
+
+  GetAllQuiz() {
+    this.quizService.getQuiz()
       .subscribe((data) => {
         console.log(data);
-      });*/
+        for (let i = 0; i < data.length; i++) {
+          if (this.id === data[i].teacher_details.id.toString()) {
+            this.NbreQuiz++;
+          }
+        }
+        console.log(this.NbreQuiz);
+      });
   }
 
   GetAllClasses() {
@@ -75,7 +90,7 @@ export class HomeComponent implements OnInit {
     const barColor = [];
     this.classeService.GetAllClasses()
       .subscribe((data) => {
-        console.log(data);
+        // console.log(data);
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < data[i].teachers.length; j++) {
             if (this.id === data[i].teachers[j].id.toString()) {
@@ -86,15 +101,15 @@ export class HomeComponent implements OnInit {
             }
           }
         }
-        console.log(this.ClassArray);
-        console.log(studentLength);
-        console.log(className);
+        // console.log(this.ClassArray);
+        // console.log(studentLength);
+        // console.log(className);
         const barChart = new Chart('bar', {
           type: 'bar',
           data: {
             labels: className,
             datasets: [{
-              label: 'Average',
+              label: 'Number of student per class',
               data: studentLength,
               backgroundColor: barColor,
               borderWidth: 1

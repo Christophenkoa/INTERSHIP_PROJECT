@@ -3,7 +3,7 @@ import { TeacherModel } from '../../models/teacher/teacher.model';
 import { HttpClient } from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {AuthService} from '../auth-guard/auth.service';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +19,18 @@ export class TeachersService {
     return this.http.post('http://127.0.0.1:8000/user/teacher/', teacher, {headers: this.authService.httpHeaders})
       .subscribe((data: TeacherModel) => {
           console.log(data);
-        },
-        error => {
-          console.log(error);
-          this.infoBull.open('Creation Error', 'Close', {
-            duration: 2000
+          this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+            duration: 3000
           });
+        },
+        (error) => {
+          if (error.error.username) {
+            console.log(error.error.username[0]);
+            this.infoBull.open('ERROR : ' + error.error.username[0], 'Close', {
+              duration: 3000
+            });
+          }
+          console.log(error);
         });
   }
 
@@ -32,8 +38,9 @@ export class TeachersService {
     return this.http.get<TeacherModel[]>('http://127.0.0.1:8000/user/teacher/', {headers: this.authService.httpHeaders});
   }
 
-  UpdateTeacher(teacherUpdated: TeacherModel, id: number) {
-    return this.http.put('http://127.0.0.1:8000/user/teacher/' + id + '/', teacherUpdated, {headers: this.authService.httpHeaders});
+  UpdateTeacher(teacherUpdated: TeacherModel, id: number): Observable<TeacherModel> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<TeacherModel>('http://127.0.0.1:8000/user/teacher/' + id + '/', teacherUpdated, {headers: this.authService.httpHeaders});
   }
 
   DeleteTeacher(id: number) {

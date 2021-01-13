@@ -6,6 +6,9 @@ import {TeachersService} from '../../services/teacher/teachers.service';
 import {CoursesService} from '../../services/courses/courses.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CuCoursePopupComponent} from './cu-course-popup/cu-course-popup.component';
+import {GetcourseModel} from "../../models/course/getcourses.model";
+import {Subject, Subscription} from "rxjs";
+import {GetstudentModel} from "../../models/student/getstudent.model";
 
 
 @Component({
@@ -16,6 +19,9 @@ import {CuCoursePopupComponent} from './cu-course-popup/cu-course-popup.componen
 export class CourseCrudComponent implements OnInit {
 
   COURSE_DATA: MatTableDataSource<any>;
+  courseArray: GetcourseModel[] = [];
+  courseSubscription: Subscription;
+  courseSubject = new Subject<GetcourseModel[]>();
 
   /* Table variables */
   displayedColumns: string[] = ['entitled', 'coefficient', 'teacher', 'actions'];
@@ -49,12 +55,16 @@ export class CourseCrudComponent implements OnInit {
 
   /* Get all courses in Data base */
   GetAllCourse() {
-    this.courseService.GetAllCourses()
-      .subscribe((data ) => {
-        console.log(data);
-        this.COURSE_DATA = new MatTableDataSource(data);
-        this.COURSE_DATA.paginator = this.paginator;
-      }, error => console.log(error));
+     this.courseSubscription = this.courseService.GetAllCourses()
+        .subscribe((data ) => {
+          for (var i= 0;i < data.length; i++) {
+            this.courseArray.push(data[i]);
+          }
+          console.log(data);
+          this.COURSE_DATA = new MatTableDataSource(this.courseArray);
+          this.COURSE_DATA.paginator = this.paginator;
+        }, error => console.log(error));
+     this.courseSubject.next(this.courseArray);
   }
 
   /* Delete a course */
@@ -63,6 +73,8 @@ export class CourseCrudComponent implements OnInit {
     if (confirm('Are you sure to delete this course ?') === true) {
       this.courseService.DeleteCourse(idcourse)
         .subscribe(result => {
+          this.courseArray = [];
+          this.GetAllCourse();
           console.log(result);
         }, error => console.log(error));
     }

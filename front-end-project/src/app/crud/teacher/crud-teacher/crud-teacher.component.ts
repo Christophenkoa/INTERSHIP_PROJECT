@@ -47,14 +47,6 @@ export class CrudTeacherComponent implements OnInit {
       disableClose : true,
       data : teacherdata,
     });
-
-    dialogRef.afterClosed()
-      .subscribe(data => {
-        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
-          duration: 3000
-        });
-        this.teacherSubject.next(this.teacherArray);
-      });
   }
   /* Open the CU(Create and Update) interface */
   OpenCUMethod() {
@@ -63,16 +55,6 @@ export class CrudTeacherComponent implements OnInit {
       height : '70%',
       disableClose : true
     });
-    dialog.afterClosed()
-      .subscribe((data: TeacherModel) => {
-        if (data) {
-          this.teacherArray.push(data);
-          console.log(this.teacherArray);
-          this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
-            duration: 3000
-          });
-        }
-      });
   }
 
   GetAllTeacher() {
@@ -91,12 +73,15 @@ export class CrudTeacherComponent implements OnInit {
   }
   /* Function that delete a teacher in Data base */
   DeleteMethod(idTeacher) {
-    console.log(idTeacher);
-    if (confirm('Are you sure to delete this teacher ?') === true) {
+    // console.log(idTeacher);
+    if (confirm('Are you sure to delete this teacher data ?') === true) {
       this.teacherService.DeleteTeacher(idTeacher)
         .subscribe(data => {
-          if (data) {
-            this.infoBull.open('Teacher has been deleted !', 'Close', {
+          // console.log(data);
+          if (data === 'This teacher data has been deleted.') {
+            this.teacherArray = [];
+            this.GetAllTeacher();
+            this.infoBull.open(data.toString(), 'Close', {
               duration: 3000
             });
           }

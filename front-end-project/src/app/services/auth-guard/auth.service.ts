@@ -58,8 +58,10 @@ export class AuthService {
 
         if (this.user.is_staff === false && this.user.is_superuser === false) {
           this.router.navigate(['/navMenu/home-student']);
-        } else {
-          this.router.navigate(['']);
+        } else if (this.user.is_superuser === true) {
+          this.router.navigate(['/navMenu/admin-panel']);
+        } else if (this.user.is_staff === true && this.user.is_superuser === false) {
+          this.router.navigate(['/navMenu/teacher-home']);
         }
       },
 

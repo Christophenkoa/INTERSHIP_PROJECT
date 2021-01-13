@@ -1,6 +1,7 @@
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
 
 from .permissions import IsStaff, IsAdmin
 from .serializers import *
@@ -46,6 +47,10 @@ class TeacherView(ModelViewSet):
             self.permission_classes = [IsAdmin]
         return super(TeacherView, self).get_permissions()
 
+    def destroy(self, request, *args, **kwargs):
+        super(TeacherView, self).destroy(request)
+        return Response("This teacher data has been deleted.")
+
 
 class StudentView(ModelViewSet):
     serializer_class = StudentSerializer
@@ -58,6 +63,9 @@ class StudentView(ModelViewSet):
             self.permission_classes = [IsStaff]
         return super(StudentView, self).get_permissions()
 
+    def destroy(self, request, *args, **kwargs):
+        super(StudentView, self).destroy(request)
+        return Response("This student data has been deleted.")
 
 # class management
 class CourseView(ModelViewSet):

@@ -19,7 +19,10 @@ export class StudentHomeComponent implements OnInit {
   isSuperuser: string;
   isActive: string;
   id: string;
-  color = ['red', 'blue', 'pink', 'yellow', 'green', 'orange', 'gray'];
+  color = ['red', 'blue', 'pink', 'yellow', 'green', 'orange', 'gray', 'aqua',
+          'aquamarine', 'indigo', 'lime', 'magenta', 'gold', 'cyan', 'coral',
+          'FireBrick', 'LightSeaGreen', 'Navy', 'Teal', 'Tomato', 'YellowGreen',
+          'Fuchsia', 'Azure', 'Moccasin', 'Olive', 'OrangeRed', 'SpringGreen'];
   NbreCourse = 0;
   NbreStudent = 0;
   NbreQuiz = 0;

@@ -23,12 +23,18 @@ import {DisplayCourseComponent} from './display-course/display-course.component'
 import {StudentHomeComponent} from './home/student-home/student-home.component';
 import {QuizResultComponent} from './quizzes/quiz-result/quiz-result.component';
 import {AuthGuardService, LoginGuardService} from './services/auth-guard/auth-guard.service';
+import {AdminPanelComponent} from './home/admin-panel/admin-panel.component';
 
 
 const routes: Routes = [
   {
-    path : '',
+    path : 'navMenu/teacher-home',
     component : HomeComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path : 'navMenu/admin-panel',
+    component : AdminPanelComponent,
     canActivate: [AuthGuardService],
   },
   {
