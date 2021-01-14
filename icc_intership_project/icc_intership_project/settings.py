@@ -30,7 +30,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200"
 ]
 
-CORS_ORIGIN_ALLOW_ALL= True
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:4200',
@@ -126,7 +126,7 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'backend_api.views.jwt_response_payload_handler',
+        'backend_api.views.jwt_response_payload_handler',
 }
 
 # Password validation

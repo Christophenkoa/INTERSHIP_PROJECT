@@ -22,15 +22,12 @@ import {DisplayCourseComponent} from './display-course/display-course.component'
 import {StudentHomeComponent} from './home/student-home/student-home.component';
 import {QuizResultComponent} from './quizzes/quiz-result/quiz-result.component';
 import {AuthGuardService, LoginGuardService} from './services/auth-guard/auth-guard.service';
-<<<<<<< HEAD
 import {AdminPanelComponent} from './home/admin-panel/admin-panel.component';
-=======
 import {OnlyStudentGuardGuard} from './services/user-guard/only-student-guard.guard';
 import {StaffGuardGuard} from './services/user-guard/staff-guard.guard';
 import {OnlyStaffGuardGuard} from './services/user-guard/only-staff-guard.guard';
 import {AdminGuardGuard} from './services/user-guard/admin-guard.guard';
 import {StudentGuardGuard} from './services/user-guard/student-guard.guard';
->>>>>>> a29aa2cb570ef49e09e43a655175e7f1d8d3a10e
 
 
 const routes: Routes = [
