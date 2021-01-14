@@ -7,6 +7,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ClassService} from '../../../services/classes/class.service';
 import {GetClassesModel} from '../../../models/class/getclasses.models';
 import * as moment from 'moment';
+import {OtherServiceService} from "../../../services/other/other-service.service";
 
 @Component({
   selector: 'app-cu-student',
@@ -25,6 +26,7 @@ export class CuStudentComponent implements OnInit {
   constructor(private formBuiler: FormBuilder,
               private studentsService: StudentsService,
               private classeService: ClassService,
+              private otherService: OtherServiceService,
               private infobull: MatSnackBar,
               private dialogRef: MatDialogRef<CuStudentComponent>,
               @Inject(MAT_DIALOG_DATA) public Studentdata: any) { }
@@ -125,7 +127,19 @@ export class CuStudentComponent implements OnInit {
     this.studentsService.CreateStudent(student)
       .subscribe(data => {
         console.log(data);
-      }, error => console.log(error));
+        this.infobull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+          duration: 3000
+        });
+        this.ClosePopup();
+      }, (error) => {
+        if (error.error.username) {
+          this.infobull.open('ERROR : ' + error.error.username[0], 'Close', {
+            duration: 3000
+          });
+        }
+        console.log(error);
+      });
+    this.otherService.GetAllStudents();
   }
 
 
@@ -170,7 +184,19 @@ export class CuStudentComponent implements OnInit {
     this.studentsService.UpdateStudent(student, this.Studentdata.id)
       .subscribe(data => {
         console.log(data);
-      }, error => console.log(error));
+        this.infobull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
+          duration: 3000
+        });
+        this.ClosePopup();
+      }, (error) => {
+        if (error.error.username) {
+          console.log(error);
+          this.infobull.open('ERROR : ' + error.error.username[0], 'Close', {
+            duration: 3000
+          });
+        }
+      });
+    this.otherService.GetAllStudents();
   }
 
   /* Method that take all class info */

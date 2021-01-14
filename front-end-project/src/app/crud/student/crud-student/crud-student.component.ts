@@ -8,6 +8,7 @@ import {StudentsService} from '../../../services/student/students.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {GetstudentModel} from '../../../models/student/getstudent.model';
 import {Subject, Subscription} from 'rxjs';
+import {OtherServiceService} from "../../../services/other/other-service.service";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CrudStudentComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private studentService: StudentsService,
+              private otherService: OtherServiceService,
               public infoBull: MatSnackBar) { }
 
   /* Differents columns of the table */
@@ -46,15 +48,6 @@ export class CrudStudentComponent implements OnInit {
       height : '70%',
       disableClose : true
     });
-    dialog.afterClosed()
-      .subscribe(data => {
-        if (data) {
-          console.log(data);
-          this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
-            duration: 3000
-          });
-        }
-      });
   }
 
   GetAllStudents() {
@@ -78,22 +71,18 @@ export class CrudStudentComponent implements OnInit {
       disableClose : true,
       data: dataStudent,
     });
-    dialog.afterClosed()
-      .subscribe(data => {
-        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
-          duration: 3000
-        });
-      });
   }
 
   /* Function that delete a teacher in Data base */
   DeleteMethod(idStudent) {
-    console.log(idStudent);
+    // console.log(idStudent);
     if (confirm('Are you sure to delete this student ?') === true) {
       this.studentService.DeleteStudent(idStudent)
         .subscribe(data => {
-          if (data) {
-            this.infoBull.open('Student has been deleted !', 'Close', {
+          if (data === 'This student data has been deleted.') {
+            this.studentArray = [];
+            this.GetAllStudents();
+            this.infoBull.open(data.toString(), 'Close', {
               duration: 3000
             });
           }

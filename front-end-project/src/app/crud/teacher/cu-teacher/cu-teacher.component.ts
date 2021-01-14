@@ -4,7 +4,8 @@ import { TeacherModel } from '../../../models/teacher/teacher.model';
 import {TeachersService} from '../../../services/teacher/teachers.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {OtherServiceService} from '../../../services/other/other-service.service';
 
 @Component({
   selector: 'app-cu-teacher',
@@ -19,6 +20,7 @@ export class CuTeacherComponent implements OnInit {
 
   constructor(private formBuiler: FormBuilder,
               private teacherService: TeachersService,
+              private otherService: OtherServiceService,
               private router: Router,
               public infoBull: MatSnackBar,
               public dialogRef: MatDialogRef<CuTeacherComponent>,
@@ -63,7 +65,7 @@ export class CuTeacherComponent implements OnInit {
   OnSubmitForm() {
     /* Function which convert a string value to boolean */
     function convert(value) {
-      if (value === "true" || value === 'true'){
+      if (value === "true" || value === 'true') {
         return true;
       } else {
         return false;
@@ -99,6 +101,8 @@ export class CuTeacherComponent implements OnInit {
 
     // console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
     this.teacherService.CreateTeacher(teacher);
+    this.otherService.GetAllTeacher();
+    this.ReturnButton();
   }
 
   /* Update function */
@@ -119,8 +123,22 @@ export class CuTeacherComponent implements OnInit {
     );
     // console.log("Oui, c'est bon " + typeof(this.registerForm.get('is_active').value));
     this.teacherService.UpdateTeacher(teacherUpdated, this.data.id)
-      .subscribe(data => console.log(data),
-        error => console.log(error));
+      .subscribe((data) => {
+        this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been updated !', 'Close', {
+          duration: 3000
+        });
+        console.log(data);
+        },
+        (error) => {
+          if (error.error.username) {
+            console.log(error.error.username[0]);
+            this.infoBull.open('ERROR : ' + error.error.username[0], 'Close', {
+              duration: 3000
+            });
+          }
+          console.log(error);
+        });
+    this.otherService.GetAllTeacher();
   }
 
   /* Function that close the CU teacher page */

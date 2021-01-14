@@ -35,6 +35,7 @@ export class MainNavComponent implements OnInit {
       // for administrator
       $(document).ready(() => {
         $('.home_student').hide();
+        $('.home_teacher').hide();
       });
       // return ;
     } else if (this.isStaff === 'true' && this.isSuperuser === 'false') {
@@ -45,6 +46,7 @@ export class MainNavComponent implements OnInit {
         $('.teacher').hide();
         $('.student').hide();
         $('.home_student').hide();
+        $('.admin_panel').hide();
       });
     } else if (this.isStaff === 'false' && this.isSuperuser === 'false') {
       // for student
@@ -55,7 +57,7 @@ export class MainNavComponent implements OnInit {
         $('.student').hide();
         $('.classView').hide();
         $('.quiz_create').hide();
-        $('.home').hide();
+        $('.home_teacher').hide();
       });
     }
   }

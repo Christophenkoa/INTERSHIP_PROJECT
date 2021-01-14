@@ -34,9 +34,9 @@ export class QuizService {
   }
 
 
-  getQuiz(): Observable<any[]> {
+  getQuiz(): Observable<Quiz[]> {
     // @ts-ignore
-    return this.http.get<any[]>(this.url, {headers: this.authService.httpHeaders});
+    return this.http.get<Quiz[]>(this.url, {headers: this.authService.httpHeaders});
   }
 
   getSelectedQuiz(id: number): Observable<any> {
