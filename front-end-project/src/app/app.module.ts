@@ -88,7 +88,8 @@ import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-co
 import { EvaluationService } from './services/evaluation/evaluation.service';
 import {DialogQuizComponent} from './quizzes/quiz-detail/dialog-quiz/dialog-quiz.component';
 import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
-import {OtherServiceService} from "./services/other/other-service.service";
+import {OtherServiceService} from './services/other/other-service.service';
+import {NotificationService} from './services/notifications/notification.service';
 
 @NgModule({
   declarations: [
@@ -179,6 +180,7 @@ import {OtherServiceService} from "./services/other/other-service.service";
               AuthService,
               EvaluationService,
               OtherServiceService,
+              NotificationService,
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: AuthInterceptor,
