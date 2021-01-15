@@ -20,6 +20,7 @@ class_management_router.register('course', CourseView, basename='course')
 class_management_router.register('class', ClassView, basename='class')
 class_management_router.register('chapter', ChapterView, basename='chapter')
 class_management_router.register('evaluation', EvaluationView, basename='evaluation')
+class_management_router.register('notification', NotificationView, basename='notification')
 
 # quiz router
 quiz_router.register('quiz', QuizView, basename='quiz')

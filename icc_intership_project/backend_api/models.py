@@ -30,6 +30,7 @@ class Course(models.Model):
     coefficient = models.IntegerField()
     my_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
     # teacher = models.ManyToManyField(Teacher, blank=True)
 
     def __str__(self):
@@ -133,3 +134,10 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.answer
+
+
+class Notification(models.Model):
+    message = models.CharField(max_length=255)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name="ass_teacher")
+    classe = models.ForeignKey(Class, on_delete=models.CASCADE, related_name="ass_class")
+    is_checked = models.BooleanField(default=False)
