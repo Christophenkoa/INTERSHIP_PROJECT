@@ -91,7 +91,10 @@ export class CourseEditorComponent implements OnInit {
         (data: any) => {
           console.log(data);
           const notification = new NotificationPostModel(
-            note.entitled + ' note has been created', false, +this.id, this.idClass
+            note.entitled + ' note has been added',
+            false,
+            +this.id,
+            this.idClass
           );
           this.notificationService.postNotification(notification).subscribe(
             () => {console.log('notification has been sent successfully!'); },

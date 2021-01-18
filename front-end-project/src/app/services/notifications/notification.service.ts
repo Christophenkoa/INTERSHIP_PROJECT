@@ -22,4 +22,7 @@ export class NotificationService {
   postNotification(notification: NotificationPostModel) {
     return this.http.post(this.url, notification, {headers: this.authService.httpHeaders});
   }
+  updateNotification(notification: NotificationGetModel) {
+    return this.http.put<NotificationGetModel>(this.url + notification.id + '/', notification, {headers: this.authService.httpHeaders});
+  }
 }

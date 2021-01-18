@@ -7,6 +7,8 @@ import {QuizService} from '../../services/quizz/quiz.service';
 import {Quiz} from '../../models/quiz_folder/quiz';
 import {GetClassesModel} from '../../models/class/getclasses.models';
 import {MatSnackBar} from "@angular/material";
+import {NotificationService} from '../../services/notifications/notification.service';
+import {NotificationPostModel} from '../../models/notification/notificationPost.model';
 
 
 @Component({
@@ -18,6 +20,7 @@ export class BuildQuizComponent implements OnInit {
 
   constructor(private classService: ClassService,
               private quizService: QuizService,
+              private notificationService: NotificationService,
               private infoBull: MatSnackBar) { }
   quizForm: FormGroup;
   success: boolean;
@@ -154,13 +157,25 @@ export class BuildQuizComponent implements OnInit {
         .subscribe(
           (data) => {
             console.log(data);
+
+            // create a notification
+            const notification = new NotificationPostModel(
+              this.myQuiz.entitled + ' quiz has been added has been added by ' + this.myQuiz.teacher_details.first_name,
+              false,
+              +this.id,
+              this.myQuiz.classe
+            );
+
+            this.notificationService.postNotification(notification).subscribe(
+              (data2) => { console.log(data2); },
+              (error) => {console.log(error); }
+            );
             this.infoBull.open('Quiz "' + data.entitled + '" has been saved !', 'Close', {
               duration: 2500
             });
             },
-          (error) => {console.log(error); }
+          (error2) => {console.log(error2); }
         );
-
       // console.log(this.allQuestions);
       // console.log('select : ' + this.selectedClass);
       // console.log(quiz);

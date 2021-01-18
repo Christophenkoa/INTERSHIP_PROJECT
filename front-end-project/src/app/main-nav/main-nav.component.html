@@ -111,14 +111,37 @@
       <span style="font-size: large;padding: 0 10px;">Hello, {{username}}</span>
 
       <!--  notifications    -->
-      <button mat-mini-fab matBadge="{{notifications.length}}"
+      <button mat-mini-fab
+              matBadgeHidden= "{{notifications.length == 0 ? true: false}}"
+              matBadge="{{notifications.length}}"
               matBadgeColor="primary"
               matTooltip="Notifications"
-              data-toggle="popover"
-              title="Popover Header"
-              data-content="Some content inside the popover">
+              [matMenuTriggerFor]="menu"
+              (click)="touchNotification()">
         <mat-icon>notification_important</mat-icon>
       </button>
+
+      <!--reference for notification div-->
+      <mat-menu #menu="matMenu" >
+        <span mat-menu-item [disableRipple]="true" class="notification-content">
+          <!-- popover content begin -->
+          <div class="p-1">
+            <div *ngIf="notifications.length !=0">
+              <mat-list>
+                <div *ngFor="let notification of notifications">
+                    <mat-list-item class="single-notification">{{notification.message}}</mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+              </mat-list>
+            </div>
+
+            <div *ngIf="notifications.length == 0">
+              <span> No new notification</span>
+            </div>
+          </div>
+            <!-- popover content end  -->
+        </span>
+      </mat-menu>
 
       <span style="padding: 0 12px;"></span>
       <button mat-raised-button color="accent" (click)="logout()">Deconnexion</button>

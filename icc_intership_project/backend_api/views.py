@@ -183,12 +183,7 @@ class AnswerView(ModelViewSet):
 class NotificationView(ModelViewSet):
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
-    # permission_classes = (IsAuthenticated,)
-
-    def get_permissions(self):
-        if self.request.method == 'POST' or self.request.method == 'DELETE' or self.request.method == 'PUT':
-            self.permission_classes = [IsStaff]
-        return super(NotificationView, self).get_permissions()
+    permission_classes = (IsAuthenticated,)
 
 
 def jwt_response_payload_handler(token, user=None, request=None):

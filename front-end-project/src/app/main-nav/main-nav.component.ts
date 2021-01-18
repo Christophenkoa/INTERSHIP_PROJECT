@@ -8,6 +8,7 @@ import {NotificationService} from '../services/notifications/notification.servic
 import {NotificationGetModel} from '../models/notification/notificationGet.model';
 import {StudentsService} from '../services/student/students.service';
 
+
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
@@ -22,6 +23,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
   studentClass = null;
   interval;
+  visible = true;
 
   notifications: NotificationGetModel[] = [];
 
@@ -50,35 +52,10 @@ export class MainNavComponent implements OnInit, OnDestroy {
     console.log(this.isStaff);
     console.log(this.isSuperuser);
 
-    /*$(document).ready(function(){
-      $('[data-toggle="popover"]').popover();
-    });*/
-
-    if (this.isStaff === 'false' && this.isSuperuser === 'false') {
-
-      // retrieve user using its id
-      this.studentService.GetSpecificStudent(+this.id).subscribe(
-        (data) => {
-          this.studentClass = data.my_class;
-          console.log(this.studentClass);
-
-          // request api every 10 seconds
-          this.interval = setInterval(() => {
-            // filter notifications by userClass
-            this.notificationService.getNotifications().subscribe(
-              (data2) => {
-                this.notifications = data2.filter(notification => notification.classe_details.id === this.studentClass);
-                console.log(data2);
-                console.log(this.notifications);
-              },
-              (error) => {console.log(error); }
-            );
-          }, 10000);
-
-          },
-        (error) => { console.log(error); }
-      );
-    }
+    // fetch notification
+    this.fetchNotification();
+    // fetch notification every lap of second
+    this.fetNotificationWithDelay();
 
     if (this.isStaff === 'true' && this.isSuperuser === 'true') {
       // for administrator
@@ -110,6 +87,89 @@ export class MainNavComponent implements OnInit, OnDestroy {
         $('.home_teacher').hide();
         $('.admin_panel').hide();
       });
+    }
+  }
+
+  fetchNotification() {
+    if (this.isStaff === 'false' && this.isSuperuser === 'false') {
+
+      // retrieve user using its id
+      this.studentService.GetSpecificStudent(+this.id).subscribe(
+        (data) => {
+          this.studentClass = data.my_class;
+          console.log(this.studentClass);
+            // filter notifications by userClass
+          this.notificationService.getNotifications().subscribe(
+              (data2) => {
+                this.notifications = data2.filter(
+                  notification => notification.classe_details.id === this.studentClass &&
+                    notification.is_checked === false
+                );
+                console.log(data2);
+                console.log(this.notifications);
+              },
+              (error) => {console.log(error); }
+            );
+        },
+        (error) => { console.log(error); }
+      );
+    }
+  }
+
+  fetNotificationWithDelay() {
+    if (this.isStaff === 'false' && this.isSuperuser === 'false') {
+
+      // retrieve user using its id
+      this.studentService.GetSpecificStudent(+this.id).subscribe(
+        (data) => {
+          this.studentClass = data.my_class;
+          console.log(this.studentClass);
+
+          // request api every 10 seconds
+          this.interval = setInterval(() => {
+            // filter notifications by userClass
+            this.notificationService.getNotifications().subscribe(
+              (data2) => {
+                this.notifications = data2.filter(
+                  notification => notification.classe_details.id === this.studentClass &&
+                    notification.is_checked === false
+                );
+                console.log(data2);
+                console.log(this.notifications);
+              },
+              (error) => {console.log(error); }
+            );
+          }, 10000);
+
+        },
+        (error) => { console.log(error); }
+      );
+    }
+  }
+
+  touchNotification() {
+    if (this.visible) {
+      this.visible = false;
+      console.log('hello1');
+    } else {
+      console.log('hello2');
+      this.changeVisibility();
+      console.log(this.notifications);
+      this.visible = true;
+      this.fetchNotification();
+    }
+  }
+
+  // after checking notification change view to false
+  changeVisibility() {
+    for (let i = 0; i < this.notifications.length; i++) {
+      if (!this.notifications[i].is_checked) {
+        this.notifications[i].is_checked = true;
+        this.notificationService.updateNotification(this.notifications[i]).subscribe(
+          () => { console.log('success'); },
+          (error) => { console.log(error); }
+        );
+      }
     }
   }
 
