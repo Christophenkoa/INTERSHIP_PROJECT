@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {TeacherModel} from '../../../models/teacher/teacher.model';
 import {CourseModel} from '../../../models/course/courses.model';
@@ -6,8 +6,10 @@ import {TeachersService} from '../../../services/teacher/teachers.service';
 import {CoursesService} from '../../../services/courses/courses.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Observable} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {OtherServiceService} from "../../../services/other/other-service.service";
+import {GetcourseModel} from "../../../models/course/getcourses.model";
 
 @Component({
   selector: 'app-cu-course-popup',
@@ -31,6 +33,7 @@ export class CuCoursePopupComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private teacherService: TeachersService,
               private courseService: CoursesService,
+              private otherService: OtherServiceService,
               private dialogRef: MatDialogRef<CuCoursePopupComponent>,
               @Inject(MAT_DIALOG_DATA) public coursedata: any,
               private snackBar: MatSnackBar) { }
@@ -94,14 +97,14 @@ export class CuCoursePopupComponent implements OnInit {
                                   );
 
     this.courseService.CreateCourse(courses)
-      .subscribe((data: CourseModel) => {
-           console.log(data);
-           this.snackBar.open(data.entitled + ' has been created !', 'Close', {
+      .subscribe((data: GetcourseModel) => {
+          this.courseService.courseArray.push(data);
+          console.log(data);
+          this.snackBar.open(data.entitled + ' has been created !', 'Close', {
             duration: 2500,
           });
-           setTimeout(() => {
-            this.dialogRef.close();
-          }, 500);
+          this.ClosePopup();
+          this.courseService.EmitCourse();
         },
         error => console.log(error));
   }
@@ -121,8 +124,11 @@ export class CuCoursePopupComponent implements OnInit {
 
     this.courseService.UpdateCourse(this.coursedata.id, courses)
       .subscribe((data) => {
-
+        this.snackBar.open(data.entitled + ' has been updated !', 'Close', {
+          duration: 3000
+        });
         console.log(data);
+        this.ClosePopup();
       }, error => console.log(error));
   }
 

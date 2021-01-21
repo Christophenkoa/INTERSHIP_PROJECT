@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ClassesModel } from '../../models/class/classes.model';
@@ -7,7 +7,7 @@ import {CourseModel} from '../../models/course/courses.model';
 import {GetcourseModel} from '../../models/course/getcourses.model';
 import {ClassService} from '../../services/classes/class.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ClassViewComponent} from '../../class-view/class-view.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class CuClassComponent implements OnInit {
   Class: string[] = ['6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Tle'];
   ClassNumber: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   serial: string[] = ['A4', 'C', 'D', 'TI'];
-  options: string[] = ['All', 'Esp'];
+  options: string[] = ['All', 'Esp', 'Arb'];
   isSerie = true;
   isOption = true;
   serieTake: string;
@@ -35,13 +35,15 @@ export class CuClassComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private courseService: CoursesService,
               private classesService: ClassService,
-              public dialogRef: MatDialogRef<CuClassComponent>) { }
+              private infoBull: MatSnackBar,
+              public dialogRef: MatDialogRef<CuClassComponent>,
+              @Inject(MAT_DIALOG_DATA) public classData: any) { }
 
   ngOnInit() {
     this.idAdmin = parseInt(localStorage.getItem('id'));
-    console.log(this.idAdmin + ' , ' + typeof (this.idAdmin));
     this.ClassesForm();
     this.TakeCourse();
+    this.PopulateForm();
   }
 
   ClassesForm() {
@@ -78,13 +80,64 @@ export class CuClassComponent implements OnInit {
       this.idTeacherarray,
       this.idAdmin
     );
-
     // console.log(classes);
-
     this.classesService.CreateClass(classes)
       .subscribe((data) => {
         console.log(data);
-      }, error => console.log(error));
+        this.infoBull.open(data.level + ' ' + data.class_number + ' has been created !', 'Close', {
+          duration: 3000
+        });
+        this.classesService.classArray.push(data);
+        this.classesService.EmitClass();
+        this.ReturnFunct();
+      }, (error) => {
+        if (error.error.non_field_errors) {
+          this.infoBull.open('ERROR : ' + error.error.non_field_errors[0].toString(), 'Close', {
+            duration: 4000
+          });
+        }
+        console.log(error);
+      });
+  }
+
+  OnUpdateForm() {
+    if (this.ClassForm.invalid) { return; }
+    // console.log(this.ClassForm.get('coursesList').value);
+
+    this.TakeCourseSelected = this.ClassForm.get('coursesList').value;
+
+    for (var i = 0; i < this.TakeCourseSelected.length; i++) {
+      this.idCourserarray.push(this.TakeCourseSelected[i].id);
+      this.idTeacherarray.push(this.TakeCourseSelected[i].course_teacher.id);
+    }
+
+    console.log(this.idCourserarray + ' , ' + this.idTeacherarray);
+
+    const classes = new ClassesModel(
+      this.ClassForm.get('class_number').value,
+      this.ClassForm.get('option').value,
+      this.ClassForm.get('level').value,
+      this.ClassForm.get('serie').value,
+      this.idCourserarray,
+      this.idTeacherarray,
+      this.idAdmin
+    );
+    console.log(this.classData.id);
+    this.classesService.UpdateClass(classes, this.classData.id)
+      .subscribe((data) => {
+        console.log(data);
+        this.infoBull.open(data.level + ' ' + data.class_number + ' has been updated !', 'Close', {
+          duration: 3000
+        });
+        this.ReturnFunct();
+      }, (error) => {
+        if (error.error.non_field_errors) {
+          this.infoBull.open('ERROR : ' + error.error.non_field_errors[0].toString(), 'Close', {
+            duration: 4000
+          });
+        }
+        console.log(error);
+      });
   }
 
   /* Take serie in the form */
@@ -123,6 +176,22 @@ export class CuClassComponent implements OnInit {
     } else {
       this.isSerie = true;
       this.isOption = true;
+    }
+  }
+
+  PopulateForm() {
+    if (this.classData) {
+      console.log(this.classData);
+      this.ClassForm.setValue({
+        class_number: this.classData.class_number,
+        option: this.classData.option,
+        level: this.classData.level,
+        serie: this.classData.serie,
+        coursesList: this.classData.all_courses
+      });
+      this.disableSerie(this.classData.level);
+    } else {
+      return;
     }
   }
 

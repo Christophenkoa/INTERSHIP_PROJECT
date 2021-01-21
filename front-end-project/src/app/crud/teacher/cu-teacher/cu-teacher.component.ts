@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { TeacherModel } from '../../../models/teacher/teacher.model';
 import {TeachersService} from '../../../services/teacher/teachers.service';
@@ -6,6 +6,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {OtherServiceService} from '../../../services/other/other-service.service';
+import {MatTableDataSource} from "@angular/material/table";
+import {Subject, Subscription} from "rxjs";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-cu-teacher',
@@ -17,6 +20,12 @@ export class CuTeacherComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
   idAdmin: number;
+
+  TEACHER_DATA: MatTableDataSource<any>;
+  teacherSubscription: Subscription;
+  teacherArray: TeacherModel[] = [];
+  teacherSubject = new Subject<TeacherModel[]>();
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private formBuiler: FormBuilder,
               private teacherService: TeachersService,
@@ -100,9 +109,25 @@ export class CuTeacherComponent implements OnInit {
                                     );
 
     // console.log(this.registerForm.get('first_name').value + ' ; ' + this.registerForm.get('last_name').value);
-    this.teacherService.CreateTeacher(teacher);
-    this.otherService.GetAllTeacher();
-    this.ReturnButton();
+    this.teacherService.CreateTeacher(teacher)
+      .subscribe((data: TeacherModel) => {
+          this.teacherService.teacherArray.push(data);
+          console.log(data);
+          this.infoBull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
+            duration: 3000
+          });
+          this.ReturnButton();
+          this.teacherService.EmitTeacher();
+        },
+        (error) => {
+          if (error.error.username) {
+            console.log(error.error.username[0]);
+            this.infoBull.open('ERROR : ' + error.error.username[0], 'Close', {
+              duration: 3000
+            });
+          }
+          console.log(error);
+        });
   }
 
   /* Update function */
@@ -138,7 +163,7 @@ export class CuTeacherComponent implements OnInit {
           }
           console.log(error);
         });
-    this.otherService.GetAllTeacher();
+    this.teacherService.EmitTeacher();
   }
 
   /* Function that close the CU teacher page */

@@ -3,7 +3,10 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="(isHandset$ | async) === false">
-    <mat-toolbar> <div class="p-3">Menu</div></mat-toolbar>
+    <span><img src="assets/images/logo.png" style="border-radius: 70px 70px 70px 70px; width: 150px; margin-left: 20px;"></span>
+    <mat-toolbar>
+      <div class="p-3" style="margin-left: 25px;">Menu</div>
+    </mat-toolbar>
 
     <mat-nav-list class="p-3">
 
@@ -91,7 +94,6 @@
         </mat-icon>
         <span style="font-size: 0.8em;">Quizz List</span>
       </a>
-
     </mat-nav-list>
 
   </mat-sidenav>
@@ -105,7 +107,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>front-end-project</span>
+      <span>E-EDUC</span>
       <span class="spacer"></span>
       <mat-icon color="accent" class="icon-spacer">account_circle</mat-icon>
       <span style="font-size: large;padding: 0 10px;">Hello, {{username}}</span>

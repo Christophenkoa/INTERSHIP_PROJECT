@@ -11,7 +11,14 @@
       <mat-card-header>
         <div class="mx-auto">
           <mat-card-title>{{ classe.level + ' ' + classe.class_number + ' ' + classe.serie + ' ' + classe.option }}</mat-card-title>
-          <mat-card-subtitle>card subtitle</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="hide">
+            <button mat-icon-button color="accent" aria-label="Edit a class" (click)="EditClass(classe)">
+              <mat-icon>launch</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" aria-label="Delete a class" (click)="DeleteClass(classe.id)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </mat-card-subtitle>
         </div>
       </mat-card-header>
 

@@ -20,7 +20,6 @@ export class CrudStudentComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private studentService: StudentsService,
-              private otherService: OtherServiceService,
               public infoBull: MatSnackBar) { }
 
   /* Differents columns of the table */
@@ -51,17 +50,13 @@ export class CrudStudentComponent implements OnInit {
   }
 
   GetAllStudents() {
-    this.studentSubscription = this.studentService.GetAllStudent()
-      .subscribe(
-        (data) => {
-          for (var i= 0;i < data.length; i++) {
-            this.studentArray.push(data[i]);
-          }
-          // console.log(data);
-          this.STUDENT_DATA = new MatTableDataSource(this.studentArray);
+    this.studentSubscription = this.studentService.studentSubject.subscribe(
+        (student: GetstudentModel[]) => {
+          this.STUDENT_DATA = new MatTableDataSource(student);
           this.STUDENT_DATA.paginator = this.paginator;
-        }, (error => console.log(error)));
-    this.studentSubject.next(this.studentArray);
+        });
+    this.studentService.GetAllStudentArray();
+    // this.studentService.EmitStudent();
   }
 
   OpenUpdateMethod(dataStudent) {

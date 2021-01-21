@@ -1,7 +1,11 @@
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from gtts import gTTS
+import os
+import re
 
 from .permissions import IsStaff, IsAdmin
 from .serializers import *
@@ -67,6 +71,7 @@ class StudentView(ModelViewSet):
         super(StudentView, self).destroy(request)
         return Response("This student data has been deleted.")
 
+
 # class management
 class CourseView(ModelViewSet):
     serializer_class = CourseSerializer
@@ -90,6 +95,10 @@ class ClassView(ModelViewSet):
         if self.request.method == 'POST' or self.request.method == 'DELETE' or self.request.method == 'PUT':
             self.permission_classes = [IsAdmin]
         return super(ClassView, self).get_permissions()
+
+    def destroy(self, request, *args, **kwargs):
+        super(ClassView, self).destroy(request)
+        return Response("This class data has been deleted.")
 
 
 class ChapterView(ModelViewSet):
@@ -197,3 +206,18 @@ def jwt_response_payload_handler(token, user=None, request=None):
         'token': token,
         'user': UserSerializer(user, context={'request': request}, ).data
     }
+
+
+class AudioView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        mytext = request.data['text']
+        username = request.data['username']
+        title = request.data['title']
+        print(username, title)
+        myobj = gTTS(text=mytext, lang="fr", slow=False)
+        myobj.save("%s.mp3" % os.path.join(r"media", title + " " + username))
+        # print(os.path.realpath(title + " " + username + ".mp3"))
+        # return Response(os.path.realpath(title + " " + username + ".mp3"))
+        return Response("http://localhost:8000/media/" + title + " " + username + ".mp3")

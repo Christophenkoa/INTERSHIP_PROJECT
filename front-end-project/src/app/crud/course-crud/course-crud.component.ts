@@ -21,12 +21,11 @@ export class CourseCrudComponent implements OnInit {
   COURSE_DATA: MatTableDataSource<any>;
   courseArray: GetcourseModel[] = [];
   courseSubscription: Subscription;
-  courseSubject = new Subject<GetcourseModel[]>();
 
   /* Table variables */
   displayedColumns: string[] = ['entitled', 'coefficient', 'teacher', 'actions'];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) Coursepaginator: MatPaginator;
   /* End */
 
   constructor(private formBuilder: FormBuilder,
@@ -36,16 +35,8 @@ export class CourseCrudComponent implements OnInit {
               public infoBull: MatSnackBar) { }
 
   ngOnInit() {
-    this.getCourses();
+    // this.getCourses();
     this.GetAllCourse();
-  }
-
-  getCourses() {
-    this.courseService.GetAllCourses()
-      .subscribe(
-        (data) => {console.log(data); },
-        error => {console.log(error); }
-      );
   }
 
   /* Table information and functions */
@@ -55,16 +46,14 @@ export class CourseCrudComponent implements OnInit {
 
   /* Get all courses in Data base */
   GetAllCourse() {
-     this.courseSubscription = this.courseService.GetAllCourses()
-        .subscribe((data ) => {
-          for (var i= 0;i < data.length; i++) {
-            this.courseArray.push(data[i]);
-          }
-          console.log(data);
-          this.COURSE_DATA = new MatTableDataSource(this.courseArray);
-          this.COURSE_DATA.paginator = this.paginator;
+     this.courseSubscription = this.courseService.courseSubject
+       .subscribe((data ) => {
+         this.COURSE_DATA = new MatTableDataSource(data);
+         this.COURSE_DATA.paginator = this.Coursepaginator;
+         console.log(data);
         }, error => console.log(error));
-     this.courseSubject.next(this.courseArray);
+     this.courseService.GetAllCoursesArray();
+     // this.courseService.EmitCourse();
   }
 
   /* Delete a course */
@@ -86,12 +75,6 @@ export class CourseCrudComponent implements OnInit {
       height : '65%',
       disableClose : true
     });
-    dialog.afterClosed()
-      .subscribe(data => {
-         this.infoBull.open(data.course + ' has been created !', 'Close', {
-           duration: 3000
-         });
-      }, error => console.log(error));
   }
 
   OpenUpdateMethod(CourseData) {
@@ -101,11 +84,5 @@ export class CourseCrudComponent implements OnInit {
       disableClose : true,
       data : CourseData
     });
-    dialog.afterClosed()
-      .subscribe(data => {
-        this.infoBull.open(data.course + ' has been updated !', 'Close', {
-          duration: 3000
-        });
-      }, error => console.log(error));
   }
 }
