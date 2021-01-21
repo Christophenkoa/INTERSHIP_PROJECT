@@ -1,8 +1,8 @@
-import {EventEmitter, Injectable, OnInit} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import {BehaviorSubject, Observable, of, Subscription, throwError} from 'rxjs';
+import {Observable, Subscription, throwError} from 'rxjs';
 
 
 import {JwtHelperService} from '@auth0/angular-jwt';

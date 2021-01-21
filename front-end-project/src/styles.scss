@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-html {
-  overflow-y: hidden;
-}
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .my-class {
@@ -11,4 +9,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
+  overflow-y: hidden;
 }

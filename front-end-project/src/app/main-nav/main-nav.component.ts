@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import {NotificationService} from '../services/notifications/notification.service';
 import {NotificationGetModel} from '../models/notification/notificationGet.model';
 import {StudentsService} from '../services/student/students.service';
+import {DOCUMENT} from '@angular/common';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class MainNavComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private studentService: StudentsService
+    private studentService: StudentsService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
 

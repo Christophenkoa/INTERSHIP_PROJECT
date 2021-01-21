@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthService} from '../services/auth-guard/auth.service';
@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode';
 import {of, Subscription} from 'rxjs';
 import {delay} from 'rxjs/operators';
 import {HttpHeaders} from '@angular/common/http';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +20,24 @@ export class LoginComponent implements OnInit {
   hide = true;
   loginForm: FormGroup;
   error: any;
+  bgVar: boolean;
 
 
   constructor(private formBuiler: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit() {
+    this.bgVar = localStorage.getItem('auth') === 'true' ? true : false;
+    this.setBackgroundOrNot(!this.bgVar);
     this.LoginForm();
+    this.authService.authentication.subscribe(
+      (data) => {
+        this.bgVar = data;
+        this.setBackgroundOrNot(!this.bgVar);
+      },
+      (error) => { console.log(error); }
+    );
   }
 
   LoginForm() {
@@ -44,5 +56,16 @@ export class LoginComponent implements OnInit {
     console.log(username + ',' + password);
 
     this.authService.login(username, password);
+  }
+
+  // If i didn't log in set the background else remove
+  setBackgroundOrNot(bool: boolean) {
+    if (bool) {
+      console.log('yiy');
+      this.document.body.classList.add('my-class');
+    } else {
+      console.log('yo');
+      this.document.body.classList.remove('my-class');
+    }
   }
 }

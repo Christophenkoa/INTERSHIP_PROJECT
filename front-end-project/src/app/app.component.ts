@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {AuthService} from './services/auth-guard/auth.service';
 import {AuthGuardService} from './services/auth-guard/auth-guard.service';
 import {HttpHeaders} from '@angular/common/http';
@@ -15,30 +14,21 @@ export class AppComponent implements OnInit {
   title = 'front-end-project';
 
   auth = false;
-
-  // http options used for making API calls
-  // private httpOptions: any;
-
-  /*// the actual JWT token
-  public token: string;
-  loginData;
-  userData;
-  role;
-  // the token expiration date
-  public token_expires: Date;*/
-
-  /*  // the username of the logged in user
-    public username: string;
-    // error messages received from the login attempt
-    public errors: any = [];*/
-
+  bgVar = false;
 
   constructor(private authGuard: AuthGuardService, private authService: AuthService, @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit() {
-    this.auth = localStorage.getItem('auth') != null;
+    this.auth = localStorage.getItem('auth') === 'true' ? true : false;
+    this.bgVar = this.auth;
     this.authService.authentication.subscribe(
-      (data) => {this.auth = data; console.log(data); }
+      (data) => {
+        this.auth = data;
+        this.bgVar = data;
+        console.log(this.bgVar);
+        // set background if user is not logged in
+        this.setBackgroundOrNot(!this.bgVar);
+      }
     );
 
     // set header based on token received
@@ -47,9 +37,17 @@ export class AppComponent implements OnInit {
         new HttpHeaders({'Content-type': 'application/json', 'Authorization': 'JWT ' + localStorage.getItem('token')});
     }
 
-    // set background if user is not logged in
-    if (!this.auth) {
+    console.log(this.auth);
+  }
+
+  // If i didn't log in set the background else remove
+  setBackgroundOrNot(bool: boolean) {
+    if (bool) {
+      console.log('yiy');
       this.document.body.classList.add('my-class');
+    } else {
+      console.log('yo');
+      this.document.body.classList.remove('my-class');
     }
   }
 }
