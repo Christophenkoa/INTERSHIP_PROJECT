@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {NoteService} from '../services/notes/note.service';
 import {ChapterModel} from '../models/chapter/chapters.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CourseModel} from '../models/course/courses.model';
 import {CoursesService} from '../services/courses/courses.service';
 import {ActivatedRoute} from '@angular/router';
 import {ClassService} from '../services/classes/class.service';
 import {GetcourseModel} from '../models/course/getcourses.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {NotificationService} from '../services/notifications/notification.service';
+import {NotificationPostModel} from '../models/notification/notificationPost.model';
 
 declare var CKEDITOR: any;
 @Component({
@@ -21,12 +22,14 @@ export class CourseEditorComponent implements OnInit {
   isStaff: string;
   isSuperuser: string;
   id: string;
+  idClass: number;
 
   constructor(private noteService: NoteService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private courseService: CoursesService,
               private classService: ClassService,
+              private notificationService: NotificationService,
               private snack: MatSnackBar) { }
 
   ngOnInit() {
@@ -46,8 +49,8 @@ export class CourseEditorComponent implements OnInit {
   }
 
   getCoursesData() {
-    const id = this.route.snapshot.params['id'];
-    this.classService.GetSingleClass(id)
+    this.idClass = this.route.snapshot.params['id'];
+    this.classService.GetSingleClass(this.idClass)
       .subscribe((data) => {
         console.log(data);
         if (this.isSuperuser === 'true') {
@@ -87,6 +90,16 @@ export class CourseEditorComponent implements OnInit {
       .subscribe(
         (data: any) => {
           console.log(data);
+          const notification = new NotificationPostModel(
+            note.entitled + ' note has been added',
+            false,
+            +this.id,
+            this.idClass
+          );
+          this.notificationService.postNotification(notification).subscribe(
+            () => {console.log('notification has been sent successfully!'); },
+            (error) => { console.log(error); }
+          );
           this.snack.open(data.entitled + ' are been saved !', 'Close', {
             duration: 3000
             });

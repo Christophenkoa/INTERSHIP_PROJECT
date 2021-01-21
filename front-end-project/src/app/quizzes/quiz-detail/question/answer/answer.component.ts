@@ -15,6 +15,8 @@ export class AnswerComponent implements OnInit {
   @Input()
   selectedAnswer: number;
 
+  isSelect = false;
+
   letter: string;
 
   constructor(private quizService: QuizService) { }
@@ -24,10 +26,16 @@ export class AnswerComponent implements OnInit {
   }
 
   isSelected() {
-    return this.selectedAnswer === this.answer.id;
+    // return this.selectedAnswer === this.answer.id;
+    if (this.isSelect) {
+      this.isSelect = false;
+    } else {
+      this.isSelect = true;
+    }
   }
 
   choose() {
+    this.isSelected();
     this.quizService.selectedAnswer.emit(this.answer);
   }
 

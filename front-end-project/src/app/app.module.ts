@@ -29,6 +29,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatMenuModule} from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { LoginComponent } from './login/login.component';
@@ -88,7 +89,9 @@ import { CuCoursePopupComponent } from './crud/course-crud/cu-course-popup/cu-co
 import { EvaluationService } from './services/evaluation/evaluation.service';
 import {DialogQuizComponent} from './quizzes/quiz-detail/dialog-quiz/dialog-quiz.component';
 import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
-import {OtherServiceService} from "./services/other/other-service.service";
+import {OtherServiceService} from './services/other/other-service.service';
+import {NotificationService} from './services/notifications/notification.service';
+import { MyDirectiveWithBackgroundImageDirective } from './directives/my-directive-with-background-image.directive';
 
 @NgModule({
   declarations: [
@@ -121,6 +124,7 @@ import {OtherServiceService} from "./services/other/other-service.service";
     CuCoursePopupComponent,
     DialogQuizComponent,
     AdminPanelComponent,
+    MyDirectiveWithBackgroundImageDirective,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent, DialogQuizComponent],
   imports: [
@@ -148,6 +152,7 @@ import {OtherServiceService} from "./services/other/other-service.service";
     MatNativeDateModule,
     MatRadioModule,
     MatAutocompleteModule,
+    MatMenuModule,
     MatSelectModule,
     CKEditorModule,
     MatSnackBarModule,
@@ -179,6 +184,7 @@ import {OtherServiceService} from "./services/other/other-service.service";
               AuthService,
               EvaluationService,
               OtherServiceService,
+              NotificationService,
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: AuthInterceptor,

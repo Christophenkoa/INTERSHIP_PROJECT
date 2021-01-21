@@ -277,3 +277,18 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['is_superuser'] = user.is_superuser
         return token
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    teacher_details = serializers.SerializerMethodField()
+    classe_details = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Notification
+        fields = '__all__'
+
+    def get_teacher_details(self, obj):
+        return TeacherSerializer(obj.teacher).data
+
+    def get_classe_details(self, obj):
+        return ClassSerializer(obj.classe).data

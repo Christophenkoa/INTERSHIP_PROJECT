@@ -189,6 +189,12 @@ class AnswerView(ModelViewSet):
         return super(AnswerView, self).get_permissions()
 
 
+class NotificationView(ModelViewSet):
+    serializer_class = NotificationSerializer
+    queryset = Notification.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+
 def jwt_response_payload_handler(token, user=None, request=None):
     """
     Returns the response data for both the login and refresh views.

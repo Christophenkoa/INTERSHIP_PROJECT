@@ -27,3 +27,21 @@
 .hide{
   display: none;
 }
+
+.mat-menu-item {
+  height: inherit;
+  width: fit-content;
+}
+
+//.notification-content {
+//  max-width: fit-content;
+//}
+
+.single-notification {
+  font-family: 'Georgia';
+  font-size: small;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
