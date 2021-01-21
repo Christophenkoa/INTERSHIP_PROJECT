@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StudentModel } from '../../models/student/student.model';
 import {TeacherModel} from '../../models/teacher/teacher.model';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {AuthService} from '../auth-guard/auth.service';
 import {GetstudentModel} from '../../models/student/getstudent.model';
 
@@ -12,15 +12,29 @@ import {GetstudentModel} from '../../models/student/getstudent.model';
 })
 export class StudentsService {
 
+  studentArray: GetstudentModel[] = [];
+  studentSubject = new Subject<GetstudentModel[]>();
   constructor(private http: HttpClient,
               private authService: AuthService) { }
 
-  CreateStudent(student: StudentModel): Observable<StudentModel> {
-    return this.http.post<StudentModel>('http://127.0.0.1:8000/user/student/', student, {headers: this.authService.httpHeaders});
+  EmitStudent() {
+    this.studentSubject.next(this.studentArray);
+  }
+
+  CreateStudent(student: StudentModel): Observable<GetstudentModel> {
+    return this.http.post<GetstudentModel>('http://127.0.0.1:8000/user/student/', student, {headers: this.authService.httpHeaders});
   }
 
   GetAllStudent(): Observable<GetstudentModel[]> {
     return this.http.get<GetstudentModel[]>('http://127.0.0.1:8000/user/student/', {headers: this.authService.httpHeaders});
+  }
+
+  GetAllStudentArray() {
+    return this.http.get<GetstudentModel[]>('http://127.0.0.1:8000/user/student/', {headers: this.authService.httpHeaders})
+      .subscribe((data) => {
+        this.studentArray = data;
+        this.EmitStudent();
+      }, error => console.log(error));
   }
 
   GetSpecificStudent(id: number): Observable<GetstudentModel> {

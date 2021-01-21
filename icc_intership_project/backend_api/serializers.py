@@ -112,7 +112,7 @@ class ClassSerializer(serializers.ModelSerializer):
         classe = Class.objects.filter(level=data['level'], class_number=data['class_number'], serie=data['serie'], option=data['option'])
         if classe:
             raise serializers.ValidationError('This class already exists !')
-        print('------------------DATA', data)
+        # print('------------------DATA', data)
         return data
 
     def get_all_courses(self, obj):
@@ -142,12 +142,12 @@ class StudentSerializer(serializers.ModelSerializer):
                   'dateOfBirth', 'my_class', 'student_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
         # extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
-    def validate(self, data):
-        user = Student.objects.get(username=data['username'])
-        if user:
-            raise serializers.ValidationError('This username already exists !')
-        else:
-            return data
+    # def validate(self, data):
+    #     user = Student.objects.get(username=data['username'])
+    #     if user:
+    #         raise serializers.ValidationError('This username already exists !')
+    #     else:
+    #         return data
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
@@ -160,22 +160,6 @@ class StudentSerializer(serializers.ModelSerializer):
         print('clear password: ', user.clear_password)
         user.save()
         return user
-
-    # def create(self,validate_data):
-    #     print("--------------------",validate_data)
-    #     return
-
-    # def get_my_class(self, obj):
-    #     return ClassSerializer(obj.my_class).data
-
-    # def create(self,validate_data):
-    #     print("--------------------",validate_data)
-    #     return
-
-    # def get_courses(self, obj):
-    #     return CourseSerializer(obj.my_class.courses, many=True).data
-    #     fields = ['first_name', 'last_name', 'username', 'evaluation', 'email', 'password', 'dateOfBirth',
-    #               'regis_number', 'my_class', 'my_admin', 'courses', 'is_superuser', 'is_staff', 'is_active']
 
 
 class EvaluationSerializer(serializers.ModelSerializer):

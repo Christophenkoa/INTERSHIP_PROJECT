@@ -125,12 +125,14 @@ export class CuStudentComponent implements OnInit {
     console.log(student);
     /* Send informations */
     this.studentsService.CreateStudent(student)
-      .subscribe(data => {
+      .subscribe((data) => {
         console.log(data);
+        this.studentsService.studentArray.push(data);
         this.infobull.open(data.first_name + ' ' + data.last_name + ' has been created !', 'Close', {
           duration: 3000
         });
         this.ClosePopup();
+        this.studentsService.EmitStudent();
       }, (error) => {
         if (error.error.username) {
           this.infobull.open('ERROR : ' + error.error.username[0], 'Close', {
@@ -139,7 +141,6 @@ export class CuStudentComponent implements OnInit {
         }
         console.log(error);
       });
-    this.otherService.GetAllStudents();
   }
 
 
@@ -196,7 +197,6 @@ export class CuStudentComponent implements OnInit {
           });
         }
       });
-    this.otherService.GetAllStudents();
   }
 
   /* Method that take all class info */

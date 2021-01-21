@@ -5,6 +5,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ClassService} from '../services/classes/class.service';
 import {GetClassesModel} from '../models/class/getclasses.models';
 import * as $ from 'jquery';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-class-view',
@@ -15,9 +16,11 @@ export class ClassViewComponent implements OnInit {
 
   // Allclasses: GetClassesModel[] = [];
   classChooseArray: GetClassesModel[] = [];
+  classeSubscription: Subscription;
   id: string;
   isStaff: string;
   isSuperuser: string;
+  hide = true;
 
   constructor(private dialog: MatDialog,
               public infoBull: MatSnackBar,
@@ -29,8 +32,11 @@ export class ClassViewComponent implements OnInit {
     this.isSuperuser = localStorage.getItem('is_superuser');
 
     if (this.isStaff === 'true' && this.isSuperuser === 'false') {
+      this.hide = false;
       $(document).ready(() => {
         $('.create_boutton').hide();
+        /*$('.Edit_boutton').hide();
+        $('.Delete_boutton').hide();*/
       });
     }
   }
@@ -42,19 +48,15 @@ export class ClassViewComponent implements OnInit {
       height: '60%',
       disableClose: true
     });
-    dialog.afterClosed()
-      .subscribe(data => {
-        this.infoBull.open(data.level + ' ' + data.class_number + ' has been created !', 'Close', {
-          duration: 3000
-        });
-      });
   }
 
   /* Get all classes and display them in this page */
   GetAllClasses() {
+    // console.log('HELLO WORLD !!');
+    // this.classeSubscription =  this.classesService.classeSubject
     this.classesService.GetAllClasses()
       .subscribe((data) => {
-        // console.log(data);
+        console.log(data);
         if (this.isSuperuser === 'true') {
           this.classChooseArray = data;
         } else {
@@ -66,8 +68,34 @@ export class ClassViewComponent implements OnInit {
             }
           }
         }
-        // console.log(this.classChooseArray);
-      });
+        // console.log(data);
+        this.classesService.GetAllClassesArray();
+        this.classesService.EmitClass();
+      }, error => console.log(error));
   }
 
+  EditClass(classe) {
+    console.log(classe);
+    const dialog = this.dialog.open(CuClassComponent, {
+      width: '30%',
+      height: '60%',
+      disableClose: true,
+      data: classe
+    });
+  }
+
+  DeleteClass(id) {
+    console.log(id);
+    if (confirm('Are you sure to delete this course ?') === true) {
+      this.classesService.DeleteClass(id)
+        .subscribe(result => {
+          this.classChooseArray = [];
+          this.GetAllClasses();
+          this.infoBull.open(result.toString(), 'Close', {
+            duration: 4000
+          });
+          console.log(result);
+        }, error => console.log(error));
+    }
+  }
 }

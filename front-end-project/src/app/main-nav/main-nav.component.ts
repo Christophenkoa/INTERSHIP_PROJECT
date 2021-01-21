@@ -36,6 +36,7 @@ export class MainNavComponent implements OnInit {
       $(document).ready(() => {
         $('.home_student').hide();
         $('.home_teacher').hide();
+        $('.quiz_create').hide();
       });
       // return ;
     } else if (this.isStaff === 'true' && this.isSuperuser === 'false') {
@@ -58,6 +59,7 @@ export class MainNavComponent implements OnInit {
         $('.classView').hide();
         $('.quiz_create').hide();
         $('.home_teacher').hide();
+        $('.admin_panel').hide();
       });
     }
   }

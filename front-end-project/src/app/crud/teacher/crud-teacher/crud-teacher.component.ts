@@ -7,6 +7,7 @@ import {TeachersService} from '../../../services/teacher/teachers.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subject, Subscription} from "rxjs";
 import {TeacherModel} from "../../../models/teacher/teacher.model";
+import {OtherServiceService} from "../../../services/other/other-service.service";
 
 
 @Component({
@@ -17,9 +18,8 @@ import {TeacherModel} from "../../../models/teacher/teacher.model";
 export class CrudTeacherComponent implements OnInit {
 
   TEACHER_DATA: MatTableDataSource<any>;
-  teacherSubscription: Subscription;
   teacherArray: TeacherModel[] = [];
-  teacherSubject = new Subject<TeacherModel[]>();
+  teacherSubscription: Subscription;
 
   /* Differents columns of the table */
   displayedColumns: string[] = ['username', 'first_name', 'last_name', 'email', 'tel', 'gender', 'is_superuser', 'is_staff', 'is_active', 'actions'];
@@ -33,11 +33,11 @@ export class CrudTeacherComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private teacherService: TeachersService,
+              private otherService: OtherServiceService,
               public infoBull: MatSnackBar) { }
 
   ngOnInit() {
     this.GetAllTeacher();
-    console.log(this.teacherArray);
   }
 
   EditTeacher(teacherdata) {
@@ -59,17 +59,14 @@ export class CrudTeacherComponent implements OnInit {
 
   GetAllTeacher() {
     /* Call function for take all teachers */
-    this.teacherSubscription = this.teacherService.GetAllTeacher()
-      .subscribe(
-        (data) => {
-          for (var i= 0; i < data.length; i++) {
-            this.teacherArray.push(data[i]);
-          }
-          this.TEACHER_DATA = new MatTableDataSource(this.teacherArray);
-          this.TEACHER_DATA.paginator = this.paginator;
-        }, (error => console.log(error))
-      );
-    this.teacherSubject.next(this.teacherArray);
+    this.teacherSubscription = this.teacherService.teacherSubject.subscribe(
+      (teacher: TeacherModel[]) => {
+        // console.log(teacher);
+        this.TEACHER_DATA = new MatTableDataSource(teacher);
+        this.TEACHER_DATA.paginator = this.paginator;
+      }, error => console.log(error));
+    this.teacherService.GetAllTeacherArray();
+    // this.teacherService.EmitTeacher();
   }
   /* Function that delete a teacher in Data base */
   DeleteMethod(idTeacher) {

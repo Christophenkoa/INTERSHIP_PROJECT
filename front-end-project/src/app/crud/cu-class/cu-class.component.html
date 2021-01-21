@@ -1,6 +1,7 @@
 <div class="jumbotron jumbotron-fluid" style="padding-bottom: 30px;padding-top: 30px;text-align: center">
   <div class="container">
-    <h1>Create Class informations</h1>
+    <h1 *ngIf="!classData">Create Class informations</h1>
+    <h1 *ngIf="classData">Update Class informations</h1>
   </div>
 </div>
 
@@ -80,7 +81,8 @@
         </div>
       </div>
       <mat-dialog-actions align="center">
-        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnSubmitForm()" [mat-dialog-close]="ClassForm.value" [disabled]="ClassForm.invalid">Save</button>
+        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnSubmitForm()" [disabled]="ClassForm.invalid" *ngIf="!classData">Save</button>
+        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnUpdateForm()" [disabled]="ClassForm.invalid" *ngIf="classData">Update</button>
         <button mat-raised-button (click)="ReturnFunct()" color="warn">Cancel</button>
       </mat-dialog-actions>
     </form>

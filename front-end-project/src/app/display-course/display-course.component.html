@@ -4,7 +4,7 @@
     <mat-card>{{myNote.entitled}}</mat-card>
   </div>
 
-  <div class="note">
+  <div class="note" id="TakeText">
     <div class="chapter_content text-justify text-secondary font-weight-normal mt-5 mb-3">
       <div [innerHTML]="myNote.text"></div>
     </div>
@@ -13,20 +13,15 @@
   <div class="p-1 mt-5 rounded" style="background-color: red">
     <div class="play_button text-center">
           <span style="cursor: pointer">
-            <button mat-fab color="primary" aria-label="listen note music" *ngIf="!isPlay">
-              <mat-icon
-                class="play-button"
-                (click)="toggle()">
-                play_arrow
-              </mat-icon>
+            <audio id="audio">
+              <source type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <button mat-mini-fab aria-label="play course" matTooltip="Play" (click)="Play()">
+              <mat-icon>play_arrow</mat-icon>
             </button>
-
-            <button mat-fab color="primary" aria-label="pause note music" *ngIf="isPlay">
-              <mat-icon
-                class="pause-button"
-                (click)="toggle()">
-                pause_arrow
-              </mat-icon>
+            <button mat-mini-fab aria-label="play course" matTooltip="Play" (click)="Pause()">
+              <mat-icon>pause</mat-icon>
             </button>
           </span>
     </div>
