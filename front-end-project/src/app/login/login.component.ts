@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {AuthService} from '../services/auth-guard/auth.service';
 import {UserManagerService} from '../services/user/user-manager.service';
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuiler: FormBuilder,
               private authService: AuthService,
+              private _snackBar: MatSnackBar,
               @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit() {
@@ -56,6 +58,19 @@ export class LoginComponent implements OnInit {
     console.log(username + ',' + password);
 
     this.authService.login(username, password);
+
+    // chech if there is an error with login credentials
+    this.authService.loginError.subscribe(
+      (data) => { 
+         if(data) {
+          const message = "Username or password is wrong";
+          this._snackBar.open(message, data, {
+            duration: 2000,
+          });
+      }
+    }
+    );
+    console.log(this.authService.loginError);
   }
 
   // If i didn't log in set the background else remove

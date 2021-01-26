@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from gtts import gTTS
 import os
-import re
+from mutagen.mp3 import MP3
 
 from .permissions import IsStaff, IsAdmin
 from .serializers import *
@@ -218,6 +218,7 @@ class AudioView(APIView):
         print(username, title)
         myobj = gTTS(text=mytext, lang="fr", slow=False)
         myobj.save("%s.mp3" % os.path.join(r"media", title + " " + username))
-        # print(os.path.realpath(title + " " + username + ".mp3"))
-        # return Response(os.path.realpath(title + " " + username + ".mp3"))
-        return Response("http://localhost:8000/media/" + title + " " + username + ".mp3")
+        audio_length = MP3("media/" + title + " " + username + ".mp3")
+        # print("---------Taille de l'audio", audio_length.info.length)
+        return Response({'url': "http://localhost:8000/media/" + title + " " + username + ".mp3",
+                         'taille': audio_length.info.length})

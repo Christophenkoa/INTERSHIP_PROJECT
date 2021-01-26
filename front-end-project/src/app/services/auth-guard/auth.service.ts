@@ -17,6 +17,8 @@ export class AuthService {
   user: User = null;
   httpHeaders = null;
   timeout;
+  // login error emitter
+  loginError = new EventEmitter<boolean>();
 
   constructor(public jwtHelper: JwtHelperService,
               private userManager: UserManagerService,
@@ -66,7 +68,8 @@ export class AuthService {
       },
 
       error => {
-        console.log(error);
+        // wrong login credentials
+        this.loginError.emit(true);
       }
     );
   }
