@@ -8,6 +8,7 @@ import Speech from 'speak-tts';
 import {OtherServiceService} from "../services/other/other-service.service";
 import {AudioModel} from "../models/other/audio.model";
 import {MatSnackBar} from "@angular/material";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-display-course',
@@ -26,47 +27,9 @@ export class DisplayCourseComponent implements OnInit {
 
   ngOnInit() {
     this.GetSingleChapter();
-<<<<<<< HEAD
     this.username = localStorage.getItem('username');
+    $('.spinner').hide();
     // this.MakeAudio();
-=======
-  }
-
-  public toggle() {
-    this.readNote();
-    this.isPlay = !this.isPlay;
-    // this.listenNote(this.isPlay);
-  }
-
-  listenNote(play: boolean) {
-    if (true) {
-      this.readNote();
-    }
-  }
-
-  readNote() {
-    console.log('readMethod');
-    const message = 'The title of this chapter is : ' + this.myNote.entitled + '.  ' + ' That is the content: ' + this.myNote.text;
-    if ('speechSynthesis' in window) {
-      const msg = new SpeechSynthesisUtterance();
-      // console.log(msg);
-      const voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[3];
-      console.log(voices);
-      msg.volume = 1; // From 0 to 1
-      msg.rate = 0.8; // From 0.1 to 10
-      msg.pitch = 1; // From 0 to 2
-      msg.lang = 'en-GB';
-      msg.text = message;
-      console.log(msg);
-      window.speechSynthesis.speak(msg);
-      console.log(voices);
-      console.log(window.speechSynthesis.speaking);
-    } else {
-      // Speech Synthesis Not Supported 😣
-      console.log('Sorry, your browser doesn\'t support text to speech!');
-    }
->>>>>>> 75b909cf8c95ef5294be8ccaecf0f786b7391899
   }
 
   GetSingleChapter() {
@@ -78,48 +41,51 @@ export class DisplayCourseComponent implements OnInit {
   }
 
   Play() {
+    /* Hide Button and show spinner after click event */
+    $('.hideButton').hide();
+    $('.spinner').show();
+    /* End */
+    /* wait a second for change the text in HTML page */
     setTimeout(() => {
+      /* Take a text loaded in the HTML page */
       const text = document.getElementById('TakeText').textContent;
-      // console.log(text);
+      /* End */
       const AudioParams = new AudioModel(this.myNote.entitled, this.username, text);
       this.otherService.ListenAudio(AudioParams)
-        .subscribe(data => {
-          console.log(data);
-          this.url = data.toString();
-          console.log(this.url);
+        .subscribe((data) => {
+          this.url = data.url.toString();
+          this.infoBull.open('The audio is ready !', 'Close', {
+            duration: 3000
+          });
+          /* To hide a block where button and spinner are. */
+          document.getElementById('row-btn').style.display = 'none';
+          /* End */
+          /* Play the sound media part. */
           const audioR = new Audio(this.url);
           audioR.play();
-          /*const audio = document.getElementById('audio');
-          audio.play();*/
+          /* End */
+          /* Convert second to millisecond */
+          const millisec = Math.round(data.taille) * 1000;
+          /* End */
+          setTimeout(() => {
+            /* Display a block where button and spinner are, show the button and hide the spinner */
+            document.getElementById('row-btn').style.display = 'block';
+            $('.hideButton').show();
+            $('.spinner').hide();
+            /* End */
+          }, millisec);
         }, error => {
+          console.log(error);
           this.infoBull.open('ERROR : a media can\'t be listen in your device !', 'Close', {
             duration: 3000
           });
         });
     }, 1000);
+    /* End */
   }
 
   Pause() {
     const audio = new Audio(this.url);
     audio.pause();
   }
-
-  /*MakeAudio() {
-    setTimeout(() => {
-      const text = document.getElementById('TakeText').textContent;
-      // console.log(text);
-      const AudioParams = new AudioModel(this.myNote.entitled, this.username, text);
-      this.otherService.ListenAudio(AudioParams)
-        .subscribe(data => {
-          console.log(data);
-          this.isActive = true;
-        }, error => {
-          this.infoBull.open('ERROR : a media can\'t be listen !', 'Close', {
-            duration: 3000
-          });
-          console.log();
-        });
-    }, 1000);
-  }*/
-
 }

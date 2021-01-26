@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div class="logo-container">
-      <img mat-card-image src="../../assets/images/logo.png" class="logo" alt="Photo of a Shiba Inu">
+      <img mat-card-image src="assets/images/logo.png" class="logo" alt="Photo of a Shiba Inu">
     </div>
     <div class="header">
       <h2>LOGIN</h2>
@@ -29,9 +29,6 @@
           <mat-error *ngIf="loginForm.get('password').errors?.required">
             Required password.
           </mat-error>
-          <!--<mat-error *ngIf="loginForm.get('password').errors?.maxLength">
-            Password must be 10 characters.
-          </mat-error>-->
         </mat-form-field>
       </div>
       <button mat-flat-button color="warn">Login</button>

@@ -17,18 +17,15 @@ user_router.register('student', StudentView, base_name='student')
 user_router.register('user', UserView, base_name='user')
 
 # class router
-<<<<<<< HEAD
 class_management_router.register('course', CourseView, base_name='course')
 class_management_router.register('class', ClassView, base_name='class')
 class_management_router.register('chapter', ChapterView, base_name='chapter')
 class_management_router.register('evaluation', EvaluationView, base_name='evaluation')
-=======
-class_management_router.register('course', CourseView, basename='course')
-class_management_router.register('class', ClassView, basename='class')
-class_management_router.register('chapter', ChapterView, basename='chapter')
-class_management_router.register('evaluation', EvaluationView, basename='evaluation')
-class_management_router.register('notification', NotificationView, basename='notification')
->>>>>>> 75b909cf8c95ef5294be8ccaecf0f786b7391899
+class_management_router.register('course', CourseView, base_name='course')
+class_management_router.register('class', ClassView, base_name='class')
+class_management_router.register('chapter', ChapterView, base_name='chapter')
+class_management_router.register('evaluation', EvaluationView, base_name='evaluation')
+class_management_router.register('notification', NotificationView, base_name='notification')
 
 # quiz router
 quiz_router.register('quiz', QuizView, base_name='quiz')
