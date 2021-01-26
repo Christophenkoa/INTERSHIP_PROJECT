@@ -57,6 +57,7 @@ export class CourseEditorComponent implements OnInit {
           this.courses = data.all_courses;
         } else {
           for (var i = 0; i < data.all_courses.length; i++) {
+            console.log(this.id);
             if (this.id === data.all_courses[i].course_teacher.id.toString()) {
               this.courses.push(data.all_courses[i]);
             }
