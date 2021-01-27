@@ -21,10 +21,6 @@ export class QuizResultComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('quizTakerId is ' + this.quizService.quizTakerId);
-    this.quizService.getSelectedQuizTaker(this.quizService.quizTakerId).subscribe(
-      (data: QuizTaker) => {this.quizTaker = data; console.log(this.quizTaker); }
-    );
     console.log('quiz result');
     this.userAnswers = this.quizService.getUserAnswers();
     console.log(this.userAnswers);
@@ -43,11 +39,20 @@ export class QuizResultComponent implements OnInit {
       }
     }
     this.result = ((this.mark / this.myQuiz.questions.length) * 100);
-    this.quizTaker.end_time = new Date();
-    this.quizTaker.score = this.result;
-    this.quizService.quizTakerUpdate(this.quizTaker).subscribe(
-      () => {console.log('put operation succeeded'); },
-      () => {console.log('put operation failed'); }
+    console.log(this.quizTaker);
+    console.log('quizTakerId is ' + this.quizService.quizTakerId);
+    this.quizService.getSelectedQuizTaker(this.quizService.quizTakerId).subscribe(
+      (data: QuizTaker) => {
+        this.quizTaker = data;
+        console.log(this.quizTaker); 
+        this.quizTaker.end_time = new Date();
+        this.quizTaker.score = this.result;
+        console.log(this.quizTaker);
+        this.quizService.quizTakerUpdate(this.quizTaker).subscribe(
+          () => {console.log('put operation succeeded'); },
+          () => {console.log('put operation failed'); }
+        );
+      }
     );
   }
 
