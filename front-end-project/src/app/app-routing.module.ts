@@ -8,7 +8,6 @@ import {CourseEditorComponent} from './course-editor/course-editor.component';
 import {ClassViewComponent} from './class-view/class-view.component';
 import { AddNoteComponent } from './crud/add-note/add-note.component';
 import { CuClassComponent } from './crud/cu-class/cu-class.component';
-import { MainSpaceComponent } from './main-space/main-space.component';
 import {CrudStudentComponent} from './crud/student/crud-student/crud-student.component';
 import {CrudTeacherComponent} from './crud/teacher/crud-teacher/crud-teacher.component';
 import {HomeComponent} from './home/home.component';
@@ -28,6 +27,7 @@ import {StaffGuardGuard} from './services/user-guard/staff-guard.guard';
 import {OnlyStaffGuardGuard} from './services/user-guard/only-staff-guard.guard';
 import {AdminGuardGuard} from './services/user-guard/admin-guard.guard';
 import {StudentGuardGuard} from './services/user-guard/student-guard.guard';
+import {QuizHistoricComponent} from "./quiz-historic/quiz-historic.component";
 
 
 const routes: Routes = [
@@ -86,11 +86,6 @@ const routes: Routes = [
     canActivate: [AuthGuardService, AdminGuardGuard],
   },
   {
-    path : 'navMenu/class-view',
-    component: MainSpaceComponent,
-    canActivate: [AuthGuardService, StaffGuardGuard],
-  },
-  {
     path : 'navMenu/student',
     component: CrudStudentComponent,
     canActivate: [AuthGuardService, AdminGuardGuard],
@@ -134,6 +129,11 @@ const routes: Routes = [
   {
     path : 'quiz/participate/:id',
     component : QuizDetailComponent,
+    canActivate: [AuthGuardService, OnlyStudentGuardGuard],
+  },
+  {
+    path : 'navMenu/quiz-historic',
+    component: QuizHistoricComponent,
     canActivate: [AuthGuardService, OnlyStudentGuardGuard],
   },
   {

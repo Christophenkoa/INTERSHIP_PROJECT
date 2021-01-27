@@ -129,11 +129,7 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    # my_class = serializers.SerializerMethodField()
-
     student_class = serializers.SerializerMethodField()
-
-    # courses = serializers.SerializerMethodField()
 
     class Meta:
         model = Student
@@ -141,13 +137,6 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'regis_number', 'first_name', 'last_name', 'tel', 'gender', 'password',
                   'dateOfBirth', 'my_class', 'student_class', 'my_admin', 'is_superuser', 'is_staff', 'is_active']
         # extra_kwargs = {'password': {'write_only': True, 'required': True}}
-
-    # def validate(self, data):
-    #     user = Student.objects.get(username=data['username'])
-    #     if user:
-    #         raise serializers.ValidationError('This username already exists !')
-    #     else:
-    #         return data
 
     def get_student_class(self, obj):
         return ClassSerializer(obj.my_class).data
@@ -186,23 +175,6 @@ class ChapterSerializer(serializers.ModelSerializer):
 
     # def get_courseObj(self, obj):
     #     return CourseSerializer1(obj.course).data
-
-
-# class QuestionQuizSerializer(serializers.ModelSerializer):
-#     answers = serializers.SerializerMethodField()
-#
-#     class Meta:
-#         model = Question
-#         fields = '__all__'
-#
-#     def get_answers(self, obj):
-#         return AnswerQuestionSerializer(obj.answer_set.all(), many=True).data
-
-
-# class AnswerQuestionSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Answer
-#         fields = '__all__'
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -264,10 +236,19 @@ class QuizSerializer(serializers.ModelSerializer):
 class QuizTakerSerializer(serializers.ModelSerializer):
     quiz = QuizSerializer
     student = StudentSerializer
+    student_details = serializers.SerializerMethodField()
+    quiz_details = serializers.SerializerMethodField()
 
     class Meta:
         model = QuizTaker
+        # fields = ['id', 'score', 'start_time', 'end_time', 'student_details', 'quiz_details']
         fields = '__all__'
+
+    def get_student_details(self, obj):
+        return StudentSerializer(obj.associated_student).data
+
+    def get_quiz_details(self, obj):
+        return QuizSerializer(obj.associated_quiz).data
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):

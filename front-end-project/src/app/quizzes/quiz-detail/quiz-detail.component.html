@@ -1,4 +1,9 @@
-<div *ngIf="quiz!=null" class="text-right text-danger font-weight-bold">Time left: {{timeLeft}}</div>
+<div *ngIf="quiz!=null" class="text-right text-danger font-weight-bold">
+  <mat-icon color="accent">
+    query_builder
+  </mat-icon>
+  Time left: {{timeLeft}}
+</div>
 <div>
   <div class="question-wrapper">
     <div *ngIf="quiz!=null" >

@@ -46,7 +46,6 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 
 
-import { MainSpaceComponent } from './main-space/main-space.component';
 import { AddNoteComponent } from './crud/add-note/add-note.component';
 import { CourseEditorComponent } from './course-editor/course-editor.component';
 import { NoteClassComponent } from './note-classe/note-class.component';
@@ -92,6 +91,7 @@ import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
 import {OtherServiceService} from './services/other/other-service.service';
 import {NotificationService} from './services/notifications/notification.service';
 import { MyDirectiveWithBackgroundImageDirective } from './directives/my-directive-with-background-image.directive';
+import { QuizHistoricComponent } from './quiz-historic/quiz-historic.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +103,6 @@ import { MyDirectiveWithBackgroundImageDirective } from './directives/my-directi
     CuStudentComponent,
     CuTeacherComponent,
     MainNavComponent,
-    MainSpaceComponent,
     AddNoteComponent,
     CourseEditorComponent,
     NoteClassComponent,
@@ -125,6 +124,7 @@ import { MyDirectiveWithBackgroundImageDirective } from './directives/my-directi
     DialogQuizComponent,
     AdminPanelComponent,
     MyDirectiveWithBackgroundImageDirective,
+    QuizHistoricComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent, DialogQuizComponent],
   imports: [

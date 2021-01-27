@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainSpaceComponent } from './main-space.component';
+import { QuizHistoricComponent } from './quiz-historic.component';
 
-describe('MainSpaceComponent', () => {
-  let component: MainSpaceComponent;
-  let fixture: ComponentFixture<MainSpaceComponent>;
+describe('QuizHistoricComponent', () => {
+  let component: QuizHistoricComponent;
+  let fixture: ComponentFixture<QuizHistoricComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainSpaceComponent ]
+      declarations: [ QuizHistoricComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainSpaceComponent);
+    fixture = TestBed.createComponent(QuizHistoricComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -28,13 +28,28 @@ mat-icon{
 }
 
 .logo {
-  background-repeat: no-repeat;
-  width: 100px;
+background-repeat: no-repeat;
+width: 100px;
+height: 100px;
+display: block;
+margin: auto;
+  /*width: 100px;
   height: 100px;
-  display: block;
-  margin: auto;
+  border-radius: -50px;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);*/
 }
 
 .logo-container{
+  /*width: 320px;
+  height: 420px;
+  background: white;
+  color: white;
+  top: 30%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;*/
 
 }

@@ -44,6 +44,7 @@ export class StudentHomeComponent implements OnInit {
     this.GetAllEvaluation();
     this.GetAllStudent();
     this.BarChartFunction();
+    this.QuizTakerGraph();
   }
 
   /* Table informations and functions */
@@ -91,7 +92,7 @@ export class StudentHomeComponent implements OnInit {
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < data.length; i++) {
               if (studentClassId === data[i].classe_details.id) {
-                console.log(data[i]);
+                // console.log(data[i]);
                 this.NbreQuiz++;
               }
             }
@@ -168,4 +169,13 @@ export class StudentHomeComponent implements OnInit {
   }
   /* End */
 
+  QuizTakerGraph() {
+    this.quizService.GetAllQuizTaker()
+      .subscribe((data) => {
+        console.log(data);
+        /* for (var i = 0; i < data.length; i++) {
+
+        } */
+      });
+  }
 }

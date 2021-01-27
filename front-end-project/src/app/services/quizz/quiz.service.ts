@@ -62,4 +62,8 @@ export class QuizService {
   quizTakerUpdate(quizTaker: QuizTaker): Observable<Quiz> {
     return this.http.put<Quiz>(this.url2 + 'quiz_taker/' + quizTaker.id + '/', quizTaker , {headers: this.authService.httpHeaders});
   }
+
+  GetAllQuizTaker(): Observable<QuizTaker[]> {
+    return this.http.get<QuizTaker[]>(this.url2 + 'quiz_taker/', {headers: this.authService.httpHeaders});
+  }
 }
