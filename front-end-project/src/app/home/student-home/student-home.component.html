@@ -10,7 +10,7 @@
         <div class="card-body-icon">
           <i class="far fa-sticky-note"></i>
         </div>
-        <h4 class="card-title">N° Course </h4>
+        <h4 class="card-title">N° COURSE </h4>
         <div class="card-text display-4">{{ NbreCourse }}</div>
     </div>
   </div>
@@ -25,7 +25,7 @@
         <div class="card-body-icon">
           <i class="fas fa-question-circle"></i>
         </div>
-        <h4 class="card-title">N° Quiz  </h4>
+        <h4 class="card-title">N° QUIZ  </h4>
         <div class="card-text display-4">{{ NbreQuiz }}</div>
     </div>
   </div>
@@ -40,7 +40,7 @@
         <div class="card-body-icon">
           <i class="fas fa-chalkboard-teacher"></i>
         </div>
-        <h4 class="card-title">N° Class Size </h4>
+        <h4 class="card-title">N° CLASS SIZE </h4>
         <div class="card-text display-4">{{ NbreStudent }}</div>
     </div>
   </div>
@@ -113,22 +113,10 @@
     </mat-card>
   </div>
   <div class="col-md-6">
-    <mat-card>
+    <mat-card *ngIf="!hidden">
       <mat-card-content>
         <canvas id="bar" style="width: 100%"></canvas>
       </mat-card-content>
     </mat-card>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
-    <mat-card>
-      <mat-card-content>
-
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="col-md-2"></div>
 </div>

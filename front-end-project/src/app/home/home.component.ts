@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material';
 import {MatPaginator} from '@angular/material/paginator';
 import {Chart} from 'chart.js';
 import {QuizService} from '../services/quizz/quiz.service';
+import {QuizTaker} from "../models/quiz_folder/quizTaker";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit {
     this.GetAllCourse();
     this.GetAllClasses();
     this.GetAllQuiz();
+    this.GetAllQuizTaker();
   }
 
   /* Table informations and functions */
@@ -130,6 +132,28 @@ export class HomeComponent implements OnInit {
             }
           }
         });
+      });
+  }
+
+  /* Get Quiztaker by teacher */
+  QuizTakerColumns: string[] = ['name', 'surname', 'entitled', 'start_time', 'end_time', 'score'];
+  QUIZTAKER_DATA: MatTableDataSource<QuizTaker>;
+  quizTaker: QuizTaker[] = [];
+  @ViewChild(MatPaginator, {static: true}) QuizTakerpaginator: MatPaginator;
+
+  /* Table informations and functions */
+  quizTakerFilter(filterValue: string) {
+    this.QUIZTAKER_DATA.filter = filterValue.trim().toLowerCase();
+  }
+  /* End */
+
+  GetAllQuizTaker() {
+    this.quizService.GetAllQuizTaker()
+      .subscribe((data) => {
+        this.quizTaker = data.filter(taker => taker.quiz_details.teacher.toString() === this.id);
+        this.QUIZTAKER_DATA = new MatTableDataSource(this.quizTaker);
+        this.QUIZTAKER_DATA.paginator = this.QuizTakerpaginator;
+        console.log(this.quizTaker);
       });
   }
 }

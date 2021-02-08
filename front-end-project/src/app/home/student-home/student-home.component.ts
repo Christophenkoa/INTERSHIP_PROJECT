@@ -44,7 +44,6 @@ export class StudentHomeComponent implements OnInit {
     this.GetAllEvaluation();
     this.GetAllStudent();
     this.BarChartFunction();
-    this.QuizTakerGraph();
   }
 
   /* Table informations and functions */
@@ -134,9 +133,6 @@ export class StudentHomeComponent implements OnInit {
             }
           }
           Average.push((nbre / inter));
-          /*console.log('addition : ' + nbre + ' , ' + 'itération : ' + inter);
-          console.log(Average);
-          console.log(barColor);*/
           const barChart = new Chart('bar', {
             type: 'bar',
             data: {
@@ -168,14 +164,4 @@ export class StudentHomeComponent implements OnInit {
       }, error => console.log(error));
   }
   /* End */
-
-  QuizTakerGraph() {
-    this.quizService.GetAllQuizTaker()
-      .subscribe((data) => {
-        console.log(data);
-        /* for (var i = 0; i < data.length; i++) {
-
-        } */
-      });
-  }
 }
