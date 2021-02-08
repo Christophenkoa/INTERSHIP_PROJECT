@@ -4,6 +4,7 @@ import {ChapterModel} from '../models/chapter/chapters.model';
 import {CoursesService} from "../services/courses/courses.service";
 import {GetcourseModel} from "../models/course/getcourses.model";
 import {StudentsService} from "../services/student/students.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-courses-list',
@@ -20,6 +21,7 @@ export class CoursesListComponent implements OnInit {
 
   constructor(private noteService: NoteService,
               private courseService: CoursesService,
+              private snackBar: MatSnackBar,
               private studentService: StudentsService) { }
 
   ngOnInit() {
@@ -61,6 +63,24 @@ export class CoursesListComponent implements OnInit {
           }
         }, error => console.log(error));
       console.log(this.Course_list);
+    }
+  }
+
+  OnUpdate(chapter) {
+
+  }
+
+  OnDelete(id) {
+    console.log(id);
+    if (confirm('Are you sure to delete this quiz ?') === true) {
+      this.noteService.DeleteNote(id)
+        .subscribe((data) => {
+          this.Course_list = [];
+          this.GetAllCourses();
+          this.snackBar.open(data.toString(), 'Close', {
+            duration: 3000
+          });
+        });
     }
   }
 

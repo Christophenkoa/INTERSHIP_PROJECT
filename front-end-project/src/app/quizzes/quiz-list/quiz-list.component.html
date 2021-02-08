@@ -16,6 +16,7 @@
       <a *ngIf="isStaff == 'true' " style="cursor: pointer;" [routerLink]="['/quiz-item', quiz_item.id]">
         <span>{{quiz_item.entitled}}</span>
       </a>
+      <button *ngIf="isStaff == 'true'" mat-icon-button color="warn" (click)="DeleteMethod(quiz_item.id)"><mat-icon>delete_outline</mat-icon></button>
     </mat-nav-list>
   </mat-expansion-panel>
 </mat-accordion>

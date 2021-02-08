@@ -66,4 +66,8 @@ export class QuizService {
   GetAllQuizTaker(): Observable<QuizTaker[]> {
     return this.http.get<QuizTaker[]>(this.url2 + 'quiz_taker/', {headers: this.authService.httpHeaders});
   }
+
+  DeleteQuiz(id: number) {
+    return this.http.delete(this.url + id + '/', {headers: this.authService.httpHeaders});
+  }
 }

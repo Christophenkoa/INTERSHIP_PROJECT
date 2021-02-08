@@ -61,11 +61,11 @@ export class LoginComponent implements OnInit {
 
     // chech if there is an error with login credentials
     this.authService.loginError.subscribe(
-      (data) => { 
-         if(data) {
-          const message = "Username or password is wrong";
-          this._snackBar.open(message, data, {
-            duration: 2000,
+      (data) => {
+         if (data) {
+          const message = 'Username or password is wrong !';
+          this._snackBar.open(message, 'Close', {
+            duration: 4000,
           });
       }
     }

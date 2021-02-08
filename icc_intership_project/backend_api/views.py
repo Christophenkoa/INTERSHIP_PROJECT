@@ -112,6 +112,10 @@ class ChapterView(ModelViewSet):
             self.permission_classes = [IsStaff]
         return super(ChapterView, self).get_permissions()
 
+    def destroy(self, request, *args, **kwargs):
+        super(ChapterView, self).destroy(request)
+        return Response("This chapter has been deleted.")
+
 
 class EvaluationView(ModelViewSet):
     serializer_class = EvaluationSerializer
@@ -138,6 +142,10 @@ class QuizView(ModelViewSet):
         if self.request.method == 'POST' or self.request.method == 'DELETE' or self.request.method == 'PUT':
             self.permission_classes = [IsStaff]
         return super(QuizView, self).get_permissions()
+
+    def destroy(self, request, *args, **kwargs):
+        super(QuizView, self).destroy(request)
+        return Response("This quiz has been deleted.")
 
 
 class QuizTakerView(ModelViewSet):

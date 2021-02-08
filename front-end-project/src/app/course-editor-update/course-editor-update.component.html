@@ -2,7 +2,7 @@
   <h1 class="display-4">create your content</h1>
 </div>
 
-<form (ngSubmit)="OnSubmitForm()" [formGroup]="NoteForm">
+<form (ngSubmit)="OnUpdateForm()" [formGroup]="NoteForm">
   <mat-form-field appearance="fill">
     <mat-label>Select Course</mat-label>
     <mat-select formControlName="course" matInput required>
@@ -41,8 +41,8 @@
   <!--    [(ngModel)]="ckeditorContent"-->
 
   <div style="width: fit-content; margin: auto;">
-      <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="primary">Save</button>
-<!--      <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="accent">Publish</button>-->
+    <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="primary">Update</button>
+    <!--      <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="accent">Publish</button>-->
   </div>
 </form>
 

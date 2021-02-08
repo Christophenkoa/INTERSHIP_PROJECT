@@ -3,6 +3,7 @@ import {QuizService} from '../../services/quizz/quiz.service';
 import {Router} from '@angular/router';
 import {StudentsService} from '../../services/student/students.service';
 import {QuizTaker} from '../../models/quiz_folder/quizTaker';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-quiz-list',
@@ -15,7 +16,10 @@ export class QuizListComponent implements OnInit {
   isSuperuser: string;
   id: string;
 
-  constructor(private quizService: QuizService, private router: Router, private studentService: StudentsService) { }
+  constructor(private quizService: QuizService,
+              private router: Router,
+              private snackBar: MatSnackBar,
+              private studentService: StudentsService) { }
 
   ngOnInit() {
     this.isStaff = localStorage.getItem('is_staff');
@@ -86,6 +90,22 @@ export class QuizListComponent implements OnInit {
         this.router.navigate(['/quiz/participate', quizId]); },
       (error) => { console.log(error); }
     );
+  }
+
+  DeleteMethod(id) {
+    // console.log(id);
+    if (confirm('Are you sure to delete this quiz ?') === true) {
+      this.quizService.DeleteQuiz(id)
+        .subscribe((data) => {
+          if (data === 'This quiz has been deleted.') {
+            this.quiz = [];
+            this.loadQuiz();
+            this.snackBar.open(data.toString(), 'Close', {
+              duration: 3000
+            });
+          }
+        });
+    }
   }
 
 }

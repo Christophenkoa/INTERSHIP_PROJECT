@@ -29,4 +29,10 @@ url = 'http://127.0.0.1:8000/class_management/chapter/';
     console.log(note);
     return this.http.post(this.url, note, {headers: this.authService.httpHeaders});
   }
+  DeleteNote(id: number) {
+    return this.http.delete(this.url + id + '/', {headers: this.authService.httpHeaders});
+  }
+  UpdateNote(note: ChapterModel, id: number): Observable<ChapterModel> {
+    return this.http.put<ChapterModel>(this.url + id + '/', note, {headers: this.authService.httpHeaders});
+  }
 }

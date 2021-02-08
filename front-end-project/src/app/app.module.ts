@@ -92,6 +92,7 @@ import {OtherServiceService} from './services/other/other-service.service';
 import {NotificationService} from './services/notifications/notification.service';
 import { MyDirectiveWithBackgroundImageDirective } from './directives/my-directive-with-background-image.directive';
 import { QuizHistoricComponent } from './quiz-historic/quiz-historic.component';
+import { CourseEditorUpdateComponent } from './course-editor-update/course-editor-update.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { QuizHistoricComponent } from './quiz-historic/quiz-historic.component';
     AdminPanelComponent,
     MyDirectiveWithBackgroundImageDirective,
     QuizHistoricComponent,
+    CourseEditorUpdateComponent,
   ],
   entryComponents: [CuTeacherComponent, CuStudentComponent, CuClassComponent, CuCoursePopupComponent, DialogQuizComponent],
   imports: [

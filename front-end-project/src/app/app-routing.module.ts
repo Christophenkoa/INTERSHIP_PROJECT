@@ -28,6 +28,7 @@ import {OnlyStaffGuardGuard} from './services/user-guard/only-staff-guard.guard'
 import {AdminGuardGuard} from './services/user-guard/admin-guard.guard';
 import {StudentGuardGuard} from './services/user-guard/student-guard.guard';
 import {QuizHistoricComponent} from "./quiz-historic/quiz-historic.component";
+import {CourseEditorUpdateComponent} from "./course-editor-update/course-editor-update.component";
 
 
 const routes: Routes = [
@@ -73,6 +74,11 @@ const routes: Routes = [
   {
     path : 'navMenu/add-note/:id',
     component: CourseEditorComponent,
+    canActivate: [AuthGuardService, OnlyStaffGuardGuard],
+  },
+  {
+    path : 'navMenu/update-note/:id',
+    component: CourseEditorUpdateComponent,
     canActivate: [AuthGuardService, OnlyStaffGuardGuard],
   },
   {

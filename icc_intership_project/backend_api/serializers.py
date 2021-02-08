@@ -166,15 +166,21 @@ class EvaluationSerializer(serializers.ModelSerializer):
         return StudentSerializer1(obj.student).data
 
 
+class CourseSerializer1(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+
 class ChapterSerializer(serializers.ModelSerializer):
-    # courseObj = serializers.SerializerMethodField()
+    courseObj = serializers.SerializerMethodField()
 
     class Meta:
         model = Chapter
         fields = '__all__'
 
-    # def get_courseObj(self, obj):
-    #     return CourseSerializer1(obj.course).data
+    def get_courseObj(self, obj):
+        return CourseSerializer1(obj.course).data
 
 
 class AnswerSerializer(serializers.ModelSerializer):
