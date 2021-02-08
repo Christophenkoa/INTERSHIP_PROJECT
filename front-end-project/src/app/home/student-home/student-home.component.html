@@ -1,25 +1,52 @@
-<div class="row" style="margin-bottom: 50px">
-  <div class="col-md-4">
+<div class="flex-container text-white m-auto">
+  <!--<<div class="col-md-4">
     <div class="bg-primary m-3" style="height: 170px;">
       <div><p> N° Course </p></div>
       <div><p>{{ NbreCourse }}</p></div>
     </div>
+  </div> -->
+  <div class="card bg-info mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="far fa-sticky-note"></i>
+        </div>
+        <h4 class="card-title">N° Course </h4>
+        <div class="card-text display-4">{{ NbreCourse }}</div>
+    </div>
   </div>
-  <div class="col-md-4">
+ <!--< <div class="col-md-4">
     <div class="bg-success m-3" style="height: 170px;">
       <div><p> N° Quiz </p></div>
       <div><p>{{ NbreQuiz }}</p></div>
     </div>
+  </div> -->
+  <div class="card bg-primary mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <h4 class="card-title">N° Quiz  </h4>
+        <div class="card-text display-4">{{ NbreQuiz }}</div>
+    </div>
   </div>
-  <div class="col-md-4">
+  <!--<<div class="col-md-4">
     <div class="bg-danger m-3" style="height: 170px;">
       <div><p> N° Class Size </p></div>
       <div><p>{{ NbreStudent }}</p></div>
     </div>
+  </div> -->
+  <div class="card bg-secondary mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <h4 class="card-title">N° Class Size </h4>
+        <div class="card-text display-4">{{ NbreStudent }}</div>
+    </div>
   </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 50px">
   <div class="col-md-6">
     <mat-card>
       <mat-card-title style="text-align: center;"><ul> Your Marks </ul></mat-card-title>
